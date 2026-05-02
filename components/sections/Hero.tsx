@@ -1,5 +1,8 @@
+import Image from "next/image";
+
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { SITE } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -66,18 +69,15 @@ export function Hero() {
                 className="absolute inset-0 rounded-full bg-red-gradient blur-3xl opacity-40 animate-pulse-glow"
                 aria-hidden
               />
-              <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-gold bg-ink shadow-gold">
-                <div className="absolute inset-3 rounded-full border border-gold/40" />
-                <div className="absolute inset-6 rounded-full bg-red-gradient opacity-90" />
-                <div className="absolute inset-10 rounded-full border border-gold/30" />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <span className="font-display text-7xl tracking-widerx text-bone drop-shadow-[0_3px_0_rgba(0,0,0,0.45)] md:text-8xl">
-                    FTP
-                  </span>
-                  <span className="mt-2 text-[10px] font-semibold uppercase tracking-widerx text-gold">
-                    Fee The Producer
-                  </span>
-                </div>
+              <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/25 bg-ink/80 shadow-gold">
+                <Image
+                  src={SITE.images.logo}
+                  alt="Fee The Producer logo"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 28rem, (min-width: 768px) 24rem, 85vw"
+                  className="object-cover"
+                />
               </div>
               <div
                 className="absolute -bottom-4 left-1/2 h-2 w-3/4 -translate-x-1/2 rounded-full bg-gold/30 blur-2xl"

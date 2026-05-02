@@ -1,4 +1,7 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/cn";
+import { SITE } from "@/lib/site";
 
 type LogoProps = {
   size?: "sm" | "md" | "lg";
@@ -6,25 +9,30 @@ type LogoProps = {
 };
 
 const sizeMap = {
-  sm: "h-8 w-8 text-[10px]",
-  md: "h-10 w-10 text-xs",
-  lg: "h-14 w-14 text-sm"
+  sm: "h-10 w-10",
+  md: "h-12 w-12",
+  lg: "h-16 w-16"
 };
 
 export function Logo({ size = "md", className }: LogoProps) {
   return (
     <span
       className={cn(
-        "relative inline-flex items-center justify-center rounded-full bg-ink ring-2 ring-gold/70 shadow-gold",
+        "relative inline-flex overflow-hidden rounded-full ring-1 ring-gold/40 shadow-gold",
         sizeMap[size],
         className
       )}
       aria-hidden
     >
-      <span className="absolute inset-1 rounded-full bg-red-gradient opacity-90" />
-      <span className="relative z-10 font-display tracking-widerx text-bone">
-        FTP
-      </span>
+      <Image
+        src={SITE.images.logo}
+        alt=""
+        fill
+        sizes={
+          size === "sm" ? "40px" : size === "md" ? "48px" : "64px"
+        }
+        className="object-cover"
+      />
     </span>
   );
 }

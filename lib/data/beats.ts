@@ -2,131 +2,163 @@ export type Beat = {
   id: string;
   title: string;
   genre: string;
-  mood: string;
   bpm: number;
-  key: string;
-  priceLease: number;
+  mood: string;
+  priceBasic: number;
+  pricePremium: number;
   priceExclusive: number;
-  duration: string;
-  tags: string[];
-  featured?: boolean;
+  audioUrl: string;
+  coverImage: string;
+  featured: boolean;
 };
 
+const PLACEHOLDER_AUDIO_URL = "/audio/ftp-preview-placeholder.wav";
+const DEFAULT_COVER_IMAGE = "/images/covers/fee_the_producer.png";
+
 export const BEATS: Beat[] = [
+  {
+    id: "floating",
+    title: "Floating",
+    genre: "Hip-Hop / Trap",
+    bpm: 0,
+    mood: "Smooth / Atmospheric",
+    priceBasic: 29,
+    pricePremium: 79,
+    priceExclusive: 299,
+    audioUrl: "/audio/Floating.m4a",
+    coverImage: "/images/covers/fee_the_producer.png",
+    featured: true
+  },
   {
     id: "throne-room",
     title: "Throne Room",
     genre: "Trap",
-    mood: "Dark · Cinematic",
     bpm: 142,
-    key: "F# Minor",
-    priceLease: 49,
-    priceExclusive: 599,
-    duration: "3:21",
-    tags: ["Trap", "Dark", "Cinematic"],
-    featured: true
-  },
-  {
-    id: "midnight-king",
-    title: "Midnight King",
-    genre: "Hip-Hop",
-    mood: "Moody · Hard-hitting",
-    bpm: 88,
-    key: "C# Minor",
-    priceLease: 39,
-    priceExclusive: 499,
-    duration: "2:54",
-    tags: ["Hip-Hop", "Moody"],
-    featured: true
-  },
-  {
-    id: "gold-chain",
-    title: "Gold Chain",
-    genre: "Trap Soul",
-    mood: "Smooth · Confident",
-    bpm: 76,
-    key: "A Minor",
-    priceLease: 49,
-    priceExclusive: 549,
-    duration: "3:08",
-    tags: ["Trap Soul", "Smooth"],
-    featured: true
-  },
-  {
-    id: "battlefield",
-    title: "Battlefield",
-    genre: "Drill",
-    mood: "Aggressive · Heavy",
-    bpm: 145,
-    key: "G Minor",
-    priceLease: 49,
-    priceExclusive: 599,
-    duration: "2:48",
-    tags: ["Drill", "Aggressive"]
-  },
-  {
-    id: "smoke-signals",
-    title: "Smoke Signals",
-    genre: "Trap",
-    mood: "Hazy · Atmospheric",
-    bpm: 138,
-    key: "D Minor",
-    priceLease: 39,
-    priceExclusive: 449,
-    duration: "3:12",
-    tags: ["Trap", "Atmospheric"]
-  },
-  {
-    id: "veterans-anthem",
-    title: "Veteran's Anthem",
-    genre: "Boom Bap",
-    mood: "Triumphant · Powerful",
-    bpm: 92,
-    key: "E Minor",
-    priceLease: 59,
+    mood: "Dark cinematic energy",
+    priceBasic: 39,
+    pricePremium: 119,
     priceExclusive: 699,
-    duration: "3:34",
-    tags: ["Boom Bap", "Triumphant"],
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
     featured: true
   },
   {
-    id: "after-hours",
-    title: "After Hours",
+    id: "ghost-mode",
+    title: "Ghost Mode",
+    genre: "Drill",
+    bpm: 146,
+    mood: "Cold and aggressive",
+    priceBasic: 49,
+    pricePremium: 149,
+    priceExclusive: 749,
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: true
+  },
+  {
+    id: "velvet-static",
+    title: "Velvet Static",
     genre: "R&B",
-    mood: "Sensual · Late Night",
-    bpm: 72,
-    key: "B Minor",
-    priceLease: 49,
-    priceExclusive: 549,
-    duration: "3:02",
-    tags: ["R&B", "Late Night"]
-  },
-  {
-    id: "no-mercy",
-    title: "No Mercy",
-    genre: "Trap",
-    mood: "Hard · Menacing",
-    bpm: 150,
-    key: "F Minor",
-    priceLease: 49,
+    bpm: 74,
+    mood: "Late-night and moody",
+    priceBasic: 35,
+    pricePremium: 109,
     priceExclusive: 599,
-    duration: "2:41",
-    tags: ["Trap", "Hard"]
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: true
   },
   {
-    id: "crown-jewel",
-    title: "Crown Jewel",
-    genre: "Trap Soul",
-    mood: "Luxurious · Reflective",
-    bpm: 84,
-    key: "G# Minor",
-    priceLease: 59,
+    id: "redline-season",
+    title: "Redline Season",
+    genre: "Trap",
+    bpm: 150,
+    mood: "High-pressure anthem",
+    priceBasic: 45,
+    pricePremium: 129,
+    priceExclusive: 729,
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: true
+  },
+  {
+    id: "veteran-code",
+    title: "Veteran Code",
+    genre: "Boom Bap",
+    bpm: 94,
+    mood: "Focused and triumphant",
+    priceBasic: 39,
+    pricePremium: 119,
     priceExclusive: 649,
-    duration: "3:25",
-    tags: ["Trap Soul", "Luxurious"]
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: false
+  },
+  {
+    id: "skylight-run",
+    title: "Skylight Run",
+    genre: "Hip-Hop",
+    bpm: 88,
+    mood: "Confident and reflective",
+    priceBasic: 35,
+    pricePremium: 99,
+    priceExclusive: 549,
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: false
+  },
+  {
+    id: "afterglow-bag",
+    title: "Afterglow Bag",
+    genre: "Trap Soul",
+    bpm: 82,
+    mood: "Luxury and introspection",
+    priceBasic: 45,
+    pricePremium: 139,
+    priceExclusive: 699,
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: false
+  },
+  {
+    id: "night-shift",
+    title: "Night Shift",
+    genre: "Cinematic",
+    bpm: 118,
+    mood: "Tense and atmospheric",
+    priceBasic: 49,
+    pricePremium: 149,
+    priceExclusive: 799,
+    audioUrl: PLACEHOLDER_AUDIO_URL,
+    coverImage: DEFAULT_COVER_IMAGE,
+    featured: false
   }
 ];
 
+export function getBeatById(id: string): Beat | undefined {
+  return BEATS.find((beat) => beat.id === id);
+}
+
+export function getBeatGenres(): string[] {
+  return Array.from(new Set(BEATS.map((beat) => beat.genre)));
+}
+
 export function getFeaturedBeats(limit = 3): Beat[] {
   return BEATS.filter((beat) => beat.featured).slice(0, limit);
+}
+
+export function getRelatedBeats(currentBeat: Beat, limit = 3): Beat[] {
+  const priorityMatches = BEATS.filter(
+    (beat) =>
+      beat.id !== currentBeat.id &&
+      (beat.genre === currentBeat.genre || beat.mood === currentBeat.mood)
+  );
+
+  const remaining = BEATS.filter(
+    (beat) =>
+      beat.id !== currentBeat.id &&
+      !priorityMatches.some((match) => match.id === beat.id)
+  );
+
+  return [...priorityMatches, ...remaining].slice(0, limit);
 }

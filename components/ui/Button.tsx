@@ -7,15 +7,17 @@ type Variant = "gold" | "red" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold uppercase tracking-widerx transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:ring-gold disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold uppercase tracking-widerx transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink focus-visible:ring-gold disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  gold: "bg-gold-gradient text-ink shadow-gold hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]",
-  red: "bg-red-gradient text-white shadow-ember hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]",
+  gold:
+    "bg-gold-gradient text-ink shadow-gold hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(212,175,55,0.38),0_28px_70px_-28px_rgba(212,175,55,0.78)] active:translate-y-0 active:scale-[0.99]",
+  red:
+    "bg-red-gradient text-white shadow-ember hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:scale-[0.99]",
   outline:
-    "border border-gold/60 bg-transparent text-gold hover:bg-gold/10 hover:border-gold",
+    "border border-gold/60 bg-white/[0.02] text-gold hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10 hover:text-gold-warm",
   ghost:
-    "bg-white/5 text-bone hover:bg-white/10 border border-white/10 backdrop-blur"
+    "border border-white/10 bg-white/5 text-bone backdrop-blur hover:-translate-y-0.5 hover:border-gold/25 hover:bg-white/10 hover:text-white"
 };
 
 const sizes: Record<Size, string> = {
@@ -49,6 +51,7 @@ export function Button(props: ButtonProps) {
 
   if ("href" in props && props.href !== undefined) {
     const { href, external } = props;
+
     if (external) {
       return (
         <a
@@ -61,6 +64,7 @@ export function Button(props: ButtonProps) {
         </a>
       );
     }
+
     return (
       <Link href={href} className={classes}>
         {children}

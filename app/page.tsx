@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 import { BeatCard } from "@/components/cards/BeatCard";
+import { EmailCapture } from "@/components/forms/email-capture";
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
+import { BookingCta } from "@/components/sections/BookingCta";
 import { Hero } from "@/components/sections/Hero";
 import { LicensingTeaser } from "@/components/sections/LicensingTeaser";
-import { EmailCapture } from "@/components/sections/EmailCapture";
-import { BookingCta } from "@/components/sections/BookingCta";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -26,19 +26,19 @@ export default function HomePage() {
             eyebrow="Featured Beats"
             title={
               <>
-                The catalog
+                Beat previews ready.
                 <br />
-                <span className="text-gold-gradient">that hits.</span>
+                <span className="text-gold-gradient">Licenses built to move.</span>
               </>
             }
-            description="Hand-picked instrumentals from the FTP catalog. Lease for runs, buy exclusive for label-ready records."
+            description="Preview the latest Fee The Producer beats, compare license tiers, and move from discovery to inquiry without leaving the catalog."
           />
           <Link
             href="/beats"
             className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
           >
-            View all beats
-            <span aria-hidden>→</span>
+            View full beat store
+            <span aria-hidden>-&gt;</span>
           </Link>
         </div>
 
@@ -60,14 +60,14 @@ export default function HomePage() {
                 <span className="text-gold-gradient">Pressed in gold.</span>
               </>
             }
-            description="Beat tapes, EPs, and singles from the FTP roster. Stream everywhere — own the moment."
+            description="Beat tapes, EPs, and singles from the FTP roster. Stream everywhere music lives and keep the brand story moving."
           />
           <Link
             href="/releases"
             className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
           >
             All releases
-            <span aria-hidden>→</span>
+            <span aria-hidden>-&gt;</span>
           </Link>
         </div>
 
@@ -80,8 +80,30 @@ export default function HomePage() {
 
       <LicensingTeaser />
 
-      <Section tone="default">
+      <Section>
         <EmailCapture />
+      </Section>
+
+      <Section className="pt-0">
+        <div className="flex flex-col items-start gap-4 rounded-[32px] border border-gold/20 bg-white/[0.02] p-8 shadow-panel md:flex-row md:items-center md:justify-between md:p-10">
+          <div>
+            <h2 className="font-display text-3xl text-bone md:text-4xl">
+              Need a custom beat or brand-ready exclusive?
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm text-white/70 md:text-base">
+              Start with the catalog, then reach out when you need a custom
+              direction, exclusive terms, or a record built around your artist.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button href="/beats" variant="gold" size="md">
+              Browse Beats
+            </Button>
+            <Button href="/contact" variant="outline" size="md">
+              Talk Licensing
+            </Button>
+          </div>
+        </div>
       </Section>
 
       <BookingCta />
