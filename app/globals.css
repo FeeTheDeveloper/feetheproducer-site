@@ -175,3 +175,89 @@ select {
     box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
   }
 }
+
+@keyframes ftpSplashLogoIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: blur(0);
+  }
+}
+
+@keyframes ftpSplashGlow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes ftpSplashTagline {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    letter-spacing: 0.05em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.18em;
+  }
+}
+
+@keyframes ftpSplashBar {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.ftp-splash-logo {
+  animation: ftpSplashLogoIn 1400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.ftp-splash-glow {
+  animation: ftpSplashGlow 2400ms ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.ftp-splash-tagline {
+  opacity: 0;
+  animation: ftpSplashTagline 900ms cubic-bezier(0.22, 1, 0.36, 1) 700ms forwards;
+}
+
+.ftp-splash-bar {
+  animation: ftpSplashBar 2200ms cubic-bezier(0.65, 0, 0.35, 1) 200ms forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ftp-splash-logo,
+  .ftp-splash-glow,
+  .ftp-splash-tagline,
+  .ftp-splash-bar {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

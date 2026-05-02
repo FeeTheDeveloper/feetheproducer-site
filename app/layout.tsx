@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { SplashScreen } from "@/components/ui/splash-screen";
 import { SITE } from "@/lib/site";
 
 import "./globals.css";
@@ -110,6 +111,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body className="min-h-screen bg-ink text-bone antialiased">
         <JsonLd data={[organizationStructuredData, websiteStructuredData]} />
+        <SplashScreen />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-xs focus:font-semibold focus:uppercase focus:tracking-widerx focus:text-ink"
