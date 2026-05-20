@@ -28,7 +28,7 @@ export function Hero() {
 
             <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
               Premium beats, original releases, and licensing built for artists
-              who want to sound like the moment they're chasing. Crafted in the
+              who want to sound like the moment they&apos;re chasing. Crafted in the
               studio. Pressed in gold.
             </p>
 

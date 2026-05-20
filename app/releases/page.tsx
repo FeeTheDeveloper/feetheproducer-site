@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
+import { ReleaseCommandCenter } from "@/components/music/release-command-center";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { RELEASES } from "@/lib/data/releases";
+import { getCampaignsForRelease } from "@/lib/data/campaigns";
+import { getPromotionsForRelease } from "@/lib/data/promotions";
+import { getReleaseById, RELEASES } from "@/lib/data/releases";
 
 export const metadata: Metadata = {
   title: "Releases",
   description:
-    "Listen to original Fee The Producer releases — beat tapes, EPs, singles, and albums. Stream on Spotify, Apple Music, YouTube, and more."
+    "Listen to original Fee The Producer releases with centralized Apple Music, Spotify, and Amazon Music streaming destinations."
 };
 
 export default function ReleasesPage() {
@@ -16,6 +19,13 @@ export default function ReleasesPage() {
     (a, b) =>
       new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
   );
+  const currentRelease = getReleaseById("lra") ?? sorted[0];
+  const linkedCampaigns = currentRelease
+    ? getCampaignsForRelease(currentRelease.id)
+    : [];
+  const linkedPromotions = currentRelease
+    ? getPromotionsForRelease(currentRelease.id)
+    : [];
 
   return (
     <Section className="pt-24 md:pt-32">
@@ -25,11 +35,20 @@ export default function ReleasesPage() {
           <>
             Original music
             <br />
-            <span className="text-gold-gradient">straight from the lab.</span>
+            <span className="text-gold-gradient">wired for every stream.</span>
           </>
         }
-        description="Beat tapes, EPs, singles, and full-length projects. Stream everywhere music lives."
+        description="Beat tapes, EPs, singles, and full-length projects. Centralized streaming links now drive release CTAs, campaign hooks, promotions, and operator visibility from one source."
       />
+
+      {currentRelease ? (
+        <ReleaseCommandCenter
+          release={currentRelease}
+          campaigns={linkedCampaigns}
+          promotions={linkedPromotions}
+          className="mt-12"
+        />
+      ) : null}
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sorted.map((release) => (

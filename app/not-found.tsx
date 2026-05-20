@@ -15,8 +15,8 @@ export default function NotFound() {
           Off the grid.
         </h1>
         <p className="mx-auto mt-4 max-w-md text-white/70">
-          That page isn't in the catalog. Let's get you back to where the beats
-          live.
+          That page isn&apos;t in the catalog. Let&apos;s get you back to where the
+          beats live.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button href="/" variant="gold" size="md">

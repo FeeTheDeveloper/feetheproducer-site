@@ -137,8 +137,8 @@ export default function AboutPage() {
             </h2>
             <p className="mt-5 text-white/75">
               Discipline is the difference. Every beat, every release, every
-              license — it's all run with the same focus we carried in service.
-              Show up, do the work, ship it clean. That's the standard.
+              license, it&apos;s all run with the same focus we carried in service.
+              Show up, do the work, ship it clean. That&apos;s the standard.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">

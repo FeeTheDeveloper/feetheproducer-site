@@ -1,22 +1,49 @@
-export type ReleaseType = "Single" | "EP" | "Album" | "Beat Tape" | "Collab";
+import { createStreamingLink } from "@/lib/music";
+import type { MusicRelease, StreamingPlatformLink } from "@/lib/types/music";
 
-export type StreamingLink = {
-  platform: "Spotify" | "Apple Music" | "YouTube" | "SoundCloud" | "Tidal";
-  href: string;
+type ReleaseSeed = Omit<MusicRelease, "streamingLinks"> & {
+  streamingLinks: Array<
+    Pick<StreamingPlatformLink, "platform" | "label" | "url" | "isPrimary"> &
+      Partial<
+        Pick<
+          StreamingPlatformLink,
+          "active" | "createdAt" | "icon"
+        >
+      >
+  >;
 };
 
-export type Release = {
-  id: string;
-  title: string;
-  artist: string;
-  type: ReleaseType;
-  releaseDate: string;
-  description: string;
-  streamingLinks: StreamingLink[];
-  featured?: boolean;
-};
-
-export const RELEASES: Release[] = [
+const releaseSeeds: ReleaseSeed[] = [
+  {
+    id: "lra",
+    title: "L.R.A.",
+    artist: "Fee The Producer",
+    type: "Single",
+    releaseDate: "2026-05-20",
+    description:
+      "Active release rollout for Fee The Producer, wired for Apple Music, Spotify, and Amazon Music from one command-center source of truth.",
+    streamingLinks: [
+      {
+        platform: "apple_music",
+        label: "Listen on Apple Music",
+        url: "https://music.apple.com/us/song/l-r-a/6769877047",
+        isPrimary: true
+      },
+      {
+        platform: "spotify",
+        label: "Follow on Spotify",
+        url: "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y?si=qYBlUAg3QXW8T6UtVSszUw",
+        isPrimary: false
+      },
+      {
+        platform: "amazon_music",
+        label: "Listen on Amazon Music",
+        url: "https://music.amazon.com/albums/B0H1XS65L3?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_dKyJYRaayvvlPhmBki0phQay1",
+        isPrimary: false
+      }
+    ],
+    featured: true
+  },
   {
     id: "throne-szn",
     title: "Throne SZN",
@@ -26,9 +53,24 @@ export const RELEASES: Release[] = [
     description:
       "A 9-track instrumental tape engineered for late-night drives and locked-in studio sessions.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "YouTube", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: false
+      },
+      {
+        platform: "apple_music",
+        label: "Listen on Apple Music",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "youtube_music",
+        label: "Listen on YouTube Music",
+        url: "#",
+        isPrimary: false
+      }
     ],
     featured: true
   },
@@ -41,9 +83,24 @@ export const RELEASES: Release[] = [
     description:
       "A producer-led EP showcasing collaborations with rising artists across the trap and R&B spectrum.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "Tidal", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "apple_music",
+        label: "Listen on Apple Music",
+        url: "#",
+        isPrimary: false
+      },
+      {
+        platform: "tidal",
+        label: "Listen on Tidal",
+        url: "#",
+        isPrimary: false
+      }
     ],
     featured: true
   },
@@ -54,11 +111,26 @@ export const RELEASES: Release[] = [
     type: "Beat Tape",
     releaseDate: "2024-11-22",
     description:
-      "Slow tempo, smooth keys, and 808s built for the after-hours bag — a producer's playground.",
+      "Slow tempo, smooth keys, and 808s built for the after-hours bag, a producer playground after midnight.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "SoundCloud", href: "#" },
-      { platform: "YouTube", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "soundcloud",
+        label: "Listen on SoundCloud",
+        url: "#",
+        isPrimary: false
+      },
+      {
+        platform: "youtube_music",
+        label: "Listen on YouTube Music",
+        url: "#",
+        isPrimary: false
+      }
     ],
     featured: true
   },
@@ -71,8 +143,18 @@ export const RELEASES: Release[] = [
     description:
       "A high-energy drill instrumental built for visuals, sync, and trailer placement.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "apple_music",
+        label: "Listen on Apple Music",
+        url: "#",
+        isPrimary: false
+      }
     ]
   },
   {
@@ -84,10 +166,30 @@ export const RELEASES: Release[] = [
     description:
       "A full-length project chronicling the journey from service to studio. 12 tracks, no skips.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "YouTube", href: "#" },
-      { platform: "Tidal", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "apple_music",
+        label: "Listen on Apple Music",
+        url: "#",
+        isPrimary: false
+      },
+      {
+        platform: "youtube_music",
+        label: "Listen on YouTube Music",
+        url: "#",
+        isPrimary: false
+      },
+      {
+        platform: "tidal",
+        label: "Listen on Tidal",
+        url: "#",
+        isPrimary: false
+      }
     ]
   },
   {
@@ -99,12 +201,36 @@ export const RELEASES: Release[] = [
     description:
       "A hazy, atmospheric trap cut featuring a special guest verse.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "SoundCloud", href: "#" }
+      {
+        platform: "spotify",
+        label: "Listen on Spotify",
+        url: "#",
+        isPrimary: true
+      },
+      {
+        platform: "soundcloud",
+        label: "Listen on SoundCloud",
+        url: "#",
+        isPrimary: false
+      }
     ]
   }
 ];
 
-export function getFeaturedReleases(limit = 3): Release[] {
+export const RELEASES: MusicRelease[] = releaseSeeds.map((release) => ({
+  ...release,
+  streamingLinks: release.streamingLinks.map((link) =>
+    createStreamingLink({
+      ...link,
+      id: `${release.id}-${link.platform}`
+    })
+  )
+}));
+
+export function getFeaturedReleases(limit = 3): MusicRelease[] {
   return RELEASES.filter((release) => release.featured).slice(0, limit);
+}
+
+export function getReleaseById(id: string): MusicRelease | undefined {
+  return RELEASES.find((release) => release.id === id);
 }

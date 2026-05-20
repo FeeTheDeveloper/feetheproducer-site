@@ -1,18 +1,12 @@
-import type { Release } from "@/lib/data/releases";
+import { StreamingLinks } from "@/components/music/streaming-links";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/cn";
+import { getReleaseStreamingReadiness } from "@/lib/music";
+import type { MusicRelease } from "@/lib/types/music";
 
 type ReleaseCardProps = {
-  release: Release;
+  release: MusicRelease;
   className?: string;
-};
-
-const platformLabel: Record<string, string> = {
-  Spotify: "Spotify",
-  "Apple Music": "Apple",
-  YouTube: "YouTube",
-  SoundCloud: "SoundCloud",
-  Tidal: "Tidal"
 };
 
 function formatDate(input: string) {
@@ -28,6 +22,8 @@ function formatDate(input: string) {
 }
 
 export function ReleaseCard({ release, className }: ReleaseCardProps) {
+  const readiness = getReleaseStreamingReadiness(release);
+
   return (
     <article
       className={cn(
@@ -56,34 +52,52 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-2xl leading-tight text-bone">
-          {release.title}
-        </h3>
-        <p className="mt-1 text-xs uppercase tracking-widerx text-gold/80">
-          {release.artist}
-        </p>
-        <p className="mt-3 text-sm text-white/70">{release.description}</p>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h3 className="font-display text-2xl leading-tight text-bone">
+              {release.title}
+            </h3>
+            <p className="mt-1 text-xs uppercase tracking-widerx text-gold/80">
+              {release.artist}
+            </p>
+          </div>
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          {release.streamingLinks.map((link) => (
-            <a
-              key={link.platform}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-widerx text-white/80 transition hover:border-gold/60 hover:bg-gold/10 hover:text-gold"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-              {platformLabel[link.platform] ?? link.platform}
-            </a>
-          ))}
+          <Badge
+            tone={
+              readiness.status === "ready"
+                ? "gold"
+                : readiness.status === "partial"
+                  ? "muted"
+                  : "red"
+            }
+            className={cn(
+              readiness.status === "partial" && "border-white/15 bg-white/[0.05] text-white/75"
+            )}
+          >
+            {readiness.status === "ready"
+              ? "Ready"
+              : readiness.status === "partial"
+                ? "Partial"
+                : "Pending"}
+          </Badge>
         </div>
 
-        {release.featured ? (
-          <div className="mt-5">
-            <Badge tone="red">Featured</Badge>
-          </div>
-        ) : null}
+        <p className="mt-3 text-sm text-white/70">{release.description}</p>
+
+        <StreamingLinks
+          links={release.streamingLinks}
+          releaseTitle={release.title}
+          compact
+          className="mt-5"
+        />
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {release.featured ? <Badge tone="red">Featured</Badge> : null}
+          <Badge tone="muted" className="border-white/10 bg-white/[0.05]">
+            {readiness.activeCount} active platform
+            {readiness.activeCount === 1 ? "" : "s"}
+          </Badge>
+        </div>
       </div>
     </article>
   );
