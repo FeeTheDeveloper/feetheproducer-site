@@ -15,6 +15,7 @@ import { getFeaturedReleases } from "@/lib/data/releases";
 export default function HomePage() {
   const featuredBeats = getFeaturedBeats(3);
   const featuredReleases = getFeaturedReleases(3);
+  const hasFeaturedBeats = featuredBeats.length > 0;
 
   return (
     <>
@@ -26,27 +27,59 @@ export default function HomePage() {
             eyebrow="Featured Beats"
             title={
               <>
-                Beat previews ready.
+                {hasFeaturedBeats ? "Beat previews ready." : "Beat catalog update."}
                 <br />
-                <span className="text-gold-gradient">Licenses built to move.</span>
+                <span className="text-gold-gradient">
+                  {hasFeaturedBeats
+                    ? "Licenses built to move."
+                    : "Fresh drops are on the way."}
+                </span>
               </>
             }
-            description="Preview the latest Fee The Producer beats, compare license tiers, and move from discovery to inquiry without leaving the catalog."
+            description={
+              hasFeaturedBeats
+                ? "Preview the latest Fee The Producer beats, compare license tiers, and move from discovery to inquiry without leaving the catalog."
+                : "The public beat placeholders have been cleared out. Reach out for custom work while the next round of beats is being loaded in."
+            }
           />
           <Link
-            href="/beats"
+            href={hasFeaturedBeats ? "/beats" : "/contact"}
             className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
           >
-            View full beat store
+            {hasFeaturedBeats ? "View full beat store" : "Request custom work"}
             <span aria-hidden>-&gt;</span>
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredBeats.map((beat) => (
-            <BeatCard key={beat.id} beat={beat} />
-          ))}
-        </div>
+        {hasFeaturedBeats ? (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredBeats.map((beat) => (
+              <BeatCard key={beat.id} beat={beat} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-12 rounded-[32px] border border-gold/20 bg-ink-elevated/75 p-8 shadow-panel md:p-10">
+            <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold/75">
+              Beat Store Status
+            </p>
+            <h2 className="mt-3 font-display text-4xl text-bone md:text-5xl">
+              No beats are listed right now.
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm text-white/70 md:text-base">
+              The placeholder beat inventory has been removed. Use the contact
+              form for custom production and head to releases to hear the live
+              record.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <Button href="/contact" variant="gold" size="md">
+                Request Custom
+              </Button>
+              <Button href="/releases" variant="outline" size="md">
+                Hear L.R.A.
+              </Button>
+            </div>
+          </div>
+        )}
       </Section>
 
       <Section id="latest-releases" tone="ember">

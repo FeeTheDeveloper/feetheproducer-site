@@ -11,7 +11,7 @@ import { getReleaseById, RELEASES } from "@/lib/data/releases";
 export const metadata: Metadata = {
   title: "Releases",
   description:
-    "Listen to original Fee The Producer releases with centralized Apple Music, Spotify, and Amazon Music streaming destinations."
+    "Listen to L.R.A. by Fee The Producer with live Apple Music, Spotify, and Amazon Music destinations."
 };
 
 export default function ReleasesPage() {
@@ -33,12 +33,12 @@ export default function ReleasesPage() {
         eyebrow="The Discography"
         title={
           <>
-            Original music
+            Current release
             <br />
-            <span className="text-gold-gradient">wired for every stream.</span>
+            <span className="text-gold-gradient">live across every stream.</span>
           </>
         }
-        description="Beat tapes, EPs, singles, and full-length projects. Centralized streaming links now drive release CTAs, campaign hooks, promotions, and operator visibility from one source."
+        description="The public release catalog is trimmed back to one live record right now. L.R.A. carries the active Apple Music embed and the shared streaming destinations."
       />
 
       {currentRelease ? (
@@ -50,11 +50,13 @@ export default function ReleasesPage() {
         />
       ) : null}
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {sorted.map((release) => (
-          <ReleaseCard key={release.id} release={release} />
-        ))}
-      </div>
+      {sorted.length > 1 ? (
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {sorted.map((release) => (
+            <ReleaseCard key={release.id} release={release} />
+          ))}
+        </div>
+      ) : null}
     </Section>
   );
 }

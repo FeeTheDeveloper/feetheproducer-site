@@ -22,6 +22,13 @@ export type StreamingPlatformLink = {
   createdAt: string;
 };
 
+export type MusicReleaseEmbed = {
+  provider: "apple_music";
+  title: string;
+  src: string;
+  height?: number;
+};
+
 export type MusicRelease = {
   id: string;
   title: string;
@@ -30,6 +37,7 @@ export type MusicRelease = {
   releaseDate: string;
   description: string;
   streamingLinks: StreamingPlatformLink[];
+  embed?: MusicReleaseEmbed;
   featured?: boolean;
 };
 

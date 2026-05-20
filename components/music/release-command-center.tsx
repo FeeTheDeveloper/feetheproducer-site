@@ -15,6 +15,7 @@ import type {
   ReleasePromotion
 } from "@/lib/types/music";
 
+import { ReleaseEmbed } from "./release-embed";
 import { StreamingLinks } from "./streaming-links";
 
 type ReleaseCommandCenterProps = {
@@ -124,6 +125,8 @@ export function ReleaseCommandCenter({
           className="mt-6"
         />
 
+        <ReleaseEmbed release={release} className="mt-6" />
+
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <MetricTile
             label="Active Platforms"
@@ -153,27 +156,33 @@ export function ReleaseCommandCenter({
               streaming destinations directly from the release model.
             </p>
 
-            <div className="mt-4 space-y-3">
-              {campaigns.map((campaign) => (
-                <div
-                  key={campaign.id}
-                  className="rounded-2xl border border-white/8 bg-ink/60 p-4"
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-sm font-semibold uppercase tracking-widerx text-bone">
-                      {campaign.name}
+            {campaigns.length > 0 ? (
+              <div className="mt-4 space-y-3">
+                {campaigns.map((campaign) => (
+                  <div
+                    key={campaign.id}
+                    className="rounded-2xl border border-white/8 bg-ink/60 p-4"
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-semibold uppercase tracking-widerx text-bone">
+                        {campaign.name}
+                      </p>
+                      <Badge tone="muted" className="border-white/10 bg-white/[0.04]">
+                        {campaign.status}
+                      </Badge>
+                      <Badge tone="gold">{campaignCtaLabel[campaign.cta]}</Badge>
+                    </div>
+                    <p className="mt-3 text-xs uppercase tracking-widerx text-white/45">
+                      {campaign.channel.replaceAll("_", " ")} / {campaign.streamingLinks.length} links attached
                     </p>
-                    <Badge tone="muted" className="border-white/10 bg-white/[0.04]">
-                      {campaign.status}
-                    </Badge>
-                    <Badge tone="gold">{campaignCtaLabel[campaign.cta]}</Badge>
                   </div>
-                  <p className="mt-3 text-xs uppercase tracking-widerx text-white/45">
-                    {campaign.channel.replaceAll("_", " ")} / {campaign.streamingLinks.length} links attached
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-4 rounded-2xl border border-dashed border-white/10 bg-ink/50 p-4 text-sm text-white/62">
+                No campaign CTA blocks are linked to this release yet.
+              </div>
+            )}
           </section>
 
           <section className="rounded-[28px] border border-white/8 bg-white/[0.03] p-5">
@@ -188,29 +197,35 @@ export function ReleaseCommandCenter({
               CTAs, multi-platform release cards, and unified destination blocks.
             </p>
 
-            <div className="mt-4 space-y-3">
-              {livePromotions.map((promotion) => (
-                <div
-                  key={promotion.id}
-                  className="rounded-2xl border border-white/8 bg-ink/60 p-4"
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-sm font-semibold uppercase tracking-widerx text-bone">
-                      {promotion.title}
+            {livePromotions.length > 0 ? (
+              <div className="mt-4 space-y-3">
+                {livePromotions.map((promotion) => (
+                  <div
+                    key={promotion.id}
+                    className="rounded-2xl border border-white/8 bg-ink/60 p-4"
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-semibold uppercase tracking-widerx text-bone">
+                        {promotion.title}
+                      </p>
+                      <Badge tone="gold">
+                        {promotionTypeLabel[promotion.cardType]}
+                      </Badge>
+                      <Badge tone="muted" className="border-white/10 bg-white/[0.04]">
+                        {campaignCtaLabel[promotion.cta]}
+                      </Badge>
+                    </div>
+                    <p className="mt-3 text-xs uppercase tracking-widerx text-white/45">
+                      {promotion.streamingLinks.length} shared release links
                     </p>
-                    <Badge tone="gold">
-                      {promotionTypeLabel[promotion.cardType]}
-                    </Badge>
-                    <Badge tone="muted" className="border-white/10 bg-white/[0.04]">
-                      {campaignCtaLabel[promotion.cta]}
-                    </Badge>
                   </div>
-                  <p className="mt-3 text-xs uppercase tracking-widerx text-white/45">
-                    {promotion.streamingLinks.length} shared release links
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-4 rounded-2xl border border-dashed border-white/10 bg-ink/50 p-4 text-sm text-white/62">
+                No promotion cards are linked to this release yet.
+              </div>
+            )}
           </section>
         </div>
       </article>

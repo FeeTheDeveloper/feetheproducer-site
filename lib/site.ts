@@ -11,8 +11,9 @@ export const SITE = {
   social: {
     instagram: "https://instagram.com/feetheproducer",
     youtube: "https://youtube.com/@feetheproducer",
-    spotify: "https://open.spotify.com/artist/feetheproducer",
-    apple: "https://music.apple.com/artist/feetheproducer",
+    spotify:
+      "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y?si=qYBlUAg3QXW8T6UtVSszUw",
+    apple: "https://music.apple.com/us/song/l-r-a/6769877047",
     soundcloud: "https://soundcloud.com/feetheproducer",
     tiktok: "https://tiktok.com/@feetheproducer"
   },
