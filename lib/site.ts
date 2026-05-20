@@ -1,10 +1,10 @@
 export const SITE = {
   name: "Fee The Producer",
   legalName: "Fee The Producer LLC",
-  title: "Fee The Producer | Beats, Music & Licensing",
-  tagline: "Beats, music, and licensing built loud and built premium.",
+  title: "Fee The Producer | L.R.A. and Artist Bio",
+  tagline: "One live release, one clear artist story.",
   description:
-    "Premium beats, music releases, and licensing by Fee The Producer. Veteran-owned music brand.",
+    "Fee The Producer is a Philadelphia-born musician, composer, writer, drummer, and keys player centered on L.R.A. and authentic musicianship.",
   url: "https://feetheproducer.com",
   domain: "feetheproducer.com",
   email: "contact@feetheproducer.com",

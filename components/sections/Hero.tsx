@@ -16,9 +16,9 @@ export function Hero() {
       <div className="container-page">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
           <div>
-            <div className="flex items-center gap-3">
-              <Badge tone="gold">Veteran-Owned · Producer</Badge>
-              <Badge tone="red">New Beats Live</Badge>
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge tone="gold">Veteran-Owned Artist</Badge>
+              <Badge tone="red">Current Release: L.R.A.</Badge>
             </div>
 
             <h1 className="mt-6 font-display text-5xl leading-[0.92] text-bone sm:text-6xl md:text-7xl lg:text-[88px]">
@@ -27,38 +27,38 @@ export function Hero() {
             </h1>
 
             <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
-              Premium beats, original releases, and licensing built for artists
-              who want to sound like the moment they&apos;re chasing. Crafted in the
-              studio. Pressed in gold.
+              One live release, one clear voice, and one place to connect with
+              the artist behind it. Listen to L.R.A. and get to know Fee The
+              Producer beyond the extra catalog noise.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button href="/beats" variant="gold" size="lg">
-                Shop Beats
+              <Button href="/releases" variant="gold" size="lg">
+                Listen to L.R.A.
               </Button>
-              <Button href="/releases" variant="outline" size="lg">
-                Listen to Releases
+              <Button href="/about" variant="outline" size="lg">
+                Read the Bio
               </Button>
             </div>
 
             <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-6 text-sm">
               <div>
                 <dt className="text-[10px] uppercase tracking-widerx text-white/50">
-                  Beats
+                  Focus
                 </dt>
-                <dd className="mt-1 font-display text-2xl text-gold">100+</dd>
+                <dd className="mt-1 font-display text-2xl text-gold">1 Release</dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-widerx text-white/50">
-                  Releases
+                  Status
                 </dt>
-                <dd className="mt-1 font-display text-2xl text-gold">20+</dd>
+                <dd className="mt-1 font-display text-2xl text-gold">Live</dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-widerx text-white/50">
-                  Streams
+                  Brand
                 </dt>
-                <dd className="mt-1 font-display text-2xl text-gold">1M+</dd>
+                <dd className="mt-1 font-display text-2xl text-gold">FTP</dd>
               </div>
             </dl>
           </div>
@@ -66,7 +66,7 @@ export function Hero() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-square">
               <div
-                className="absolute inset-0 rounded-full bg-red-gradient blur-3xl opacity-40 animate-pulse-glow"
+                className="absolute inset-0 rounded-full bg-red-gradient opacity-40 blur-3xl animate-pulse-glow"
                 aria-hidden
               />
               <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/25 bg-ink/80 shadow-gold">
@@ -93,14 +93,14 @@ export function Hero() {
           {Array.from({ length: 2 }).map((_, idx) => (
             <div key={idx} className="flex shrink-0 items-center gap-12">
               {[
-                "Trap",
-                "Drill",
-                "Hip-Hop",
-                "Trap Soul",
-                "Boom Bap",
-                "R&B",
-                "Cinematic",
-                "Sync · Film · TV"
+                "Fee The Producer",
+                "Veteran-Owned",
+                "Independent Artist",
+                "L.R.A.",
+                "Artist Bio",
+                "Direct Streaming",
+                "Current Release",
+                "Built With Discipline"
               ].map((item) => (
                 <span
                   key={`${idx}-${item}`}

@@ -19,9 +19,9 @@ const releaseSeeds: ReleaseSeed[] = [
     title: "L.R.A.",
     artist: "Fee The Producer",
     type: "Single",
-    releaseDate: "2026-05-20",
+    releaseDate: "2026-05-14",
     description:
-      "Fee The Producer's current live release, now carrying the only active streaming destination set on the site.",
+      "L.R.A. - Single is released under 12310735 Records DK in the Jazz genre and credits alfreddie postell as composer.",
     embed: {
       provider: "apple_music",
       title: "L.R.A. by Fee The Producer on Apple Music",

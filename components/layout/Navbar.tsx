@@ -65,8 +65,8 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href="/beats" variant="gold" size="sm">
-            Shop Beats
+          <Button href="/releases" variant="gold" size="sm">
+            Hear L.R.A.
           </Button>
         </div>
 
@@ -129,8 +129,13 @@ export function Navbar() {
               );
             })}
 
-            <Button href="/beats" variant="gold" size="md" className="mt-2 w-full">
-              Shop Beats
+            <Button
+              href="/releases"
+              variant="gold"
+              size="md"
+              className="mt-2 w-full"
+            >
+              Hear L.R.A.
             </Button>
           </nav>
         </div>
