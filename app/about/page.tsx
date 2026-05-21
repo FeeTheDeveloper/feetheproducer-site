@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 
 import { BookingCta } from "@/components/sections/BookingCta";
@@ -85,18 +86,17 @@ export default function AboutPage() {
                 className="absolute inset-0 rounded-full bg-red-gradient opacity-30 blur-3xl"
                 aria-hidden
               />
-              <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-gold bg-ink shadow-gold">
-                <div className="absolute inset-3 rounded-full border border-gold/40" />
-                <div className="absolute inset-6 rounded-full bg-red-gradient opacity-90" />
-                <div className="absolute inset-10 rounded-full border border-gold/30" />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <span className="font-display text-7xl tracking-widerx text-bone drop-shadow-[0_3px_0_rgba(0,0,0,0.45)] md:text-8xl">
-                    FTP
-                  </span>
-                  <span className="mt-2 text-[10px] font-semibold uppercase tracking-widerx text-gold">
-                    Fee The Producer
-                  </span>
-                </div>
+              <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-gold bg-ink shadow-gold">
+                <Image
+                  src="/images/covers/profile_pic.png"
+                  alt="Portrait of Fee The Producer"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 28rem, (min-width: 768px) 24rem, 90vw"
+                  className="object-cover"
+                />
+                <div className="pointer-events-none absolute inset-3 rounded-full border border-gold/40" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
               </div>
             </div>
           </div>
