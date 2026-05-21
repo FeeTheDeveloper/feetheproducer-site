@@ -42,6 +42,12 @@ const releaseSeeds: ReleaseSeed[] = [
         isPrimary: false
       },
       {
+        platform: "youtube_music",
+        label: "Follow on YouTube Music",
+        url: "https://music.youtube.com/channel/UCH7T-ComR_PAbSH9cbJ8r5Q?si=-8pQFwbWppuIlCRN",
+        isPrimary: false
+      },
+      {
         platform: "amazon_music",
         label: "Listen on Amazon Music",
         url: "https://music.amazon.com/albums/B0H1XS65L3?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_dKyJYRaayvvlPhmBki0phQay1",
