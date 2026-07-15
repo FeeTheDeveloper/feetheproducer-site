@@ -4,6 +4,7 @@ import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { EmailCapture } from "@/components/forms/email-capture";
 import { VideoEmbed } from "@/components/music/video-embed";
 import { Bio } from "@/components/sections/Bio";
+import { Credits } from "@/components/sections/Credits";
 import { Hero } from "@/components/sections/Hero";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
@@ -61,6 +62,8 @@ export default function HomePage() {
           />
         </Section>
       ) : null}
+
+      <Credits />
 
       {otherReleases.length > 0 ? (
         <Section id="catalog">

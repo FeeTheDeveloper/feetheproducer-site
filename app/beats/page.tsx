@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { EmailCapture } from "@/components/forms/email-capture";
 import { VideoEmbed } from "@/components/music/video-embed";
+import { Credits } from "@/components/sections/Credits";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -113,6 +114,8 @@ export default function BeatsPage() {
           />
         </Section>
       ) : null}
+
+      <Credits />
 
       <Section className="pt-0">
         <EmailCapture />
