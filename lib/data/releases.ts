@@ -1,77 +1,130 @@
-import { createStreamingLink } from "@/lib/music";
-import type { MusicRelease, StreamingPlatformLink } from "@/lib/types/music";
+export type ReleaseStatus = "presave" | "live";
 
-type ReleaseSeed = Omit<MusicRelease, "streamingLinks"> & {
-  streamingLinks: Array<
-    Pick<StreamingPlatformLink, "platform" | "label" | "url" | "isPrimary"> &
-      Partial<
-        Pick<
-          StreamingPlatformLink,
-          "active" | "createdAt" | "icon"
-        >
-      >
-  >;
-};
+export interface StreamingLink {
+  platform: "apple" | "spotify" | "youtube" | "amazon";
+  label: string;
+  url: string;
+  primary?: boolean;
+}
 
-const releaseSeeds: ReleaseSeed[] = [
+export interface Release {
+  slug: string;
+  title: string;
+  artist: string;
+  role: "artist" | "producer"; // producer = placement credit, framed "Produced by FTP"
+  creditedArtist?: string; // primary artist when role === "producer"
+  featuring?: string[];
+  explicit?: boolean;
+  type: "Single" | "EP" | "Album";
+  releaseDate: string; // ISO date
+  status: ReleaseStatus;
+  featured: boolean; // drives homepage hero
+  description: string;
+  coverArt: string;
+  previewAudio?: string; // 30s clip in /public/audio — never the full unreleased track
+  videoUrl?: string; // YouTube embed URL
+  presaveUrl?: string; // DistroKid hyperfollow link pre-release
+  appleEmbedUrl?: string;
+  links: StreamingLink[];
+}
+
+export const releases: Release[] = [
   {
-    id: "lra",
+    slug: "koolin-it",
+    title: "Koolin It",
+    artist: "Fee The Producer",
+    role: "artist",
+    featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
+    type: "Single",
+    releaseDate: "2026-07-15", // TODO: replace with the confirmed DistroKid release date once processing clears
+    status: "live", // video is live now
+    featured: false,
+    description:
+      "Produced by Fee The Producer. Official video out now.",
+    coverArt: "/images/covers/koolin-it.png",
+    previewAudio: "/audio/koolin-it-preview.mp3",
+    videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
+    links: [],
+  },
+  {
+    slug: "im-gone",
+    title: "I'm Gone",
+    artist: "Fee The Producer",
+    role: "artist",
+    featuring: ["Luh Semi", "A.P."],
+    explicit: true,
+    type: "Single",
+    releaseDate: "2026-07-15",
+    status: "presave", // flip to "live" on release day and populate links[]
+    featured: true,
+    description:
+      "The new single from Fee The Producer featuring Luh Semi and A.P. — out July 15, 2026.",
+    coverArt: "/images/covers/im-gone.png",
+    // DistroKid hyperfollow is the universal CTA: it auto-routes to every store
+    // as they go live, so no manual link-chasing on release day.
+    presaveUrl: "", // TODO: grab from DistroKid > Promote
+    previewAudio: "/audio/im-gone-preview.mp3",
+    links: [],
+  },
+  {
+    slug: "l-r-a",
     title: "L.R.A.",
     artist: "Fee The Producer",
+    role: "artist",
     type: "Single",
     releaseDate: "2026-05-14",
+    status: "live",
+    featured: false,
     description:
-      "L.R.A. - Single is released under 12310735 Records DK in the Jazz genre and credits alfreddie postell as composer.",
-    embed: {
-      provider: "apple_music",
-      title: "L.R.A. by Fee The Producer on Apple Music",
-      src: "https://embed.music.apple.com/us/song/l-r-a/6769877047",
-      height: 175
-    },
-    streamingLinks: [
+      "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
+    coverArt: "/images/covers/fee_the_producer.png",
+    appleEmbedUrl: "https://embed.music.apple.com/us/song/l-r-a/6769877047",
+    links: [
       {
-        platform: "apple_music",
-        label: "Listen on Apple Music",
+        platform: "apple",
+        label: "Apple Music",
         url: "https://music.apple.com/us/song/l-r-a/6769877047",
-        isPrimary: true
+        primary: true,
       },
       {
         platform: "spotify",
-        label: "Follow on Spotify",
-        url: "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y?si=qYBlUAg3QXW8T6UtVSszUw",
-        isPrimary: false
+        label: "Spotify",
+        url: "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y",
       },
       {
-        platform: "youtube_music",
-        label: "Follow on YouTube Music",
-        url: "https://music.youtube.com/channel/UCH7T-ComR_PAbSH9cbJ8r5Q?si=-8pQFwbWppuIlCRN",
-        isPrimary: false
+        platform: "youtube",
+        label: "YouTube Music",
+        url: "https://music.youtube.com/channel/UCH7T-ComR_PAbSH9cbJ8r5Q",
       },
       {
-        platform: "amazon_music",
-        label: "Listen on Amazon Music",
-        url: "https://music.amazon.com/albums/B0H1XS65L3?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_dKyJYRaayvvlPhmBki0phQay1",
-        isPrimary: false
-      }
+        platform: "amazon",
+        label: "Amazon Music",
+        url: "https://music.amazon.com/albums/B0H1XS65L3",
+      },
     ],
-    featured: true
-  }
+  },
 ];
 
-export const RELEASES: MusicRelease[] = releaseSeeds.map((release) => ({
-  ...release,
-  streamingLinks: release.streamingLinks.map((link) =>
-    createStreamingLink({
-      ...link,
-      id: `${release.id}-${link.platform}`
-    })
-  )
-}));
+export const featuredRelease = releases.find((r) => r.featured) ?? releases[0];
+export const liveReleases = releases.filter((r) => r.status === "live");
+export const upcomingReleases = releases.filter((r) => r.status === "presave");
+export const artistReleases = releases.filter((r) => r.role === "artist");
+export const placements = releases.filter((r) => r.role === "producer");
 
-export function getFeaturedReleases(limit = 3): MusicRelease[] {
-  return RELEASES.filter((release) => release.featured).slice(0, limit);
+export function getReleaseBySlug(slug: string): Release | undefined {
+  return releases.find((release) => release.slug === slug);
 }
 
-export function getReleaseById(id: string): MusicRelease | undefined {
-  return RELEASES.find((release) => release.id === id);
+export function formatFeaturing(release: Release): string | null {
+  if (!release.featuring || release.featuring.length === 0) {
+    return null;
+  }
+
+  if (release.featuring.length === 1) {
+    return `feat. ${release.featuring[0]}`;
+  }
+
+  return `feat. ${release.featuring.slice(0, -1).join(", ")} & ${
+    release.featuring[release.featuring.length - 1]
+  }`;
 }

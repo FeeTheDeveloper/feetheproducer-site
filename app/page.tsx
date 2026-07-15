@@ -2,37 +2,51 @@ import Link from "next/link";
 
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { EmailCapture } from "@/components/forms/email-capture";
-import { ReleaseEmbed } from "@/components/music/release-embed";
+import { VideoEmbed } from "@/components/music/video-embed";
 import { Bio } from "@/components/sections/Bio";
 import { Hero } from "@/components/sections/Hero";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getFeaturedReleases } from "@/lib/data/releases";
+import {
+  featuredRelease,
+  formatFeaturing,
+  releases
+} from "@/lib/data/releases";
 
 export default function HomePage() {
-  const currentRelease = getFeaturedReleases(1)[0];
+  const latestVideoRelease = releases.find((release) => release.videoUrl);
+  const otherReleases = releases.filter(
+    (release) => release.slug !== featuredRelease.slug
+  );
 
   return (
     <>
       <Hero />
 
-      {currentRelease ? (
-        <Section id="current-release" tone="ember">
+      {latestVideoRelease?.videoUrl ? (
+        <Section id="latest-video" tone="ember">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <SectionHeading
-              eyebrow="Current Release"
+              eyebrow="Latest Video"
               title={
                 <>
-                  One release.
+                  {latestVideoRelease.title}
                   <br />
-                  <span className="text-gold-gradient">One clear focus.</span>
+                  <span className="text-gold-gradient">
+                    Official video out now.
+                  </span>
                 </>
               }
-              description="The site now centers a single live release instead of a catalog. L.R.A. is the active record and the main destination."
+              description={[
+                formatFeaturing(latestVideoRelease),
+                latestVideoRelease.description
+              ]
+                .filter(Boolean)
+                .join(" — ")}
             />
             <Link
-              href="/releases"
+              href={`/releases/${latestVideoRelease.slug}`}
               className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
             >
               Open release page
@@ -40,16 +54,48 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] xl:items-start">
-            <ReleaseCard release={currentRelease} />
-            <ReleaseEmbed release={currentRelease} />
+          <VideoEmbed
+            src={latestVideoRelease.videoUrl}
+            title={`${latestVideoRelease.title} — official video`}
+            className="mt-12"
+          />
+        </Section>
+      ) : null}
+
+      {otherReleases.length > 0 ? (
+        <Section id="catalog">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="The Catalog"
+              title={
+                <>
+                  {releases.length} records.
+                  <br />
+                  <span className="text-gold-gradient">More on the way.</span>
+                </>
+              }
+              description="Singles, videos, and previews — every record with a direct path to where it streams."
+            />
+            <Link
+              href="/releases"
+              className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
+            >
+              See all releases
+              <span aria-hidden>-&gt;</span>
+            </Link>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {otherReleases.map((release) => (
+              <ReleaseCard key={release.slug} release={release} />
+            ))}
           </div>
         </Section>
       ) : null}
 
       <Bio />
 
-      <Section>
+      <Section id="updates">
         <EmailCapture />
       </Section>
 
@@ -60,7 +106,7 @@ export default function HomePage() {
               Want to connect with Fee The Producer?
             </h2>
             <p className="mt-3 max-w-2xl text-sm text-white/70 md:text-base">
-              Start with the release, read the bio, and reach out directly for
+              Listen to the records, read the bio, and reach out directly for
               collaboration, media, or booking conversations.
             </p>
           </div>

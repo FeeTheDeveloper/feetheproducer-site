@@ -15,15 +15,15 @@ export default function NotFound() {
           Off the grid.
         </h1>
         <p className="mx-auto mt-4 max-w-md text-white/70">
-          That page isn&apos;t here. Let&apos;s get you back to the current release or
-          the artist story.
+          That page isn&apos;t here. Let&apos;s get you back to the music or the
+          artist story.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button href="/" variant="gold" size="md">
             Back to Home
           </Button>
           <Button href="/releases" variant="outline" size="md">
-            Hear L.R.A.
+            Hear the Music
           </Button>
         </div>
       </div>

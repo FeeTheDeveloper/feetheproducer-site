@@ -1,8 +1,9 @@
 # Fee The Producer Official Site
 
-Next.js App Router site for **Fee The Producer LLC**. The project is set up as
-a Vercel-ready beat-selling platform with audio previews, dynamic beat pages,
-lead capture, licensing content, and contact flows.
+Next.js App Router site for **Fee The Producer LLC**. A Vercel-ready artist
+site built around a data-driven release catalog, with audio previews, official
+video embeds, per-release pages, lead capture, licensing content, and contact
+flows.
 
 ## Stack
 
@@ -69,11 +70,23 @@ public/
 
 ## Media Workflow
 
-- Put beat audio files in `public/audio/`
-- Put beat cover art in `public/images/covers/`
+- Put audio previews in `public/audio/` — 30-second clips only, never full
+  unreleased tracks
+- Put cover art in `public/images/covers/` (1024x1024)
+- Add or update releases in `lib/data/releases.ts` — the homepage hero,
+  `/releases`, per-release pages, and the sitemap all derive from that array
 - Add or update beat entries in `lib/data/beats.ts`
-- Use public paths such as `/audio/Floating.m4a` and
-  `/images/covers/fee_the_producer.png`
+- Use public paths such as `/audio/im-gone-preview.mp3` and
+  `/images/covers/im-gone.png`
+
+### Release-day runbook
+
+1. Set the release `status` to `"live"` and paste store links into `links[]`
+   as they resolve (the DistroKid HyperFollow link in `presaveUrl` stays the
+   primary CTA and auto-routes to every store).
+2. Commit, push, verify the Vercel deploy.
+3. When a new record clears DistroKid processing, set its `releaseDate` and
+   add its links the same way.
 
 ## Vercel Deployment
 

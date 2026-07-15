@@ -1,209 +1,122 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { BeatCard } from "@/components/cards/BeatCard";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { EmailCapture } from "@/components/forms/email-capture";
+import { VideoEmbed } from "@/components/music/video-embed";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { BEATS, getBeatGenres, getFeaturedBeats } from "@/lib/data/beats";
-import { SITE } from "@/lib/site";
+import { formatFeaturing, getReleaseBySlug } from "@/lib/data/releases";
 
 export const metadata: Metadata = {
-  title: "Beats",
+  title: "Beats & Custom Production",
   description:
-    "The Fee The Producer beat catalog is being refreshed. Check back for new drops or reach out for custom production."
+    "Custom production and placements from Fee The Producer — live instrumentation, Philadelphia soul, and records built from scratch for your project."
 };
 
-const beatCatalogStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  name: "Fee The Producer Beat Catalog",
-  url: `${SITE.url}/beats`,
-  itemListElement: BEATS.map((beat, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    url: `${SITE.url}/beats/${beat.id}`,
-    item: {
-      "@type": "Product",
-      name: beat.title,
-      image: [`${SITE.url}${beat.coverImage}`],
-      category: `${beat.genre} beat`,
-      brand: {
-        "@type": "Brand",
-        name: SITE.name
-      },
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: "USD",
-        lowPrice: beat.priceBasic,
-        highPrice: beat.priceExclusive,
-        offerCount: 3,
-        availability: "https://schema.org/InStock"
-      }
-    }
-  }))
-};
+const services = [
+  {
+    title: "Custom Production",
+    description:
+      "Records built from scratch around your voice — live drums, keys, and arrangement, not loop-pack leftovers."
+  },
+  {
+    title: "Placements",
+    description:
+      "Artist and label placements with production credit, from single records to full projects."
+  },
+  {
+    title: "Sync & Brand",
+    description:
+      "Film, TV, ad campaigns, and brand work with sync-ready paperwork and fast turnaround."
+  }
+];
 
 export default function BeatsPage() {
-  const genres = getBeatGenres();
-  const featuredBeats = getFeaturedBeats(4);
-  const catalogBeats = BEATS.filter(
-    (beat) => !featuredBeats.some((featuredBeat) => featuredBeat.id === beat.id)
-  );
-  const hasBeats = BEATS.length > 0;
+  const proofOfWork = getReleaseBySlug("koolin-it");
+  const featuring = proofOfWork ? formatFeaturing(proofOfWork) : null;
 
   return (
     <>
-      {hasBeats ? <JsonLd data={beatCatalogStructuredData} /> : null}
-
       <Section className="pt-24 md:pt-32">
         <SectionHeading
-          eyebrow="Beat Store"
+          eyebrow="Custom Production"
           title={
             <>
-              {hasBeats ? "Preview the catalog." : "Beat catalog refresh."}
+              Production built
               <br />
-              <span className="text-gold-gradient">
-                {hasBeats ? "Lock the right license." : "New drops coming soon."}
-              </span>
+              <span className="text-gold-gradient">for your record.</span>
             </>
           }
-          description={
-            hasBeats
-              ? "Every listing includes an audio preview, transparent pricing, and a direct path to the exact license level you need."
-              : "All current placeholder beat listings have been cleared out. No public beats are live right now while the catalog is being rebuilt."
-          }
+          description="Custom production and placements from Fee The Producer — live instrumentation, jazz-rooted arrangement, and Philadelphia soul, shaped around your sound."
         />
 
-        {hasBeats ? (
-          <>
-            <div className="mt-10 grid gap-4 md:grid-cols-3">
-              <div className="rounded-[28px] border border-gold/25 bg-white/[0.03] p-5 shadow-panel">
-                <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold">
-                  Available beats
-                </p>
-                <p className="mt-3 font-display text-5xl text-bone">{BEATS.length}</p>
-              </div>
-              <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
-                <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold">
-                  Genres covered
-                </p>
-                <p className="mt-3 font-display text-5xl text-bone">{genres.length}</p>
-              </div>
-              <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
-                <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold">
-                  License options
-                </p>
-                <p className="mt-3 font-display text-5xl text-bone">3</p>
-              </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {services.map((service) => (
+            <div
+              key={service.title}
+              className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5 transition hover:border-gold/35"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold">
+                {service.title}
+              </p>
+              <p className="mt-3 text-sm text-white/70">
+                {service.description}
+              </p>
             </div>
+          ))}
+        </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-semibold uppercase tracking-widerx text-white/45">
-                Genres
-              </span>
-              {genres.map((genre) => (
-                <span
-                  key={genre}
-                  className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-widerx text-white/80"
-                >
-                  {genre}
-                </span>
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="mt-12 rounded-[32px] border border-gold/20 bg-ink-elevated/75 p-8 shadow-panel md:p-10">
-            <p className="text-[11px] font-semibold uppercase tracking-widerx text-gold/75">
-              Catalog Status
-            </p>
-            <h2 className="mt-3 font-display text-4xl text-bone md:text-5xl">
-              No beats are live right now.
-            </h2>
-            <p className="mt-4 max-w-2xl text-sm text-white/70 md:text-base">
-              The placeholder beat inventory has been removed. Reach out for
-              custom production, or check the releases page for the current live
-              record.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button href="/contact" variant="gold" size="md">
-                Request Custom
-              </Button>
-              <Button href="/releases" variant="outline" size="md">
-                Hear L.R.A.
-              </Button>
-            </div>
-          </div>
-        )}
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/contact" variant="gold" size="md">
+            Start the Brief
+          </Button>
+          <Button href="/releases" variant="outline" size="md">
+            Hear the Records
+          </Button>
+        </div>
       </Section>
 
-      {hasBeats ? (
-        <>
-          <Section className="pt-0">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <SectionHeading
-                eyebrow="Featured Picks"
-                title={
-                  <>
-                    Fast lane records.
-                    <br />
-                    <span className="text-gold-gradient">Ready to move today.</span>
-                  </>
-                }
-                description="A quick shortlist of the beats getting the first call right now."
-              />
-            </div>
+      {proofOfWork?.videoUrl ? (
+        <Section tone="ember" className="pt-0">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="Proof of Work"
+              title={
+                <>
+                  {proofOfWork.title}
+                  <br />
+                  <span className="text-gold-gradient">
+                    Produced by Fee The Producer.
+                  </span>
+                </>
+              }
+              description={
+                featuring
+                  ? `${featuring} — the official video, produced end to end by Fee The Producer.`
+                  : "The official video, produced end to end by Fee The Producer."
+              }
+            />
+            <Link
+              href={`/releases/${proofOfWork.slug}`}
+              className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
+            >
+              Open release page
+              <span aria-hidden>-&gt;</span>
+            </Link>
+          </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-              {featuredBeats.map((beat) => (
-                <BeatCard key={beat.id} beat={beat} />
-              ))}
-            </div>
-          </Section>
-
-          <Section className="pt-0">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <SectionHeading
-                eyebrow="Full Catalog"
-                title={
-                  <>
-                    All beats.
-                    <br />
-                    <span className="text-gold-gradient">All preview-ready.</span>
-                  </>
-                }
-                description="Compare moods, BPM ranges, and price tiers before you commit."
-              />
-            </div>
-
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              {catalogBeats.map((beat) => (
-                <BeatCard key={beat.id} beat={beat} />
-              ))}
-            </div>
-
-            <div className="mt-16 flex flex-col items-start gap-4 rounded-[32px] border border-gold/25 bg-ink-elevated/70 p-8 shadow-panel md:flex-row md:items-center md:justify-between md:p-10">
-              <div>
-                <h2 className="font-display text-3xl text-bone md:text-4xl">
-                  Need a custom record or an exclusive negotiation?
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm text-white/70 md:text-base">
-                  Start with the preview, then reach out for custom production,
-                  exclusive terms, sync-ready paperwork, or artist development.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button href="/contact" variant="gold" size="md">
-                  Request Custom
-                </Button>
-                <Button href="/licensing" variant="outline" size="md">
-                  Review Licensing
-                </Button>
-              </div>
-            </div>
-          </Section>
-        </>
+          <VideoEmbed
+            src={proofOfWork.videoUrl}
+            title={`${proofOfWork.title} — official video`}
+            className="mt-12"
+          />
+        </Section>
       ) : null}
+
+      <Section className="pt-0">
+        <EmailCapture />
+      </Section>
     </>
   );
 }
