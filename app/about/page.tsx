@@ -6,7 +6,16 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { featuredRelease, releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
+
+function formatReleaseDay(input: string) {
+  const date = new Date(`${input}T00:00:00Z`);
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+
+  return `${month}.${day}`;
+}
 
 export const metadata: Metadata = {
   title: "About",
@@ -72,7 +81,7 @@ export default function AboutPage() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href="/releases" variant="gold" size="lg">
-                Listen to L.R.A.
+                Hear the Music
               </Button>
               <Button href="/contact" variant="outline" size="lg">
                 Connect
@@ -137,43 +146,58 @@ export default function AboutPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <Badge tone="red">Latest Release</Badge>
+            <Badge tone="red">
+              {featuredRelease.status === "presave"
+                ? "New Single"
+                : "Latest Release"}
+            </Badge>
             <h2 className="mt-4 font-display text-4xl leading-[0.95] text-bone md:text-5xl">
-              L.R.A.
+              {featuredRelease.title}
               <br />
-              <span className="text-gold-gradient">Single.</span>
+              <span className="text-gold-gradient">
+                {featuredRelease.type}.
+              </span>
             </h2>
-            <p className="mt-5 text-white/75">
-              Fee The Producer&apos;s latest release, &ldquo;L.R.A.&rdquo;, is
-              available on Apple Music as <em>L.R.A. - Single</em>. The track is
-              released under 12310735 Records DK, listed in the Jazz genre, and
-              credits alfreddie postell as composer. The single was released on
-              May 14, 2026.
-            </p>
+            <p className="mt-5 text-white/75">{featuredRelease.description}</p>
+            <div className="mt-6">
+              <Button
+                href={`/releases/${featuredRelease.slug}`}
+                variant="gold"
+                size="md"
+              >
+                Open the Release
+              </Button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">05.14</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {formatReleaseDay(featuredRelease.releaseDate)}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
                 Release date
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">Jazz</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {featuredRelease.type}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Genre
+                Format
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">DK</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {releases.length}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Label
+                Records out
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">AP</p>
+              <p className="font-display text-4xl text-gold-gradient">PHL</p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Composer credit
+                Home base
               </p>
             </div>
           </div>
