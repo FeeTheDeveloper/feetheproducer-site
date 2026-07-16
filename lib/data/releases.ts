@@ -38,7 +38,7 @@ export const releases: Release[] = [
     type: "Single",
     releaseDate: "2026-07-15", // TODO: replace with the confirmed DistroKid release date once processing clears
     status: "live", // video is live now
-    featured: false,
+    featured: true,
     description:
       "Produced by Fee The Producer. Official video out now.",
     coverArt: "/images/covers/koolin-it.png",
@@ -46,26 +46,6 @@ export const releases: Release[] = [
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
     // HyperFollow auto-routes to every store as DistroKid processing clears.
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
-    links: [],
-  },
-  {
-    slug: "im-gone",
-    title: "I'm Gone",
-    artist: "Fee The Producer",
-    role: "artist",
-    featuring: ["Luh Semi", "A.P."],
-    explicit: true,
-    type: "Single",
-    releaseDate: "2026-07-15",
-    status: "presave", // flip to "live" on release day and populate links[]
-    featured: true,
-    description:
-      "The new single from Fee The Producer featuring Luh Semi and A.P. — out July 15, 2026.",
-    coverArt: "/images/covers/im-gone.png",
-    // DistroKid hyperfollow is the universal CTA: it auto-routes to every store
-    // as they go live, so no manual link-chasing on release day.
-    presaveUrl: "", // TODO: grab from DistroKid > Promote
-    previewAudio: "/audio/im-gone-preview.mp3",
     links: [],
   },
   {
