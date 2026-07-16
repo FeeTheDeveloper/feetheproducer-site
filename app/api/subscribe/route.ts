@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { isEmailConfigured, sendNotificationEmail } from "@/lib/resend";
+
 type SubscribePayload = {
   email?: unknown;
 };
@@ -32,10 +34,21 @@ export async function POST(request: Request) {
     );
   }
 
-  console.info("[subscribe] FTP email capture", {
-    email,
-    provider: "pending-resend-convertkit-mailchimp"
-  });
+  if (isEmailConfigured()) {
+    const result = await sendNotificationEmail({
+      subject: "New FTP list subscriber",
+      text: `New subscriber via feetheproducer.com email capture:\n\n${email}`,
+      replyTo: email
+    });
+
+    if (!result.ok) {
+      console.error("[subscribe] Resend delivery failed", result.error);
+    }
+  } else {
+    console.info("[subscribe] FTP email capture (Resend not configured)", {
+      email
+    });
+  }
 
   return NextResponse.json({
     ok: true,

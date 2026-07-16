@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { isEmailConfigured, sendNotificationEmail } from "@/lib/resend";
+
 type ContactPayload = {
   name?: unknown;
   email?: unknown;
@@ -48,10 +50,30 @@ export async function POST(request: Request) {
     );
   }
 
-  console.info("[contact] FTP inquiry received", {
-    ...submission,
-    provider: "pending-resend"
-  });
+  if (isEmailConfigured()) {
+    const result = await sendNotificationEmail({
+      subject: `New inquiry: ${submission.service} — ${submission.name}`,
+      text: [
+        "New inquiry via feetheproducer.com contact form:",
+        "",
+        `Name: ${submission.name}`,
+        `Email: ${submission.email}`,
+        `Service: ${submission.service}`,
+        "",
+        "Message:",
+        submission.message
+      ].join("\n"),
+      replyTo: submission.email
+    });
+
+    if (!result.ok) {
+      console.error("[contact] Resend delivery failed", result.error);
+    }
+  } else {
+    console.info("[contact] FTP inquiry received (Resend not configured)", {
+      ...submission
+    });
+  }
 
   return NextResponse.json({
     ok: true,
