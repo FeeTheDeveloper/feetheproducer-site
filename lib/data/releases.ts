@@ -36,17 +36,36 @@ export const releases: Release[] = [
     role: "artist",
     featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
     type: "Single",
-    releaseDate: "2026-07-15", // TODO: replace with the confirmed DistroKid release date once processing clears
-    status: "live", // video is live now
+    releaseDate: "2026-07-15",
+    status: "live",
     featured: true,
     description:
       "Produced by Fee The Producer. Official video out now.",
     coverArt: "/images/covers/koolin-it.png",
     previewAudio: "/audio/koolin-it-preview.mp3",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
-    // HyperFollow auto-routes to every store as DistroKid processing clears.
+    // HyperFollow auto-routes to every store as they go live.
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
-    links: [],
+    appleEmbedUrl:
+      "https://embed.music.apple.com/us/album/koolin-it/6791122806?i=6791122807",
+    links: [
+      {
+        platform: "apple",
+        label: "Apple Music",
+        url: "https://music.apple.com/us/album/koolin-it/6791122806?i=6791122807",
+        primary: true,
+      },
+      {
+        platform: "spotify",
+        label: "Spotify",
+        url: "https://open.spotify.com/album/757nRemtieUPsAakRTgUrk",
+      },
+      {
+        platform: "youtube",
+        label: "YouTube Music",
+        url: "https://music.youtube.com/watch?v=WZKFAHjL0m4",
+      },
+    ],
   },
   {
     slug: "l-r-a",
