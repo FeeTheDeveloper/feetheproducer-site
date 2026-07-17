@@ -44,6 +44,8 @@ export const releases: Release[] = [
     coverArt: "/images/covers/koolin-it.png",
     previewAudio: "/audio/koolin-it-preview.mp3",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
+    // DistroKid hyperfollow auto-routes to every store as they go live.
+    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
     links: [],
   },
   {
