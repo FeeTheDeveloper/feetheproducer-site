@@ -38,11 +38,10 @@ export const releases: Release[] = [
     type: "Single",
     releaseDate: "2026-07-15", // TODO: replace with the confirmed DistroKid release date once processing clears
     status: "live", // video is live now
-    featured: false,
+    featured: true,
     description:
       "Produced by Fee The Producer. Official video out now.",
     coverArt: "/images/covers/koolin-it.png",
-    previewAudio: "/audio/koolin-it-preview.mp3",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
     links: [],
   },
@@ -56,7 +55,7 @@ export const releases: Release[] = [
     type: "Single",
     releaseDate: "2026-07-15",
     status: "presave", // flip to "live" on release day and populate links[]
-    featured: true,
+    featured: false,
     description:
       "The new single from Fee The Producer featuring Luh Semi and A.P. — out July 15, 2026.",
     coverArt: "/images/covers/im-gone.png",
