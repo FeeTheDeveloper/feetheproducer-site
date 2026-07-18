@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import { BookingCta } from "@/components/sections/BookingCta";
 import { Badge } from "@/components/ui/Badge";
