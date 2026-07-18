@@ -1,31 +1,26 @@
 import type { Metadata } from "next";
 
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
-import { ReleaseCommandCenter } from "@/components/music/release-command-center";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getCampaignsForRelease } from "@/lib/data/campaigns";
-import { getPromotionsForRelease } from "@/lib/data/promotions";
-import { getReleaseById, RELEASES } from "@/lib/data/releases";
+import { releases } from "@/lib/data/releases";
 
 export const metadata: Metadata = {
   title: "Releases",
   description:
-    "Listen to L.R.A. by Fee The Producer with live Apple Music, Spotify, and Amazon Music destinations."
+    "Every Fee The Producer release — new singles, official videos, and direct links to Apple Music, Spotify, YouTube Music, and Amazon Music."
 };
 
 export default function ReleasesPage() {
-  const sorted = [...RELEASES].sort(
-    (a, b) =>
+  const sorted = [...releases].sort((a, b) => {
+    if (a.status !== b.status) {
+      return a.status === "presave" ? -1 : 1;
+    }
+
+    return (
       new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-  );
-  const currentRelease = getReleaseById("lra") ?? sorted[0];
-  const linkedCampaigns = currentRelease
-    ? getCampaignsForRelease(currentRelease.id)
-    : [];
-  const linkedPromotions = currentRelease
-    ? getPromotionsForRelease(currentRelease.id)
-    : [];
+    );
+  });
 
   return (
     <Section className="pt-24 md:pt-32">
@@ -33,30 +28,21 @@ export default function ReleasesPage() {
         eyebrow="The Discography"
         title={
           <>
-            Current release
+            The records.
             <br />
-            <span className="text-gold-gradient">live across every stream.</span>
+            <span className="text-gold-gradient">
+              Streaming everywhere they land.
+            </span>
           </>
         }
-        description="The public release catalog is trimmed back to one live record right now. L.R.A. carries the active Apple Music embed and the shared streaming destinations."
+        description="New singles, official videos, and every live streaming destination — straight from the source."
       />
 
-      {currentRelease ? (
-        <ReleaseCommandCenter
-          release={currentRelease}
-          campaigns={linkedCampaigns}
-          promotions={linkedPromotions}
-          className="mt-12"
-        />
-      ) : null}
-
-      {sorted.length > 1 ? (
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((release) => (
-            <ReleaseCard key={release.id} release={release} />
-          ))}
-        </div>
-      ) : null}
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {sorted.map((release) => (
+          <ReleaseCard key={release.slug} release={release} />
+        ))}
+      </div>
     </Section>
   );
 }
