@@ -41,7 +41,7 @@ export const releases: Release[] = [
     featured: true,
     description:
       "Produced by Fee The Producer. Official video out now.",
-    coverArt: "/images/covers/koolin_it_cover.png",
+    coverArt: "/images/covers/koolin-it-cover.png",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
     // DistroKid hyperfollow auto-routes to every store as they go live.
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
