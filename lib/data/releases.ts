@@ -40,7 +40,7 @@ export const releases: Release[] = [
     status: "live", // video is live now
     featured: true,
     description:
-      "Produced by Fee The Producer. Official video out now.",
+      "Koolin It — the official single from Fee The Producer featuring Don Twan, Lab Spitta & Luh Semi. Official video out now on YouTube. Stream on Spotify and all major platforms.",
     coverArt: "/images/covers/koolin-it-cover.png",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
     // DistroKid hyperfollow auto-routes to every store as they go live.
@@ -54,7 +54,7 @@ export const releases: Release[] = [
       },
       {
         platform: "youtube",
-        label: "YouTube Music",
+        label: "YouTube",
         url: "https://www.youtube.com/watch?v=0CQak9UPKDo",
       },
     ],
