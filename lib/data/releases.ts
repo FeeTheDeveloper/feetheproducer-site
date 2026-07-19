@@ -41,11 +41,33 @@ export const releases: Release[] = [
     featured: true,
     description:
       "Produced by Fee The Producer. Official video out now.",
-    coverArt: "/images/covers/koolin-it.png",
+    coverArt: "/images/covers/koolin_it_cover.png",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
     // DistroKid hyperfollow auto-routes to every store as they go live.
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
-    links: [],
+    links: [
+      {
+        platform: "apple",
+        label: "Apple Music",
+        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
+        primary: true,
+      },
+      {
+        platform: "spotify",
+        label: "Spotify",
+        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
+      },
+      {
+        platform: "youtube",
+        label: "YouTube Music",
+        url: "https://www.youtube.com/watch?v=0CQak9UPKDo",
+      },
+      {
+        platform: "amazon",
+        label: "Amazon Music",
+        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
+      },
+    ],
   },
   {
     slug: "im-gone",
