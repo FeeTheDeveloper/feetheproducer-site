@@ -47,25 +47,15 @@ export const releases: Release[] = [
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
     links: [
       {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
-        primary: true,
-      },
-      {
         platform: "spotify",
         label: "Spotify",
-        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
+        url: "https://open.spotify.com/track/5BglDixMDLH1cNn7jiRt89",
+        primary: true,
       },
       {
         platform: "youtube",
         label: "YouTube Music",
         url: "https://www.youtube.com/watch?v=0CQak9UPKDo",
-      },
-      {
-        platform: "amazon",
-        label: "Amazon Music",
-        url: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
       },
     ],
   },
