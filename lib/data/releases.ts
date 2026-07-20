@@ -18,90 +18,33 @@ export type Release = {
 
 export const RELEASES: Release[] = [
   {
-    id: "throne-szn",
-    title: "Throne SZN",
-    artist: "Fee The Producer",
-    type: "Beat Tape",
-    releaseDate: "2025-09-12",
-    description:
-      "A 9-track instrumental tape engineered for late-night drives and locked-in studio sessions.",
-    streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "YouTube", href: "#" }
-    ],
-    featured: true
-  },
-  {
-    id: "gold-standard",
-    title: "Gold Standard",
-    artist: "Fee The Producer x V.A.",
-    type: "EP",
-    releaseDate: "2025-04-04",
-    description:
-      "A producer-led EP showcasing collaborations with rising artists across the trap and R&B spectrum.",
-    streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "Tidal", href: "#" }
-    ],
-    featured: true
-  },
-  {
-    id: "after-hours-vol-1",
-    title: "After Hours Vol. 1",
-    artist: "Fee The Producer",
-    type: "Beat Tape",
-    releaseDate: "2024-11-22",
-    description:
-      "Slow tempo, smooth keys, and 808s built for the after-hours bag — a producer's playground.",
-    streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "SoundCloud", href: "#" },
-      { platform: "YouTube", href: "#" }
-    ],
-    featured: true
-  },
-  {
-    id: "battlefield-single",
-    title: "Battlefield",
+    id: "l-r-a",
+    title: "L.R.A",
     artist: "Fee The Producer",
     type: "Single",
-    releaseDate: "2024-07-04",
+    releaseDate: "2026-05-14",
     description:
-      "A high-energy drill instrumental built for visuals, sync, and trailer placement.",
+      "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" }
-    ]
+      { platform: "Apple Music", href: "https://music.apple.com/us/song/l-r-a/6769877047" },
+      { platform: "Spotify", href: "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y" },
+      { platform: "YouTube", href: "https://www.youtube.com/results?search_query=Fee+The+Producer+L.R.A" }
+    ],
+    featured: true
   },
   {
-    id: "veteran-mode",
-    title: "Veteran Mode",
+    id: "koolin-it",
+    title: "Koolin It",
     artist: "Fee The Producer",
-    type: "Album",
-    releaseDate: "2024-03-15",
-    description:
-      "A full-length project chronicling the journey from service to studio. 12 tracks, no skips.",
-    streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "Apple Music", href: "#" },
-      { platform: "YouTube", href: "#" },
-      { platform: "Tidal", href: "#" }
-    ]
-  },
-  {
-    id: "smoke-signals",
-    title: "Smoke Signals",
-    artist: "Fee The Producer ft. TBA",
     type: "Single",
-    releaseDate: "2023-10-31",
+    releaseDate: "2026-07-15",
     description:
-      "A hazy, atmospheric trap cut featuring a special guest verse.",
+      "Produced by Fee The Producer. Official video out now.",
     streamingLinks: [
-      { platform: "Spotify", href: "#" },
-      { platform: "SoundCloud", href: "#" }
-    ]
+      { platform: "Spotify", href: "https://open.spotify.com/track/5BglDixMDLH1cNn7jiRt89" },
+      { platform: "YouTube", href: "https://www.youtube.com/watch?v=0CQak9UPKDo" }
+    ],
+    featured: true
   }
 ];
 
