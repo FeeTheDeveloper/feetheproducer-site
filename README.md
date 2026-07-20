@@ -76,8 +76,8 @@ public/
 - Add or update releases in `lib/data/releases.ts` — the homepage hero,
   `/releases`, per-release pages, and the sitemap all derive from that array
 - Add or update beat entries in `lib/data/beats.ts`
-- Use public paths such as `/audio/im-gone-preview.mp3` and
-  `/images/covers/im-gone.png`
+- Use public paths such as `/audio/koolin-it-preview.mp3` and
+  `/images/covers/koolin-it-cover.png`
 
 ### Release-day runbook
 
