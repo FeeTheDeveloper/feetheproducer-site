@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/cn";
@@ -87,13 +88,12 @@ export function SplashScreen() {
             aria-hidden
             className="ftp-splash-glow pointer-events-none absolute inset-0 -z-10 rounded-full bg-gold/30 blur-3xl"
           />
-          <img
+          <Image
             src={SITE.images.logo}
             alt={`${SITE.name} logo`}
             width={384}
             height={384}
-            decoding="async"
-            fetchPriority="high"
+            priority
             className="h-56 w-56 select-none object-contain drop-shadow-[0_18px_40px_rgba(212,175,55,0.25)] sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96"
             draggable={false}
           />

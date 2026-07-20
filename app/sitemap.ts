@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { BEATS } from "@/lib/data/beats";
+import { releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
 
 const STATIC_PATHS = [
@@ -25,6 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.7
   }));
 
+  const releaseEntries = releases.map((release) => ({
+    url: `${SITE.url}/releases/${release.slug}`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.8
+  }));
+
   const beatEntries = BEATS.map((beat) => ({
     url: `${SITE.url}/beats/${beat.id}`,
     lastModified,
@@ -32,5 +40,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8
   }));
 
-  return [...staticEntries, ...beatEntries];
+  return [...staticEntries, ...releaseEntries, ...beatEntries];
 }

@@ -3,19 +3,24 @@ import type { Metadata } from "next";
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { RELEASES } from "@/lib/data/releases";
+import { releases } from "@/lib/data/releases";
 
 export const metadata: Metadata = {
   title: "Releases",
   description:
-    "Listen to original Fee The Producer releases — beat tapes, EPs, singles, and albums. Stream on Spotify, Apple Music, YouTube, and more."
+    "Every Fee The Producer release — new singles, official videos, and direct links to Apple Music, Spotify, YouTube Music, and Amazon Music."
 };
 
 export default function ReleasesPage() {
-  const sorted = [...RELEASES].sort(
-    (a, b) =>
+  const sorted = [...releases].sort((a, b) => {
+    if (a.status !== b.status) {
+      return a.status === "presave" ? -1 : 1;
+    }
+
+    return (
       new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-  );
+    );
+  });
 
   return (
     <Section className="pt-24 md:pt-32">
@@ -23,17 +28,19 @@ export default function ReleasesPage() {
         eyebrow="The Discography"
         title={
           <>
-            Original music
+            The records.
             <br />
-            <span className="text-gold-gradient">straight from the lab.</span>
+            <span className="text-gold-gradient">
+              Streaming everywhere they land.
+            </span>
           </>
         }
-        description="Beat tapes, EPs, singles, and full-length projects. Stream everywhere music lives."
+        description="New singles, official videos, and every live streaming destination — straight from the source."
       />
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sorted.map((release) => (
-          <ReleaseCard key={release.id} release={release} />
+          <ReleaseCard key={release.slug} release={release} />
         ))}
       </div>
     </Section>

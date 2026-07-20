@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 
 import { BookingCta } from "@/components/sections/BookingCta";
@@ -5,33 +6,43 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { featuredRelease, releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
+
+function formatReleaseDay(input: string) {
+  const date = new Date(`${input}T00:00:00Z`);
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+
+  return `${month}.${day}`;
+}
 
 export const metadata: Metadata = {
   title: "About",
-  description: `${SITE.legalName} is a veteran-owned music production brand built for beats, releases, licensing, and artist collaboration.`
+  description:
+    "Fee The Producer is a Philadelphia-born musician, composer, writer, drummer, and keys player shaped by soul tradition, live musicianship, and authentic expression."
 };
 
-const PILLARS = [
+const focusAreas = [
   {
-    title: "Beats",
+    title: "Philadelphia",
     description:
-      "Premium instrumentals built for artists who want to sound like the moment they're chasing — every pack mixed, mastered, and ready."
+      "The sound is rooted in the city&apos;s soul tradition, rhythmic sharpness, and real lived experience."
   },
   {
-    title: "Releases",
+    title: "Musicianship",
     description:
-      "Original projects pushed across every major streaming platform. Beat tapes, EPs, and singles with the FTP signature."
+      "Built around live bands, studio sessions, instrumental craftsmanship, and years of performance discipline."
   },
   {
-    title: "Licensing",
+    title: "Composition",
     description:
-      "Transparent licensing tiers — from basic leases to full exclusive buyouts. Real rights, written clearly, no fine print."
+      "Jazz influence, soul textures, live instrumentation, and modern production move together with intention."
   },
   {
-    title: "Collaboration",
+    title: "Legacy",
     description:
-      "Custom production, artist collaborations, sync placements, and brand partnerships. Built loud, built premium."
+      "Fee The Producer represents Philadelphia musicianship at its core: soul, composition, rhythm, and legacy in motion."
   }
 ];
 
@@ -41,32 +52,39 @@ export default function AboutPage() {
       <Section className="pt-24 md:pt-32">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <Badge tone="gold">Veteran-Owned · {SITE.legalName}</Badge>
+            <Badge tone="gold">Philadelphia / {SITE.legalName}</Badge>
             <h1 className="mt-4 font-display text-5xl leading-[0.95] text-bone md:text-6xl lg:text-7xl">
-              Built in the studio.
+              The artist behind
               <br />
-              <span className="text-gold-gradient">Pressed in gold.</span>
+              <span className="text-gold-gradient">Fee The Producer.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base text-white/75 md:text-lg">
-              {SITE.legalName} is a veteran-owned music production brand
-              focused on the four things that move records: beats, releases,
-              licensing, and artist collaboration. Every track that leaves the
-              lab carries the same standard — clean, intentional, and built to
-              hit.
+            <p className="mt-6 max-w-2xl text-base text-white/75 md:text-lg">
+              Fee The Producer is a Philadelphia-born musician, composer,
+              writer, drummer, and keys player shaped by the city&apos;s rich soul
+              tradition and the creative wave of the Neo-soul era. Coming up
+              around elite musicians, live bands, studio sessions, and real
+              instrumental craftsmanship, Fee developed a sound rooted in feel,
+              discipline, musicianship, and authentic expression.
             </p>
-            <p className="mt-4 max-w-xl text-base text-white/65 md:text-lg">
-              We work with independent artists, labels, and brands across trap,
-              drill, hip-hop, R&B, and cinematic. Whether you need a one-off
-              lease, a full exclusive buyout, or a custom production session —
-              we ship it premium, every time.
+            <p className="mt-4 max-w-2xl text-base text-white/65 md:text-lg">
+              His work carries the spirit of Philadelphia: soulful, sharp,
+              rhythmic, and built from lived experience. As a composer and
+              producer, Fee blends live instrumentation, jazz influence, soul
+              textures, and modern production into music that speaks with both
+              elegance and grit.
+            </p>
+            <p className="mt-4 max-w-2xl text-base text-white/65 md:text-lg">
+              His foundation on drums and keys gives the records a
+              performance-driven quality, allowing each composition to move
+              with rhythm, emotion, and intention.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href="/beats" variant="gold" size="lg">
-                Shop Beats
+              <Button href="/releases" variant="gold" size="lg">
+                Hear the Music
               </Button>
               <Button href="/contact" variant="outline" size="lg">
-                Work With Us
+                Connect
               </Button>
             </div>
           </div>
@@ -77,18 +95,17 @@ export default function AboutPage() {
                 className="absolute inset-0 rounded-full bg-red-gradient opacity-30 blur-3xl"
                 aria-hidden
               />
-              <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-gold bg-ink shadow-gold">
-                <div className="absolute inset-3 rounded-full border border-gold/40" />
-                <div className="absolute inset-6 rounded-full bg-red-gradient opacity-90" />
-                <div className="absolute inset-10 rounded-full border border-gold/30" />
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <span className="font-display text-7xl tracking-widerx text-bone drop-shadow-[0_3px_0_rgba(0,0,0,0.45)] md:text-8xl">
-                    FTP
-                  </span>
-                  <span className="mt-2 text-[10px] font-semibold uppercase tracking-widerx text-gold">
-                    Fee The Producer
-                  </span>
-                </div>
+              <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-gold bg-ink shadow-gold">
+                <Image
+                  src="/images/covers/profile_pic.png"
+                  alt="Portrait of Fee The Producer"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 28rem, (min-width: 768px) 24rem, 90vw"
+                  className="object-cover"
+                />
+                <div className="pointer-events-none absolute inset-3 rounded-full border border-gold/40" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
               </div>
             </div>
           </div>
@@ -97,30 +114,30 @@ export default function AboutPage() {
 
       <Section tone="panel">
         <SectionHeading
-          eyebrow="What We Do"
+          eyebrow="Bio"
           title={
             <>
-              Four pillars.
+              Soul, rhythm,
               <br />
-              <span className="text-gold-gradient">One standard.</span>
+              <span className="text-gold-gradient">and lived expression.</span>
             </>
           }
-          description="Everything FTP ships falls into one of four lanes — and every lane is held to the same premium standard."
+          description="Philadelphia musicianship sits at the center of the work: performance, composition, feel, and discipline."
         />
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {PILLARS.map((pillar, index) => (
+          {focusAreas.map((item, index) => (
             <article
-              key={pillar.title}
+              key={item.title}
               className="relative flex flex-col rounded-2xl border border-white/10 bg-ink/40 p-6 backdrop-blur transition hover:border-gold/40"
             >
               <span className="font-display text-5xl text-gold-gradient">
                 0{index + 1}
               </span>
               <h3 className="mt-4 font-display text-2xl text-bone">
-                {pillar.title}
+                {item.title}
               </h3>
-              <p className="mt-2 text-sm text-white/70">{pillar.description}</p>
+              <p className="mt-2 text-sm text-white/70">{item.description}</p>
             </article>
           ))}
         </div>
@@ -129,41 +146,58 @@ export default function AboutPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <Badge tone="red">The Mission</Badge>
+            <Badge tone="red">
+              {featuredRelease.status === "presave"
+                ? "New Single"
+                : "Latest Release"}
+            </Badge>
             <h2 className="mt-4 font-display text-4xl leading-[0.95] text-bone md:text-5xl">
-              Premium sound.
+              {featuredRelease.title}
               <br />
-              <span className="text-gold-gradient">Built with discipline.</span>
+              <span className="text-gold-gradient">
+                {featuredRelease.type}.
+              </span>
             </h2>
-            <p className="mt-5 text-white/75">
-              Discipline is the difference. Every beat, every release, every
-              license — it's all run with the same focus we carried in service.
-              Show up, do the work, ship it clean. That's the standard.
-            </p>
+            <p className="mt-5 text-white/75">{featuredRelease.description}</p>
+            <div className="mt-6">
+              <Button
+                href={`/releases/${featuredRelease.slug}`}
+                variant="gold"
+                size="md"
+              >
+                Open the Release
+              </Button>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">100+</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {formatReleaseDay(featuredRelease.releaseDate)}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Beats in catalog
+                Release date
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">20+</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {featuredRelease.type}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Releases shipped
+                Format
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">1M+</p>
+              <p className="font-display text-4xl text-gold-gradient">
+                {releases.length}
+              </p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Streams across platforms
+                Records out
               </p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-ink/40 p-5">
-              <p className="font-display text-4xl text-gold-gradient">100%</p>
+              <p className="font-display text-4xl text-gold-gradient">PHL</p>
               <p className="mt-1 text-xs uppercase tracking-widerx text-white/60">
-                Veteran-owned
+                Home base
               </p>
             </div>
           </div>

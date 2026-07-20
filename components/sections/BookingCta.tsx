@@ -28,12 +28,12 @@ export function BookingCta() {
                 Need a custom record?
                 <br />
                 <span className="text-gold-gradient">
-                  Let's build it together.
+                  Let&apos;s build it together.
                 </span>
               </h2>
               <p className="mt-4 max-w-xl text-sm text-white/75 md:text-base">
                 Custom production, artist collaborations, sync placements, and
-                exclusive buyouts. Tell us about the project — we'll make it
+                exclusive buyouts. Tell us about the project and we&apos;ll make it
                 hit.
               </p>
             </div>
