@@ -60,26 +60,6 @@ export const releases: Release[] = [
     ],
   },
   {
-    slug: "im-gone",
-    title: "I'm Gone",
-    artist: "Fee The Producer",
-    role: "artist",
-    featuring: ["Luh Semi", "A.P."],
-    explicit: true,
-    type: "Single",
-    releaseDate: "2026-07-15",
-    status: "presave", // flip to "live" on release day and populate links[]
-    featured: false,
-    description:
-      "The new single from Fee The Producer featuring Luh Semi and A.P. — out July 15, 2026.",
-    coverArt: "/images/covers/im-gone.png",
-    // DistroKid hyperfollow is the universal CTA: it auto-routes to every store
-    // as they go live, so no manual link-chasing on release day.
-    presaveUrl: "", // TODO: grab from DistroKid > Promote
-    previewAudio: "/audio/im-gone-preview.mp3",
-    links: [],
-  },
-  {
     slug: "l-r-a",
     title: "L.R.A.",
     artist: "Fee The Producer",
