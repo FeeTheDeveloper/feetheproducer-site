@@ -36,14 +36,13 @@ export const releases: Release[] = [
     role: "artist",
     featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
     type: "Single",
-    releaseDate: "2026-07-15", // TODO: replace with the confirmed DistroKid release date once processing clears
-    status: "live", // video is live now
+    releaseDate: "2026-07-15",
+    status: "live",
     featured: true,
     description:
       "Koolin It — the official single from Fee The Producer featuring Don Twan, Lab Spitta & Luh Semi. Official video out now on YouTube. Stream on Spotify and all major platforms.",
     coverArt: "/images/covers/koolin-it-cover.png",
     videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
-    // DistroKid hyperfollow auto-routes to every store as they go live.
     presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
     links: [
       {
@@ -67,7 +66,7 @@ export const releases: Release[] = [
     type: "Single",
     releaseDate: "2026-05-14",
     status: "live",
-    featured: false,
+    featured: true,
     description:
       "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
     coverArt: "/images/covers/fee_the_producer.png",
@@ -82,12 +81,12 @@ export const releases: Release[] = [
       {
         platform: "spotify",
         label: "Spotify",
-        url: "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y",
+        url: "https://open.spotify.com/search/Fee%20The%20Producer%20L.R.A",
       },
       {
         platform: "youtube",
-        label: "YouTube Music",
-        url: "https://music.youtube.com/channel/UCH7T-ComR_PAbSH9cbJ8r5Q",
+        label: "YouTube",
+        url: "https://www.youtube.com/results?search_query=Fee+The+Producer+L.R.A",
       },
       {
         platform: "amazon",
