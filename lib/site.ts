@@ -18,7 +18,8 @@ export const SITE = {
     tiktok: "https://tiktok.com/@feetheproducer"
   },
   images: {
-    logo: "/brand/fee-the-producer-logo.png"
+    logo: "/brand/fee-the-producer-logo.png",
+    bio: "/images/bio/fee-the-producer-bio.png"
   }
 } as const;
 

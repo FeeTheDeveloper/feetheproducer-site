@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 import { BookingCta } from "@/components/sections/BookingCta";
 import { Badge } from "@/components/ui/Badge";
@@ -92,21 +92,24 @@ export default function AboutPage() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-square">
               <div
-                className="absolute inset-0 rounded-full bg-red-gradient opacity-30 blur-3xl"
+                className="absolute -inset-4 rounded-full bg-red-gradient opacity-30 blur-3xl"
                 aria-hidden
               />
               <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-gold bg-ink shadow-gold">
                 <Image
-                  src="/images/covers/profile_pic.png"
+                  src={SITE.images.bio}
                   alt="Portrait of Fee The Producer"
                   fill
                   priority
-                  sizes="(min-width: 1024px) 28rem, (min-width: 768px) 24rem, 90vw"
+                  sizes="(min-width: 1024px) 28rem, (min-width: 768px) 24rem, 85vw"
                   className="object-cover"
                 />
                 <div className="pointer-events-none absolute inset-3 rounded-full border border-gold/40" />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
               </div>
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-gold/40 bg-ink-elevated px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widerx text-gold">
+                Fee The Producer
+              </span>
             </div>
           </div>
         </div>
