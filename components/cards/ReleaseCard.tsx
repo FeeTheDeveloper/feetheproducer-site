@@ -42,7 +42,7 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
       )}
     >
       <Link
-        href={`/releases/${release.slug}`}
+        href={`/streaming/${release.slug}`}
         className="relative block aspect-square overflow-hidden bg-ink"
         aria-label={`${release.title} release page`}
       >
@@ -97,7 +97,7 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
           <ReleaseCta release={release} size="sm" />
           {release.videoUrl ? (
             <Button
-              href={`/releases/${release.slug}#video`}
+              href={`/streaming/${release.slug}#video`}
               variant="outline"
               size="sm"
             >

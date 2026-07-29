@@ -69,7 +69,9 @@ export const releases: Release[] = [
     featured: true,
     description:
       "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
-    coverArt: "/images/covers/fee_the_producer.png",
+    coverArt: "/images/covers/lra-cover.png",
+    previewAudio: "/audio/L.R.A..m4a",
+    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/lra-2/",
     appleEmbedUrl: "https://embed.music.apple.com/us/song/l-r-a/6769877047",
     links: [
       {
@@ -94,6 +96,41 @@ export const releases: Release[] = [
         url: "https://music.amazon.com/albums/B0H1XS65L3",
       },
     ],
+  },
+  {
+    slug: "im-gone",
+    title: "I'm Gone",
+    artist: "Fee The Producer",
+    role: "artist",
+    featuring: ["Luh Semi", "A.P 223"],
+    explicit: true,
+    type: "Single",
+    releaseDate: "2026-07-29",
+    status: "live",
+    featured: false,
+    description:
+      "I'm Gone — Fee The Producer links up with Luh Semi & A.P 223 for the official single. Streaming now everywhere.",
+    coverArt: "/images/covers/im_gone_cover.png",
+    presaveUrl:
+      "https://distrokid.com/hyperfollow/feetheproducer/im-gone-feat-luh-semi--ap-223/",
+    links: [],
+  },
+  {
+    slug: "rolling",
+    title: "Rolling",
+    artist: "Fee The Producer",
+    role: "artist",
+    featuring: ["Ray Nathan"],
+    type: "Single",
+    // Placeholder release date — update to the actual date if it differs.
+    releaseDate: "2026-07-29",
+    status: "live",
+    featured: false,
+    description:
+      "Rolling — Fee The Producer links up with Ray Nathan for the official single. Streaming now everywhere.",
+    coverArt: "/images/covers/rolling_cover.png",
+    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/rolling/",
+    links: [],
   },
 ];
 

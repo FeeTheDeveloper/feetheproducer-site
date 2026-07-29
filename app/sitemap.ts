@@ -7,7 +7,8 @@ import { SITE } from "@/lib/site";
 const STATIC_PATHS = [
   "",
   "/beats",
-  "/releases",
+  "/streaming",
+  "/downloads",
   "/licensing",
   "/about",
   "/contact"
@@ -20,14 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE.url}${path}`,
     lastModified,
     changeFrequency:
-      path === "/beats" || path === "/releases"
+      path === "/beats" || path === "/streaming" || path === "/downloads"
         ? ("weekly" as const)
         : ("monthly" as const),
     priority: path === "" ? 1 : 0.7
   }));
 
   const releaseEntries = releases.map((release) => ({
-    url: `${SITE.url}/releases/${release.slug}`,
+    url: `${SITE.url}/streaming/${release.slug}`,
     lastModified,
     changeFrequency: "weekly" as const,
     priority: 0.8

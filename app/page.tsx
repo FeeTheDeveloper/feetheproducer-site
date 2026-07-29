@@ -47,7 +47,7 @@ export default function HomePage() {
                 .join(" — ")}
             />
             <Link
-              href={`/releases/${latestVideoRelease.slug}`}
+              href={`/streaming/${latestVideoRelease.slug}`}
               className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
             >
               Open release page
@@ -80,7 +80,7 @@ export default function HomePage() {
               description="Singles, videos, and previews — every record with a direct path to where it streams."
             />
             <Link
-              href="/releases"
+              href="/streaming"
               className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
             >
               See all releases
