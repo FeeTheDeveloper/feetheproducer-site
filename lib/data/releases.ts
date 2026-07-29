@@ -69,7 +69,7 @@ export const releases: Release[] = [
     featured: true,
     description:
       "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
-    coverArt: "/images/covers/fee_the_producer.png",
+    coverArt: "/images/covers/lra-cover.png",
     appleEmbedUrl: "https://embed.music.apple.com/us/song/l-r-a/6769877047",
     links: [
       {

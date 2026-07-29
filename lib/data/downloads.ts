@@ -35,6 +35,7 @@ export const downloads: DownloadTrack[] = [
     slug: "im-gone",
     title: "I'm Gone",
     artist: "Fee The Producer",
+    featuring: ["Luh Semi", "A.P 223"],
     coverArt: "/images/covers/im_gone_cover.png",
     audioSrc: "/audio/I%27m%20Gone%20%5Bedited%20%233%5D.m4a.m4a",
     price: "$1.29"
