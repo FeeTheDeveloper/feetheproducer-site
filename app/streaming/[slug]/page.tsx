@@ -60,13 +60,13 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `${SITE.url}/releases/${release.slug}`
+      canonical: `${SITE.url}/streaming/${release.slug}`
     },
     openGraph: {
       type: "music.song",
       title: `${title} | ${release.artist}`,
       description,
-      url: `${SITE.url}/releases/${release.slug}`,
+      url: `${SITE.url}/streaming/${release.slug}`,
       images: [
         {
           url: coverUrl,

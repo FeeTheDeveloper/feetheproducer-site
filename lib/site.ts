@@ -26,7 +26,7 @@ export const SITE = {
 export const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/beats", label: "Beats" },
-  { href: "/releases", label: "Releases" },
+  { href: "/streaming", label: "Streaming" },
   { href: "/downloads", label: "Downloads" },
   { href: "/licensing", label: "Licensing" },
   { href: "/contact", label: "Contact" }

@@ -80,7 +80,7 @@ export default function AboutPage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button href="/releases" variant="gold" size="lg">
+              <Button href="/streaming" variant="gold" size="lg">
                 Hear the Music
               </Button>
               <Button href="/contact" variant="outline" size="lg">
@@ -164,7 +164,7 @@ export default function AboutPage() {
             <p className="mt-5 text-white/75">{featuredRelease.description}</p>
             <div className="mt-6">
               <Button
-                href={`/releases/${featuredRelease.slug}`}
+                href={`/streaming/${featuredRelease.slug}`}
                 variant="gold"
                 size="md"
               >

@@ -5,8 +5,11 @@ export interface DownloadTrack {
   featuring?: string[];
   coverArt: string;
   audioSrc: string; // path to file in /public/audio
-  price?: string; // display label, e.g. "Free" or "$2.99"
-  purchaseUrl?: string; // external checkout link (optional)
+  price: string; // fallback display label used until stripePriceId is live, e.g. "$1.29"
+  stripePriceId?: string; // Stripe Price ID (price_...) — create the Product/Price in the
+  // Stripe dashboard, paste the Price ID here, and set STRIPE_SECRET_KEY in the
+  // environment. Once both are set, checkout activates and the displayed price
+  // syncs live from Stripe — change the price in Stripe, not in this file.
 }
 
 export const downloads: DownloadTrack[] = [
@@ -17,7 +20,7 @@ export const downloads: DownloadTrack[] = [
     featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
     coverArt: "/images/covers/koolin-it-cover.png",
     audioSrc: "/audio/Koolin%20It.mp3",
-    price: "Free"
+    price: "$1.29"
   },
   {
     slug: "rolling",
@@ -26,7 +29,7 @@ export const downloads: DownloadTrack[] = [
     featuring: ["Ray Nathan"],
     coverArt: "/images/covers/rolling_cover.png",
     audioSrc: "/audio/rolling-feat-ray-nathan.m4a",
-    price: "Free"
+    price: "$1.29"
   },
   {
     slug: "im-gone",
@@ -34,7 +37,7 @@ export const downloads: DownloadTrack[] = [
     artist: "Fee The Producer",
     coverArt: "/images/covers/im_gone_cover.png",
     audioSrc: "/audio/I%27m%20Gone%20%5Bedited%20%233%5D.m4a.m4a",
-    price: "Free"
+    price: "$1.29"
   }
 ];
 

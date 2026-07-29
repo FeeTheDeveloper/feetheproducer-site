@@ -78,7 +78,7 @@ export function Hero() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <ReleaseCta release={release} size="lg" />
               <Button
-                href={`/releases/${release.slug}`}
+                href={`/streaming/${release.slug}`}
                 variant="outline"
                 size="lg"
               >
