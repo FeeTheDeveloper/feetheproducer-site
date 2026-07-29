@@ -39,6 +39,14 @@ export const downloads: DownloadTrack[] = [
     coverArt: "/images/covers/im_gone_cover.png",
     audioSrc: "/audio/I%27m%20Gone%20%5Bedited%20%233%5D.m4a.m4a",
     price: "$1.29"
+  },
+  {
+    slug: "lra",
+    title: "L.R.A.",
+    artist: "Fee The Producer",
+    coverArt: "/images/covers/lra-cover.png",
+    audioSrc: "/audio/L.R.A..m4a",
+    price: "$1.29"
   }
 ];
 
