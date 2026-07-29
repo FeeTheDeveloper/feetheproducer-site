@@ -95,6 +95,24 @@ export const releases: Release[] = [
       },
     ],
   },
+  {
+    slug: "im-gone",
+    title: "I'm Gone",
+    artist: "Fee The Producer",
+    role: "artist",
+    featuring: ["Luh Semi", "A.P 223"],
+    explicit: true,
+    type: "Single",
+    releaseDate: "2026-07-29",
+    status: "live",
+    featured: false,
+    description:
+      "I'm Gone — Fee The Producer links up with Luh Semi & A.P 223 for the official single. Streaming now everywhere.",
+    coverArt: "/images/covers/im_gone_cover.png",
+    presaveUrl:
+      "https://distrokid.com/hyperfollow/feetheproducer/im-gone-feat-luh-semi--ap-223/",
+    links: [],
+  },
 ];
 
 export const featuredRelease = releases.find((r) => r.featured) ?? releases[0];
