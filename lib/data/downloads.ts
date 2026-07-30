@@ -6,7 +6,9 @@ export interface DownloadTrack {
   coverArt: string;
   audioSrc: string; // path to file in /public/audio
   price?: string; // display label, e.g. "Free" or "$2.99"
-  purchaseUrl?: string; // external checkout link (optional)
+  priceCents?: number; // set together with `price` to sell via Stripe Checkout (e.g. 199 for $1.99)
+  stripePriceId?: string; // Stripe Price ID from the real product catalog — takes priority over priceCents
+  purchaseUrl?: string; // external checkout link (optional) — overrides Stripe Checkout if set
 }
 
 export const downloads: DownloadTrack[] = [
@@ -17,7 +19,9 @@ export const downloads: DownloadTrack[] = [
     featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
     coverArt: "/images/covers/koolin-it-cover.png",
     audioSrc: "/audio/Koolin%20It.mp3",
-    price: "Free"
+    price: "$0.99",
+    priceCents: 99,
+    stripePriceId: "price_1TyixrAuTxmRmIVIqUjIkXQX"
   },
   {
     slug: "rolling",
@@ -26,7 +30,9 @@ export const downloads: DownloadTrack[] = [
     featuring: ["Ray Nathan"],
     coverArt: "/images/covers/rolling_cover.png",
     audioSrc: "/audio/rolling-feat-ray-nathan.m4a",
-    price: "Free"
+    price: "$0.99",
+    priceCents: 99,
+    stripePriceId: "price_1Tyj1UAuTxmRmIVIAkY8TJfw"
   },
   {
     slug: "im-gone",
@@ -34,7 +40,19 @@ export const downloads: DownloadTrack[] = [
     artist: "Fee The Producer",
     coverArt: "/images/covers/im_gone_cover.png",
     audioSrc: "/audio/I%27m%20Gone%20%5Bedited%20%233%5D.m4a.m4a",
-    price: "Free"
+    price: "$0.99",
+    priceCents: 99,
+    stripePriceId: "price_1Tyj2mAuTxmRmIVIBRDeIvTH"
+  },
+  {
+    slug: "l-r-a",
+    title: "L.R.A.",
+    artist: "Fee The Producer",
+    coverArt: "/images/covers/fee_the_producer.png",
+    audioSrc: "/audio/L.R.A..m4a",
+    price: "$0.99",
+    priceCents: 99,
+    stripePriceId: "price_1TyizhAuTxmRmIVIu4Sasftv"
   }
 ];
 

@@ -12,6 +12,8 @@ type DownloadCardProps = {
 
 export function DownloadCard({ track, className }: DownloadCardProps) {
   const featuring = formatDownloadFeaturing(track);
+  const purchaseUrl =
+    track.purchaseUrl ?? (track.priceCents ? `/api/checkout/${track.slug}` : undefined);
 
   return (
     <article
@@ -53,10 +55,19 @@ export function DownloadCard({ track, className }: DownloadCardProps) {
         />
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {track.purchaseUrl ? (
-            <Button href={track.purchaseUrl} variant="gold" size="sm" external>
-              Purchase &amp; Download
-            </Button>
+          {purchaseUrl ? (
+            track.purchaseUrl ? (
+              <Button href={track.purchaseUrl} variant="gold" size="sm" external>
+                Purchase &amp; Download
+              </Button>
+            ) : (
+              <a
+                href={purchaseUrl}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-4 py-2 text-xs font-semibold uppercase tracking-widerx text-ink shadow-gold transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+              >
+                Purchase &amp; Download
+              </a>
+            )
           ) : (
             <a
               href={track.audioSrc}
