@@ -5,10 +5,11 @@ export interface DownloadTrack {
   featuring?: string[];
   coverArt: string;
   audioSrc: string; // path to file in /public/audio
-  price?: string; // display label, e.g. "Free" or "$2.99"
-  priceCents?: number; // set together with `price` to sell via Stripe Checkout (e.g. 199 for $1.99)
-  stripePriceId?: string; // Stripe Price ID from the real product catalog — takes priority over priceCents
-  purchaseUrl?: string; // external checkout link (optional) — overrides Stripe Checkout if set
+  price: string; // fallback display label used until stripePriceId is live, e.g. "$1.29"
+  stripePriceId?: string; // Stripe Price ID (price_...) — create the Product/Price in the
+  // Stripe dashboard, paste the Price ID here, and set STRIPE_SECRET_KEY in the
+  // environment. Once both are set, checkout activates and the displayed price
+  // syncs live from Stripe — change the price in Stripe, not in this file.
 }
 
 export const downloads: DownloadTrack[] = [
@@ -20,7 +21,6 @@ export const downloads: DownloadTrack[] = [
     coverArt: "/images/covers/koolin-it-cover.png",
     audioSrc: "/audio/Koolin%20It.mp3",
     price: "$0.99",
-    priceCents: 99,
     stripePriceId: "price_1TyixrAuTxmRmIVIqUjIkXQX"
   },
   {
@@ -31,27 +31,25 @@ export const downloads: DownloadTrack[] = [
     coverArt: "/images/covers/rolling_cover.png",
     audioSrc: "/audio/rolling-feat-ray-nathan.m4a",
     price: "$0.99",
-    priceCents: 99,
     stripePriceId: "price_1Tyj1UAuTxmRmIVIAkY8TJfw"
   },
   {
     slug: "im-gone",
     title: "I'm Gone",
     artist: "Fee The Producer",
+    featuring: ["Luh Semi", "A.P 223"],
     coverArt: "/images/covers/im_gone_cover.png",
     audioSrc: "/audio/I%27m%20Gone%20%5Bedited%20%233%5D.m4a.m4a",
     price: "$0.99",
-    priceCents: 99,
     stripePriceId: "price_1Tyj2mAuTxmRmIVIBRDeIvTH"
   },
   {
-    slug: "l-r-a",
+    slug: "lra",
     title: "L.R.A.",
     artist: "Fee The Producer",
-    coverArt: "/images/covers/fee_the_producer.png",
+    coverArt: "/images/covers/lra-cover.png",
     audioSrc: "/audio/L.R.A..m4a",
     price: "$0.99",
-    priceCents: 99,
     stripePriceId: "price_1TyizhAuTxmRmIVIu4Sasftv"
   }
 ];

@@ -72,7 +72,7 @@ export default function BeatsPage() {
           <Button href="/contact" variant="gold" size="md">
             Start the Brief
           </Button>
-          <Button href="/releases" variant="outline" size="md">
+          <Button href="/streaming" variant="outline" size="md">
             Hear the Records
           </Button>
         </div>
@@ -99,7 +99,7 @@ export default function BeatsPage() {
               }
             />
             <Link
-              href={`/releases/${proofOfWork.slug}`}
+              href={`/streaming/${proofOfWork.slug}`}
               className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
             >
               Open release page
