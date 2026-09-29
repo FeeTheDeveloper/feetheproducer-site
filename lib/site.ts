@@ -13,7 +13,7 @@ export const SITE = {
     youtube: "https://youtube.com/@feetheproducer",
     spotify:
       "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y?si=qYBlUAg3QXW8T6UtVSszUw",
-    apple: "https://music.apple.com/us/song/l-r-a/6769877047",
+    apple: "https://music.apple.com/us/artist/fee-the-producer/1896424385",
     soundcloud: "https://soundcloud.com/feetheproducer",
     tiktok: "https://tiktok.com/@feetheproducer"
   },
@@ -27,7 +27,6 @@ export const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/beats", label: "Beats" },
   { href: "/streaming", label: "Streaming" },
-  { href: "/downloads", label: "Downloads" },
   { href: "/licensing", label: "Licensing" },
   { href: "/contact", label: "Contact" }
 ] as const;

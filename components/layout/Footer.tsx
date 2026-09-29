@@ -7,6 +7,7 @@ const SOCIAL_LINKS: Array<{ href: string; label: string }> = [
   { href: SITE.social.instagram, label: "Instagram" },
   { href: SITE.social.youtube, label: "YouTube" },
   { href: SITE.social.spotify, label: "Spotify" },
+  { href: SITE.social.apple, label: "Apple Music" },
   { href: SITE.social.soundcloud, label: "SoundCloud" }
 ];
 
