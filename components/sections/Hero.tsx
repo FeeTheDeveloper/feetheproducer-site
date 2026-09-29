@@ -41,7 +41,7 @@ export function Hero() {
             <div className="flex flex-wrap items-center gap-3">
               <Badge tone="gold">Veteran-Owned Artist</Badge>
               <Badge tone="red">
-                {isUpcoming ? "New Single" : "Latest Release"}: {release.title}
+                {isUpcoming ? "New Single" : "Featured Release"}: {release.title}
               </Badge>
             </div>
 

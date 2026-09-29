@@ -152,7 +152,7 @@ export default function AboutPage() {
             <Badge tone="red">
               {featuredRelease.status === "presave"
                 ? "New Single"
-                : "Latest Release"}
+                : "Featured Release"}
             </Badge>
             <h2 className="mt-4 font-display text-4xl leading-[0.95] text-bone md:text-5xl">
               {featuredRelease.title}
