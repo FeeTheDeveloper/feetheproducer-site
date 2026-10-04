@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { releases } from "@/lib/data/releases";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Streaming",
   description:
-    "Stream every Fee The Producer release — new singles, official videos, and direct links to Apple Music, Spotify, YouTube Music, and Amazon Music."
+    "Explore selected Fee The Producer releases and the official Apple Music artist profile."
 };
 
 export default function StreamingPage() {
@@ -30,23 +30,40 @@ export default function StreamingPage() {
           eyebrow="The Discography"
           title={
             <>
-              The records.
+              Selected records.
               <br />
               <span className="text-gold-gradient">
-                Streaming everywhere they land.
+                Listen where they land.
               </span>
             </>
           }
-          description="New singles, official videos, and every live streaming destination — straight from the source."
+          description="Selected singles, official videos, and listening links. Visit Apple Music for the current artist catalog."
         />
-        <Link
-          href="/downloads"
+        <a
+          href={SITE.social.apple}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
         >
-          Prefer to own it?
+          View Fee The Producer on Apple Music
           <span aria-hidden>-&gt;</span>
-        </Link>
+        </a>
       </div>
+
+      <a
+        href="https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-10 block rounded-[28px] border border-gold/30 bg-white/[0.03] p-6 transition hover:border-gold/60"
+      >
+        <p className="text-xs font-semibold uppercase tracking-widerx text-gold">
+          Latest on Apple Music · August 30, 2026
+        </p>
+        <h2 className="mt-3 font-display text-2xl text-bone md:text-3xl">
+          All Gas No Breaks (feat. Ray Nathan)
+        </h2>
+        <p className="mt-2 text-sm text-white/70">Listen on Apple Music →</p>
+      </a>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sorted.map((release) => (

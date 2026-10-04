@@ -79,8 +79,8 @@ export default function ContactPage() {
             Send a Message
           </h2>
           <p className="mt-2 text-sm text-white/65">
-            Contact requests post through the live inquiry route and are ready
-            for direct email delivery when the provider is connected.
+            Fill in the details below to open a draft in your email app. Send
+            the draft to complete your inquiry.
           </p>
           <div className="mt-8">
             <ContactForm />

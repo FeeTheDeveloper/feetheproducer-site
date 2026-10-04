@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
-import { EmailCapture } from "@/components/forms/email-capture";
 import { VideoEmbed } from "@/components/music/video-embed";
 import { Bio } from "@/components/sections/Bio";
 import { Credits } from "@/components/sections/Credits";
@@ -77,7 +76,7 @@ export default function HomePage() {
                   <span className="text-gold-gradient">More on the way.</span>
                 </>
               }
-              description="Singles, videos, and previews — every record with a direct path to where it streams."
+              description="Selected singles and videos with links to listening destinations."
             />
             <Link
               href="/streaming"
@@ -97,10 +96,6 @@ export default function HomePage() {
       ) : null}
 
       <Bio />
-
-      <Section id="updates">
-        <EmailCapture />
-      </Section>
 
       <Section className="pt-0">
         <div className="flex flex-col items-start gap-4 rounded-[32px] border border-gold/20 bg-white/[0.02] p-8 shadow-panel md:flex-row md:items-center md:justify-between md:p-10">

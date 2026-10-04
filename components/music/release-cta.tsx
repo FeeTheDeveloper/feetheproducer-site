@@ -23,8 +23,8 @@ export function ReleaseCta({ release, size = "lg", className }: ReleaseCtaProps)
   if (release.status === "presave") {
     if (!release.presaveUrl) {
       return (
-        <Button href="/#updates" variant="gold" size={size} className={className}>
-          Get Release Alerts
+        <Button href="/contact" variant="gold" size={size} className={className}>
+          Contact for Updates
         </Button>
       );
     }
@@ -44,7 +44,7 @@ export function ReleaseCta({ release, size = "lg", className }: ReleaseCtaProps)
 
   const primary =
     release.links.find((link) => link.primary) ?? release.links[0];
-  const href = release.presaveUrl || primary?.url;
+  const href = primary?.url || release.presaveUrl;
 
   if (!href) {
     return null;

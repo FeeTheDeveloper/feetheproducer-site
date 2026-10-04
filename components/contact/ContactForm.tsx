@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { SITE } from "@/lib/site";
 
 const SERVICE_OPTIONS = [
   "Lease a beat",
@@ -15,7 +16,7 @@ const SERVICE_OPTIONS = [
   "Other"
 ] as const;
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "error";
 
 const inputBase =
   "mt-2 w-full rounded-2xl border border-white/10 bg-ink/60 px-4 py-3 text-sm text-bone placeholder:text-white/35 transition focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20";
@@ -27,7 +28,7 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -39,35 +40,22 @@ export function ContactForm() {
       message: formData.get("message")
     };
 
-    setStatus("submitting");
-    setMessage(null);
+    const name = String(payload.name ?? "").trim();
+    const email = String(payload.email ?? "").trim();
+    const service = String(payload.service ?? "").trim();
+    const details = String(payload.message ?? "").trim();
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) {
-        const data = (await response.json().catch(() => null)) as
-          | { error?: string }
-          | null;
-
-        throw new Error(data?.error || "Unable to send your message.");
-      }
-
-      form.reset();
-      setStatus("success");
-      setMessage("Message received. The FTP team will follow up soon.");
-    } catch (error) {
+    if (!name || !service || !details || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("error");
-      setMessage(
-        error instanceof Error ? error.message : "Unable to send your message."
-      );
+      setMessage("Complete every field and enter a valid email address.");
+      return;
     }
+
+    const subject = `Fee The Producer inquiry: ${service}`;
+    const body = `Name: ${name}\nEmail: ${email}\nService: ${service}\n\n${details}`;
+    setStatus("idle");
+    setMessage("Your email app will open with a draft. Send it to complete your inquiry.");
+    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
@@ -130,15 +118,14 @@ export function ContactForm() {
 
       <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
         <p className="text-[11px] uppercase tracking-widerx text-white/45">
-          Routed through the FTP contact workflow and ready for email delivery.
+          Opens an email draft. Your message is sent only when you send it from your email app.
         </p>
         <Button
           type="submit"
           variant="gold"
           size="lg"
-          disabled={status === "submitting"}
         >
-          {status === "submitting" ? "Sending..." : "Send Message"}
+          Open Email Draft
         </Button>
       </div>
 
@@ -146,9 +133,9 @@ export function ContactForm() {
         <div
           className={cn(
             "rounded-2xl border p-4 text-sm",
-            status === "success"
-              ? "border-gold/40 bg-gold/10 text-gold"
-              : "border-red/40 bg-red/10 text-red-ember"
+            status === "error"
+              ? "border-red/40 bg-red/10 text-red-ember"
+              : "border-gold/40 bg-gold/10 text-gold"
           )}
           aria-live="polite"
         >

@@ -8,7 +8,6 @@ const STATIC_PATHS = [
   "",
   "/beats",
   "/streaming",
-  "/downloads",
   "/licensing",
   "/about",
   "/contact"
@@ -21,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE.url}${path}`,
     lastModified,
     changeFrequency:
-      path === "/beats" || path === "/streaming" || path === "/downloads"
+      path === "/beats" || path === "/streaming"
         ? ("weekly" as const)
         : ("monthly" as const),
     priority: path === "" ? 1 : 0.7
