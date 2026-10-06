@@ -2,6 +2,8 @@
 
 Next.js 15 artist site for Fee The Producer. The public experience features selected releases, official platform links, production services, and an email draft contact flow.
 
+[Portfolio evidence and truth boundary](docs/PORTFOLIO_CASE_STUDY.md)
+
 ## Local checks
 
 ```bash
