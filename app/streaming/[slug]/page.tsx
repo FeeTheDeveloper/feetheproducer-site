@@ -4,10 +4,7 @@ import { notFound } from "next/navigation";
 import { ReleaseArtwork } from "@/components/music/ReleaseArtwork";
 import { Button } from "@/components/ui/Button";
 import { ArrowIcon } from "@/components/ui/Icons";
-import {
-  getReleaseBySlug,
-  releases,
-} from "@/lib/data/releases";
+import { getReleaseBySlug, releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() {

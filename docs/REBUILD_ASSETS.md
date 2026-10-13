@@ -20,15 +20,17 @@ Prompt:
 
 ## Music artwork
 
-`Rolling` uses the existing repository cover. Three previously removed cover files are not restored. Their cards use code-authored branded sleeves and are described as branded record sleeves in accessible text, not original cover art.
+Five official cover images were downloaded from the artwork URLs supplied by the Apple Music connector on October 13, 2026. Sources, canonical track URLs, dates, explicit flags, and artist/song IDs are recorded in `CATALOG_SOURCE.json`. Local copies are `public/images/covers/apple-*.jpg`; original bytes are kept and Next Image serves responsive derivatives. No full audio was downloaded. Public catalog metadata and artwork availability do not establish ownership or licensing rights.
+
+Historical Koolin It, L.R.A., and I'm Gone pages and links have been removed from the displayed catalog and sitemap. Their old routes return 404. Other streaming/social links have been removed. The supplied Apple Music artist and YouTube channel remain, alongside internal navigation and contact.
 
 ## Source review
 
 - Base repository: `FeeTheDeveloper/feetheproducer-site`, commit `a3384b75abba818f38b17698cadaa4b59752e5f4`; matched remote HEAD before implementation.
-- Existing public experience inspected at https://feetheproducer.com/ on October 13, 2026. Existing catalog and destination links retained; this work is not a new rights or release-metadata audit.
+- Existing public experience inspected at https://feetheproducer.com/ on October 13, 2026. The owner then designated the current Apple Music catalog and exact YouTube channel. Canonical metadata was verified through Apple Music and cross-checked against its artist profile; the supplied YouTube channel identity was inspected in Chrome. No rights audit or media-listening claim is made.
 - Fee The Developer design-engineering, frontend-design, frontend-design-premium, and web-3d-motion guidance used with Fee The Producer command/repository guidance.
 - Mobbin tools were unavailable; no external screen references or Mobbin research results are claimed. Visual direction derives from the supplied emblem.
 
 ## Recovery
 
-All work is isolated on `codex/fp-luxury-rebuild-20261013`. No commit, push, provider mutation, or deployment is part of this initial rebuild. Review the diff against the base before publishing. The base itself lacks shared shell/components; returning to it does not restore a buildable site. A production rollback must use the actual previously verified deployment.
+Site work is isolated on `codex/fp-luxury-rebuild-20261013`. An external commit `75505a2` captured the initial rebuild during the session; it was preserved. Final refinements and repository workflows remain in the working tree. This agent did not commit, push, mutate a site provider, or deploy the site. Review both the branch diff against `a3384b7` and remaining working-tree changes before publishing. The base itself lacks shared shell/components; returning to it does not restore a buildable site. A production rollback must use the actual previously verified deployment.

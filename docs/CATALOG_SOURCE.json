@@ -9,7 +9,11 @@
   "youtube": {
     "channelId": "UC9UgxU4WyYxVZzhVYeLyc_Q",
     "url": "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q",
-    "authority": "User supplied as the video and content channel on 2026-10-13"
+    "authority": "User supplied as the video and content channel on 2026-10-13",
+    "displayName": "Fee The Producer",
+    "handle": "@FeeTheProducer-r4k",
+    "verifiedAt": "2026-10-13",
+    "observation": "Channel identity verified in Chrome. No uploaded content was visible; the site links to the channel without featuring an invented video."
   },
   "scope": "Public catalog metadata and navigation only; no rights, ownership, private library, full audio, or playback verification implied.",
   "releases": [

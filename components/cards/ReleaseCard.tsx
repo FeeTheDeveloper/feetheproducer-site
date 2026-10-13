@@ -25,7 +25,9 @@ export function ReleaseCard({ release }: { release: Release }) {
               </span>
             )}
           </h3>
-          <p>{release.artist} · {release.genre}</p>
+          <p>
+            {release.artist} · {release.genre}
+          </p>
         </div>
       </Link>
     </article>

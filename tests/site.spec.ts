@@ -4,9 +4,10 @@ import AxeBuilder from "@axe-core/playwright";
 const routes = [
   "/",
   "/streaming",
-  "/streaming/koolin-it",
-  "/streaming/l-r-a",
-  "/streaming/im-gone",
+  "/streaming/the-band-room",
+  "/streaming/neva-give-up",
+  "/streaming/back-from-venus",
+  "/streaming/all-gas-no-breaks",
   "/streaming/rolling",
   "/beats",
   "/about",
@@ -44,6 +45,9 @@ test("all public routes and local images load without runtime errors", async ({
   expect(errors).toEqual([]);
   for (const route of [
     "/streaming/missing",
+    "/streaming/koolin-it",
+    "/streaming/l-r-a",
+    "/streaming/im-gone",
     "/beats/missing",
     "/downloads",
     "/api/checkout",
@@ -63,7 +67,7 @@ test("desktop, mobile, and narrow layouts have no horizontal overflow", async ({
       "/streaming",
       "/beats",
       "/contact",
-      "/streaming/rolling",
+      "/streaming/all-gas-no-breaks",
       "/about",
     ]) {
       await page.goto(route);
@@ -244,23 +248,78 @@ test("contact validates fields and prepares an email draft without a network sub
   expect(requests).toEqual([]);
 });
 
-test("video does not load a provider iframe before visitor interaction", async ({
+test("catalog contains only current Apple releases and the approved YouTube channel", async ({
   page,
+  request,
 }) => {
-  await page.route("https://www.youtube-nocookie.com/**", (route) =>
-    route.fulfill({
-      status: 200,
-      contentType: "text/html",
-      body: "<html lang='en'><title>Video boundary test</title></html>",
-    }),
-  );
-  await page.goto("/streaming/koolin-it");
-  await expect(page.locator("iframe")).toHaveCount(0);
-  await page.getByRole("button", { name: /Play Koolin It/ }).click();
-  await expect(page.locator("iframe")).toHaveAttribute(
-    "src",
-    "https://www.youtube-nocookie.com/embed/0CQak9UPKDo?autoplay=1",
-  );
+  const artistUrl =
+    "https://music.apple.com/us/artist/fee-the-producer/1896424385";
+  const channelUrl = "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q";
+  const expected = [
+    {
+      slug: "the-band-room",
+      title: "The Band Room",
+      url: "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
+    },
+    {
+      slug: "neva-give-up",
+      title: "Neva Give Up (feat. Dave Watson)",
+      url: "https://music.apple.com/us/album/neva-give-up-feat-dave-watson/6822143525?i=6822143526",
+    },
+    {
+      slug: "back-from-venus",
+      title: "Back From Venus",
+      url: "https://music.apple.com/us/album/back-from-venus/6820309021?i=6820309022",
+    },
+    {
+      slug: "all-gas-no-breaks",
+      title: "All Gas No Breaks (feat. Ray Nathan)",
+      url: "https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864",
+    },
+    {
+      slug: "rolling",
+      title: "Rolling (feat. Ray-Nathan)",
+      url: "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
+    },
+  ];
+  await page.goto("/streaming");
+  await expect(page.locator(".release-card")).toHaveCount(5);
+  expect(
+    await page
+      .locator(".release-card-link")
+      .evaluateAll((links) => links.map((link) => link.getAttribute("href"))),
+  ).toEqual(expected.map((release) => `/streaming/${release.slug}`));
+  for (const release of expected) {
+    await page.goto(`/streaming/${release.slug}`);
+    await expect(page.locator("h1")).toContainText(release.title);
+    await expect(page.locator(".platform-buttons a")).toHaveCount(1);
+    await expect(page.locator(".platform-buttons a")).toHaveAttribute(
+      "href",
+      release.url,
+    );
+  }
+  const allowed = new Set([
+    artistUrl,
+    channelUrl,
+    ...expected.map((release) => release.url),
+  ]);
+  for (const route of routes) {
+    await page.goto(route);
+    const links = await page
+      .locator('a[href^="http"]')
+      .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href")));
+    expect(
+      links.every((url) => url !== null && allowed.has(url)),
+      route,
+    ).toBe(true);
+    expect(links, route).toContain(channelUrl);
+    await expect(page.locator("iframe, audio, video")).toHaveCount(0);
+  }
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  for (const release of expected)
+    expect(sitemap).toContain(`/streaming/${release.slug}`);
+  for (const removed of ["koolin-it", "l-r-a", "im-gone"])
+    expect(sitemap).not.toContain(`/streaming/${removed}`);
 });
 
 test("primary routes have no detectable WCAG A/AA violations", async ({
