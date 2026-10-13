@@ -1,165 +1,144 @@
-export type ReleaseStatus = "presave" | "live";
-
+// Verified against the owner-selected Apple Music artist profile on 2026-10-13.
+// Refresh using docs/CATALOG_SOURCE.json; preserve canonical titles and URLs.
 export interface StreamingLink {
-  platform: "apple" | "spotify" | "youtube" | "amazon";
-  label: string;
+  platform: "apple";
+  label: "Apple Music";
   url: string;
-  primary?: boolean;
+  primary: boolean;
 }
 
 export interface Release {
   slug: string;
+  appleSongId: string;
   title: string;
   artist: string;
-  role: "artist" | "producer"; // producer = placement credit, framed "Produced by FTP"
-  creditedArtist?: string; // primary artist when role === "producer"
-  featuring?: string[];
-  explicit?: boolean;
+  explicit: boolean;
   type: "Single" | "EP" | "Album";
-  releaseDate: string; // ISO date
-  status: ReleaseStatus;
-  featured: boolean; // drives homepage hero
+  releaseDate: string;
+  status: "live";
+  featured: boolean;
+  genre: string;
   description: string;
   coverArt: string;
-  previewAudio?: string; // 30s clip in /public/audio — never the full unreleased track
-  videoUrl?: string; // YouTube embed URL
-  presaveUrl?: string; // DistroKid hyperfollow link pre-release
-  appleEmbedUrl?: string;
   links: StreamingLink[];
 }
 
 export const releases: Release[] = [
   {
-    slug: "koolin-it",
-    title: "Koolin It",
-    artist: "Fee The Producer",
-    role: "artist",
-    featuring: ["Don Twan", "Lab Spitta", "Luh Semi"],
-    type: "Single",
-    releaseDate: "2026-07-15",
-    status: "live",
-    featured: true,
-    description:
-      "Koolin It — the official single from Fee The Producer featuring Don Twan, Lab Spitta & Luh Semi. Official video out now on YouTube. Stream on Spotify and all major platforms.",
-    coverArt: "/images/covers/koolin-it-cover.png",
-    videoUrl: "https://www.youtube.com/embed/0CQak9UPKDo",
-    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/koolin-it/",
-    links: [
+    "slug": "the-band-room",
+    "appleSongId": "6822257258",
+    "title": "The Band Room",
+    "artist": "Fee The Producer",
+    "explicit": false,
+    "type": "Single",
+    "releaseDate": "2026-10-12",
+    "status": "live",
+    "featured": true,
+    "genre": "Jazz",
+    "description": "The Band Room — Jazz single by Fee The Producer. Listen on Apple Music.",
+    "coverArt": "/images/covers/apple-the-band-room.jpg",
+    "links": [
       {
-        platform: "spotify",
-        label: "Spotify",
-        url: "https://open.spotify.com/track/5BglDixMDLH1cNn7jiRt89",
-        primary: true,
-      },
-      {
-        platform: "youtube",
-        label: "YouTube",
-        url: "https://www.youtube.com/watch?v=0CQak9UPKDo",
-      },
-    ],
+        "platform": "apple",
+        "label": "Apple Music",
+        "url": "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
+        "primary": true
+      }
+    ]
   },
   {
-    slug: "l-r-a",
-    title: "L.R.A.",
-    artist: "Fee The Producer",
-    role: "artist",
-    type: "Single",
-    releaseDate: "2026-05-14",
-    status: "live",
-    featured: true,
-    description:
-      "A jazz-rooted single built on live feel — drums, keys, and Philadelphia soul tradition.",
-    coverArt: "/images/covers/lra-cover.png",
-    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/lra-2/",
-    appleEmbedUrl: "https://embed.music.apple.com/us/song/l-r-a/6769877047",
-    links: [
+    "slug": "neva-give-up",
+    "appleSongId": "6822143526",
+    "title": "Neva Give Up (feat. Dave Watson)",
+    "artist": "Fee The Producer",
+    "explicit": false,
+    "type": "Single",
+    "releaseDate": "2026-10-12",
+    "status": "live",
+    "featured": false,
+    "genre": "R&B/Soul",
+    "description": "Neva Give Up (feat. Dave Watson) — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
+    "coverArt": "/images/covers/apple-neva-give-up.jpg",
+    "links": [
       {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/song/l-r-a/6769877047",
-        primary: true,
-      },
-      {
-        platform: "spotify",
-        label: "Spotify",
-        url: "https://open.spotify.com/search/Fee%20The%20Producer%20L.R.A",
-      },
-      {
-        platform: "youtube",
-        label: "YouTube",
-        url: "https://www.youtube.com/results?search_query=Fee+The+Producer+L.R.A",
-      },
-      {
-        platform: "amazon",
-        label: "Amazon Music",
-        url: "https://music.amazon.com/albums/B0H1XS65L3",
-      },
-    ],
+        "platform": "apple",
+        "label": "Apple Music",
+        "url": "https://music.apple.com/us/album/neva-give-up-feat-dave-watson/6822143525?i=6822143526",
+        "primary": true
+      }
+    ]
   },
   {
-    slug: "im-gone",
-    title: "I'm Gone",
-    artist: "Fee The Producer",
-    role: "artist",
-    featuring: ["Luh Semi", "A.P 223"],
-    explicit: true,
-    type: "Single",
-    releaseDate: "2026-07-29",
-    status: "live",
-    featured: false,
-    description:
-      "I'm Gone — Fee The Producer links up with Luh Semi & A.P 223 for the official single. Streaming now everywhere.",
-    coverArt: "/images/covers/im_gone_cover.png",
-    presaveUrl:
-      "https://distrokid.com/hyperfollow/feetheproducer/im-gone-feat-luh-semi--ap-223/",
-    links: [],
+    "slug": "back-from-venus",
+    "appleSongId": "6820309022",
+    "title": "Back From Venus",
+    "artist": "Fee The Producer",
+    "explicit": true,
+    "type": "Single",
+    "releaseDate": "2026-10-06",
+    "status": "live",
+    "featured": false,
+    "genre": "Hip-Hop/Rap",
+    "description": "Back From Venus — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+    "coverArt": "/images/covers/apple-back-from-venus.jpg",
+    "links": [
+      {
+        "platform": "apple",
+        "label": "Apple Music",
+        "url": "https://music.apple.com/us/album/back-from-venus/6820309021?i=6820309022",
+        "primary": true
+      }
+    ]
   },
   {
-    slug: "rolling",
-    title: "Rolling",
-    artist: "Fee The Producer",
-    role: "artist",
-    featuring: ["Ray-Nathan"],
-    explicit: true,
-    type: "Single",
-    releaseDate: "2026-07-23",
-    status: "live",
-    featured: false,
-    description:
-      "Rolling (feat. Ray-Nathan) — listen on Apple Music.",
-    coverArt: "/images/covers/rolling_cover.png",
-    presaveUrl: "https://distrokid.com/hyperfollow/feetheproducer1/rolling/",
-    links: [
+    "slug": "all-gas-no-breaks",
+    "appleSongId": "6806901864",
+    "title": "All Gas No Breaks (feat. Ray Nathan)",
+    "artist": "Fee The Producer",
+    "explicit": true,
+    "type": "Single",
+    "releaseDate": "2026-08-30",
+    "status": "live",
+    "featured": false,
+    "genre": "Hip-Hop/Rap",
+    "description": "All Gas No Breaks (feat. Ray Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+    "coverArt": "/images/covers/apple-all-gas-no-breaks.jpg",
+    "links": [
       {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
-        primary: true,
-      },
-    ],
+        "platform": "apple",
+        "label": "Apple Music",
+        "url": "https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864",
+        "primary": true
+      }
+    ]
   },
+  {
+    "slug": "rolling",
+    "appleSongId": "6794165344",
+    "title": "Rolling (feat. Ray-Nathan)",
+    "artist": "Fee The Producer",
+    "explicit": true,
+    "type": "Single",
+    "releaseDate": "2026-07-23",
+    "status": "live",
+    "featured": false,
+    "genre": "Hip-Hop/Rap",
+    "description": "Rolling (feat. Ray-Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+    "coverArt": "/images/covers/apple-rolling.jpg",
+    "links": [
+      {
+        "platform": "apple",
+        "label": "Apple Music",
+        "url": "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
+        "primary": true
+      }
+    ]
+  }
 ];
 
-export const featuredRelease = releases.find((r) => r.featured) ?? releases[0];
-export const liveReleases = releases.filter((r) => r.status === "live");
-export const upcomingReleases = releases.filter((r) => r.status === "presave");
-export const artistReleases = releases.filter((r) => r.role === "artist");
-export const placements = releases.filter((r) => r.role === "producer");
+export const featuredRelease = releases.find((release) => release.featured) ?? releases[0];
 
 export function getReleaseBySlug(slug: string): Release | undefined {
   return releases.find((release) => release.slug === slug);
 }
 
-export function formatFeaturing(release: Release): string | null {
-  if (!release.featuring || release.featuring.length === 0) {
-    return null;
-  }
-
-  if (release.featuring.length === 1) {
-    return `feat. ${release.featuring[0]}`;
-  }
-
-  return `feat. ${release.featuring.slice(0, -1).join(", ")} & ${
-    release.featuring[release.featuring.length - 1]
-  }`;
-}

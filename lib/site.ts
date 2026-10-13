@@ -1,32 +1,26 @@
 export const SITE = {
   name: "Fee The Producer",
   legalName: "Fee The Producer LLC",
-  title: "Fee The Producer | New Music, Videos & Custom Production",
-  tagline: "New music, official videos, and custom production.",
+  title: "Fee The Producer | Sound. Soul. Signature.",
+  tagline: "Sound. Soul. Signature.",
   description:
-    "Fee The Producer is a Philadelphia-born musician, composer, writer, drummer, and keys player. New singles, official videos, and custom production.",
+    "Fee The Producer is a Philadelphia-born musician, composer, writer, drummer, and keys player. Listen on Apple Music, explore videos on YouTube, and discuss custom production.",
   url: "https://feetheproducer.com",
   domain: "feetheproducer.com",
   email: "contact@feetheproducer.com",
   social: {
-    instagram: "https://instagram.com/feetheproducer",
-    youtube: "https://youtube.com/@feetheproducer",
-    spotify:
-      "https://open.spotify.com/artist/6eFd541mqXgVpKOiCHJq2y?si=qYBlUAg3QXW8T6UtVSszUw",
+    youtube: "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q",
     apple: "https://music.apple.com/us/artist/fee-the-producer/1896424385",
-    soundcloud: "https://soundcloud.com/feetheproducer",
-    tiktok: "https://tiktok.com/@feetheproducer"
   },
   images: {
-    logo: "/brand/fee-the-producer-logo.png",
-    bio: "/images/bio/fee-the-producer-bio.png"
-  }
+    logo: "/brand/fp-luxury-emblem.png",
+    studio: "/images/studio/studio-character.png",
+  },
 } as const;
 
 export const NAV_ITEMS = [
   { href: "/", label: "Home" },
-  { href: "/beats", label: "Beats" },
-  { href: "/streaming", label: "Streaming" },
-  { href: "/licensing", label: "Licensing" },
-  { href: "/contact", label: "Contact" }
+  { href: "/streaming", label: "The music" },
+  { href: "/beats", label: "The studio" },
+  { href: "/about", label: "About Fee" },
 ] as const;

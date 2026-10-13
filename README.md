@@ -4,6 +4,12 @@ Next.js 15 artist site for Fee The Producer. The public experience features sele
 
 [Portfolio evidence and truth boundary](docs/PORTFOLIO_CASE_STUDY.md)
 
+## Signature Room rebuild
+
+The gold/silver/black visual system, dimensional emblem scene, and stylized studio character are documented in [DESIGN.md](DESIGN.md). See [asset provenance and scope](docs/REBUILD_ASSETS.md). The supplied logo is preserved unchanged. Motion can be paused and respects the OS reduced-motion preference. The scene uses CSS depth with raster artwork; the character is not a rigged 3D model.
+
+For browser verification, run `npx playwright install chromium` once, then `npm run test:e2e`. Test output and screenshots are kept in ignored `test-results/`.
+
 ## Local checks
 
 ```bash

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
@@ -13,7 +13,7 @@ const SERVICE_OPTIONS = [
   "Sync / Film / TV placement",
   "Artist collaboration",
   "Brand partnership",
-  "Other"
+  "Other",
 ] as const;
 
 type Status = "idle" | "error";
@@ -25,8 +25,10 @@ const labelBase =
   "text-[11px] font-semibold uppercase tracking-widerx text-white/70";
 
 export function ContactForm() {
+  const [ready, setReady] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
+  useEffect(() => setReady(true), []);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -37,7 +39,7 @@ export function ContactForm() {
       name: formData.get("name"),
       email: formData.get("email"),
       service: formData.get("service"),
-      message: formData.get("message")
+      message: formData.get("message"),
     };
 
     const name = String(payload.name ?? "").trim();
@@ -45,27 +47,51 @@ export function ContactForm() {
     const service = String(payload.service ?? "").trim();
     const details = String(payload.message ?? "").trim();
 
-    if (!name || !service || !details || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (
+      !name ||
+      !service ||
+      !details ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
       setStatus("error");
       setMessage("Complete every field and enter a valid email address.");
+      const firstInvalid = !name
+        ? "name"
+        : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+          ? "email"
+          : !service
+            ? "service"
+            : "message";
+      (form.elements.namedItem(firstInvalid) as HTMLElement | null)?.focus();
       return;
     }
 
     const subject = `Fee The Producer inquiry: ${service}`;
     const body = `Name: ${name}\nEmail: ${email}\nService: ${service}\n\n${details}`;
     setStatus("idle");
-    setMessage("Your email app will open with a draft. Send it to complete your inquiry.");
+    setMessage(
+      "Your email app will open with a draft. Send it to complete your inquiry.",
+    );
     window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
+      <noscript>
+        <p className="text-sm text-bone">
+          Use the email link on this page to send your inquiry. The draft form
+          needs JavaScript.
+        </p>
+      </noscript>
       <div className="grid gap-6 md:grid-cols-2">
         <label className="block">
           <span className={labelBase}>Name</span>
           <input
             type="text"
             name="name"
+            autoComplete="name"
+            maxLength={120}
+            disabled={!ready}
             required
             placeholder="Your name"
             className={inputBase}
@@ -77,6 +103,8 @@ export function ContactForm() {
           <input
             type="email"
             name="email"
+            maxLength={254}
+            disabled={!ready}
             required
             autoComplete="email"
             inputMode="email"
@@ -90,9 +118,10 @@ export function ContactForm() {
         <span className={labelBase}>Service</span>
         <select
           name="service"
+          disabled={!ready}
           required
           defaultValue=""
-          className={cn(inputBase, "appearance-none pr-10")}
+          className={cn(inputBase, "pr-10")}
         >
           <option value="" disabled>
             Choose a service
@@ -109,6 +138,8 @@ export function ContactForm() {
         <span className={labelBase}>Message</span>
         <textarea
           name="message"
+          maxLength={4000}
+          disabled={!ready}
           required
           rows={6}
           placeholder="Tell us about the project, timeline, and sound you need."
@@ -118,13 +149,10 @@ export function ContactForm() {
 
       <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center">
         <p className="text-[11px] uppercase tracking-widerx text-white/45">
-          Opens an email draft. Your message is sent only when you send it from your email app.
+          Opens an email draft. Your message is sent only when you send it from
+          your email app.
         </p>
-        <Button
-          type="submit"
-          variant="gold"
-          size="lg"
-        >
+        <Button type="submit" disabled={!ready} variant="gold" size="lg">
           Open Email Draft
         </Button>
       </div>
@@ -135,7 +163,7 @@ export function ContactForm() {
             "rounded-2xl border p-4 text-sm",
             status === "error"
               ? "border-red/40 bg-red/10 text-red-ember"
-              : "border-gold/40 bg-gold/10 text-gold"
+              : "border-gold/40 bg-gold/10 text-gold",
           )}
           aria-live="polite"
         >

@@ -1,123 +1,87 @@
 import Link from "next/link";
-
-import { ReleaseCard } from "@/components/cards/ReleaseCard";
-import { VideoEmbed } from "@/components/music/video-embed";
-import { Bio } from "@/components/sections/Bio";
-import { Credits } from "@/components/sections/Credits";
 import { Hero } from "@/components/sections/Hero";
-import { Button } from "@/components/ui/Button";
-import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import {
-  featuredRelease,
-  formatFeaturing,
-  releases
-} from "@/lib/data/releases";
+import { Studio } from "@/components/sections/Studio";
+import { ProjectCta } from "@/components/sections/ProjectCta";
+import { ReleaseCard } from "@/components/cards/ReleaseCard";
+import { ArrowIcon, PlayIcon } from "@/components/ui/Icons";
+import { releases } from "@/lib/data/releases";
+import { SITE } from "@/lib/site";
 
 export default function HomePage() {
-  const latestVideoRelease = releases.find((release) => release.videoUrl);
-  const otherReleases = releases.filter(
-    (release) => release.slug !== featuredRelease.slug
-  );
-
   return (
     <>
       <Hero />
-
-      {latestVideoRelease?.videoUrl ? (
-        <Section id="latest-video" tone="ember">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading
-              eyebrow="Latest Video"
-              title={
-                <>
-                  {latestVideoRelease.title}
-                  <br />
-                  <span className="text-gold-gradient">
-                    Official video out now.
-                  </span>
-                </>
-              }
-              description={[
-                formatFeaturing(latestVideoRelease),
-                latestVideoRelease.description
-              ]
-                .filter(Boolean)
-                .join(" — ")}
-            />
-            <Link
-              href={`/streaming/${latestVideoRelease.slug}`}
-              className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
-            >
-              Open release page
-              <span aria-hidden>-&gt;</span>
-            </Link>
-          </div>
-
-          <VideoEmbed
-            src={latestVideoRelease.videoUrl}
-            title={`${latestVideoRelease.title} — official video`}
-            className="mt-12"
-          />
-        </Section>
-      ) : null}
-
-      <Credits />
-
-      {otherReleases.length > 0 ? (
-        <Section id="catalog">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <SectionHeading
-              eyebrow="The Catalog"
-              title={
-                <>
-                  {releases.length} records.
-                  <br />
-                  <span className="text-gold-gradient">More on the way.</span>
-                </>
-              }
-              description="Selected singles and videos with links to listening destinations."
-            />
-            <Link
-              href="/streaming"
-              className="inline-flex items-center gap-2 self-start text-xs font-semibold uppercase tracking-widerx text-gold hover:underline md:self-end"
-            >
-              See all releases
-              <span aria-hidden>-&gt;</span>
-            </Link>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {otherReleases.map((release) => (
-              <ReleaseCard key={release.slug} release={release} />
-            ))}
-          </div>
-        </Section>
-      ) : null}
-
-      <Bio />
-
-      <Section className="pt-0">
-        <div className="flex flex-col items-start gap-4 rounded-[32px] border border-gold/20 bg-white/[0.02] p-8 shadow-panel md:flex-row md:items-center md:justify-between md:p-10">
-          <div>
-            <h2 className="font-display text-3xl text-bone md:text-4xl">
-              Want to connect with Fee The Producer?
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm text-white/70 md:text-base">
-              Listen to the records, read the bio, and reach out directly for
-              collaboration, media, or booking conversations.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button href="/about" variant="gold" size="md">
-              Read About Fee
-            </Button>
-            <Button href="/contact" variant="outline" size="md">
-              Contact
-            </Button>
-          </div>
+      <div className="listening-strip">
+        <div className="container-page">
+          <span className="eyebrow">FIND YOUR FREQUENCY</span>
+          <a href={SITE.social.apple} target="_blank" rel="noopener noreferrer">
+            Apple Music <span>↗</span>
+          </a>
+          <a
+            href={SITE.social.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            YouTube <span>↗</span>
+          </a>
         </div>
-      </Section>
+      </div>
+      <section className="catalog-section container-page" id="selected-records">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">THE DISCOGRAPHY</p>
+            <h2>
+              Records with <em>feeling.</em>
+            </h2>
+          </div>
+          <Link href="/streaming" className="text-link">
+            Explore the catalog <ArrowIcon />
+          </Link>
+        </div>
+        <div className="release-grid">
+          {releases.slice(0, 3).map((release) => (
+            <ReleaseCard key={release.slug} release={release} />
+          ))}
+        </div>
+        <a
+          href={SITE.social.youtube}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="featured-video"
+        >
+          <span className="video-play">
+            <PlayIcon />
+          </span>
+          <div>
+            <span className="eyebrow">IN THE FRAME / YOUTUBE</span>
+            <h3>
+              More than the record. <span>Videos &amp; content.</span>
+            </h3>
+          </div>
+          <span className="video-link">
+            Visit the channel <ArrowIcon />
+          </span>
+        </a>
+      </section>
+      <Studio />
+      <section className="artist-statement container-page">
+        <p className="eyebrow">THE ARTIST BEHIND THE SOUND</p>
+        <h2>
+          Rooted in soul.
+          <br />
+          Driven by <em>feeling.</em>
+        </h2>
+        <div>
+          <p>
+            A musician first. Fee The Producer brings drums, keys, and a love of
+            musical detail into every creative conversation.
+          </p>
+          <Link className="text-link" href="/about">
+            Meet Fee The Producer <ArrowIcon />
+          </Link>
+        </div>
+      </section>
+      <ProjectCta />
     </>
   );
 }

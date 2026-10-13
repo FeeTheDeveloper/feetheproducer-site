@@ -1,0 +1,132 @@
+{
+  "verifiedAt": "2026-10-13",
+  "source": "Apple Music connector canonical song metadata, cross-checked against the artist profile in Chrome",
+  "artist": {
+    "name": "Fee The Producer",
+    "appleArtistId": "1896424385",
+    "url": "https://music.apple.com/us/artist/fee-the-producer/1896424385"
+  },
+  "youtube": {
+    "channelId": "UC9UgxU4WyYxVZzhVYeLyc_Q",
+    "url": "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q",
+    "authority": "User supplied as the video and content channel on 2026-10-13"
+  },
+  "scope": "Public catalog metadata and navigation only; no rights, ownership, private library, full audio, or playback verification implied.",
+  "releases": [
+    {
+      "slug": "the-band-room",
+      "appleSongId": "6822257258",
+      "title": "The Band Room",
+      "artist": "Fee The Producer",
+      "explicit": false,
+      "type": "Single",
+      "releaseDate": "2026-10-12",
+      "status": "live",
+      "featured": true,
+      "genre": "Jazz",
+      "description": "The Band Room — Jazz single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-the-band-room.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/19/66/2e/19662e0b-0996-52e2-306c-61a90a8838b6/artwork.jpg/1200x1200bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "slug": "neva-give-up",
+      "appleSongId": "6822143526",
+      "title": "Neva Give Up (feat. Dave Watson)",
+      "artist": "Fee The Producer",
+      "explicit": false,
+      "type": "Single",
+      "releaseDate": "2026-10-12",
+      "status": "live",
+      "featured": false,
+      "genre": "R&B/Soul",
+      "description": "Neva Give Up (feat. Dave Watson) — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-neva-give-up.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e7/73/25/e7732556-77d4-1326-cb49-779d8a64ccd7/artwork.jpg/1200x1200bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/neva-give-up-feat-dave-watson/6822143525?i=6822143526",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "slug": "back-from-venus",
+      "appleSongId": "6820309022",
+      "title": "Back From Venus",
+      "artist": "Fee The Producer",
+      "explicit": true,
+      "type": "Single",
+      "releaseDate": "2026-10-06",
+      "status": "live",
+      "featured": false,
+      "genre": "Hip-Hop/Rap",
+      "description": "Back From Venus — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-back-from-venus.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0b/79/3d/0b793dc7-a6b1-39a2-4f00-e67a88ae643f/artwork.jpg/1200x1200bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/back-from-venus/6820309021?i=6820309022",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "slug": "all-gas-no-breaks",
+      "appleSongId": "6806901864",
+      "title": "All Gas No Breaks (feat. Ray Nathan)",
+      "artist": "Fee The Producer",
+      "explicit": true,
+      "type": "Single",
+      "releaseDate": "2026-08-30",
+      "status": "live",
+      "featured": false,
+      "genre": "Hip-Hop/Rap",
+      "description": "All Gas No Breaks (feat. Ray Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-all-gas-no-breaks.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/31/85/eb/3185eb2f-51d3-3524-fe90-a9e5b85f8340/artwork.jpg/1200x1200bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864",
+          "primary": true
+        }
+      ]
+    },
+    {
+      "slug": "rolling",
+      "appleSongId": "6794165344",
+      "title": "Rolling (feat. Ray-Nathan)",
+      "artist": "Fee The Producer",
+      "explicit": true,
+      "type": "Single",
+      "releaseDate": "2026-07-23",
+      "status": "live",
+      "featured": false,
+      "genre": "Hip-Hop/Rap",
+      "description": "Rolling (feat. Ray-Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-rolling.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9f/56/89/9f56891a-b914-21fe-b7d7-12521fd04397/artwork.jpg/1200x1200bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
+          "primary": true
+        }
+      ]
+    }
+  ]
+}
