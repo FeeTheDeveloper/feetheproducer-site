@@ -1,92 +1,83 @@
-# Clerk / Stripe / Supabase integration layer
+﻿# Accounts, payments, and database
 
-Wired on 2026-10-13. This document covers what exists in the repository, what
-still has to be provisioned outside it, and the boundary this layer respects.
+Updated October 14, 2026. Production is https://feetheproducer.com.
+Clerk owns visitor identity; Supabase stores profiles, catalog mappings, orders,
+and entitlements; Stripe owns prices and payment state. Secrets and customer
+records stay outside this public repository.
 
-## Boundary
+## Implemented behavior
 
-`AGENTS.md` keeps private operations out of this public repository. This layer
-is written to that rule:
+- `/sign-up` and `/sign-in` use Clerk. `/account` requires a signed-in visitor.
+  Google sign-in is disabled in the production Clerk application.
+- Clerk domain records are verified. The enabled Supabase integration trusts
+  `https://clerk.feetheproducer.com`.
+- Supabase policies permit visitors to read only their own profile, orders, and
+  entitlements, plus active products. Client writes and execution of fulfillment
+  functions are denied. Service-only database functions handle privileged writes.
+- `/api/checkout` accepts `{ productSlug, quantity? }`, requires authentication,
+  validates an active one-time Stripe price, and creates a pending order.
+  Quantity must be an integer from 1 through 99. An optional `Idempotency-Key`
+  is scoped to the user and request contents. Return URLs use the canonical site.
+- `/api/webhooks/stripe` verifies signatures and mode, retrieves current Stripe
+  state, and commits receipts and fulfillment in one database transaction.
+  Pending payments do not grant access. Duplicate/reordered events cannot
+  downgrade paid orders or resurrect refunded purchases. Full refunds revoke
+  that purchase; another paid purchase retains access. Partial refunds retain
+  access. Subscriptions are not enabled.
+- `/api/webhooks/clerk` verifies signatures and mirrors profile lifecycle events.
+  Monotonic timestamps reject stale updates; deletion tombstones prevent late
+  create/update events from restoring deleted profiles.
+- `/api/health/integrations` reports presence and missing variable names, never
+  credential values. It is a configuration check, not a payment test.
+- Contact continues to open an email draft; it does not submit a message.
 
-- **No credentials.** Every secret is read from the environment. `.env.example`
-  documents the names; `.env*.local` is git-ignored.
-- **No customer data.** Profiles, orders, and entitlements live in Supabase.
-  Nothing is written back into the repo.
-- **No commercial terms.** Prices are resolved from the Supabase `products`
-  table at request time, never from a catalog committed here.
-- **Contact is untouched.** `/contact` still opens an email draft. No contact
-  route was added, and nothing claims a message was sent or captured.
-- **The public site is unaffected.** With no credentials present, the auth
-  middleware passes through and each route answers `503`. The stream-first
-  pages, reduced-motion behaviour, and no-JavaScript fallbacks are unchanged.
+## Adding digital products
 
-## Routes
+The four old download products and their prices were archived at the owner's
+request. The active digital catalog was empty when checked October 14.
 
-| Route | Method | Purpose | Needs |
-| --- | --- | --- | --- |
-| `/api/health/integrations` | GET | Which integrations are configured. Names of missing variables only — never a value. | — |
-| `/api/account` | GET | The signed-in visitor's profile, orders, and entitlements. | Clerk, Supabase |
-| `/api/checkout` | POST | Creates a Stripe Checkout session and a pending order. Body: `{ productSlug, quantity? }`. | Clerk, Stripe, Supabase service role |
-| `/api/webhooks/stripe` | POST | Settles orders and grants/revokes entitlements. Signature-verified, idempotent. | Stripe, Supabase service role |
-| `/api/webhooks/clerk` | POST | Mirrors the Clerk account into `profiles`. Signature-verified. | Clerk signing secret, Supabase service role |
+Create an active, one-time product and default price in Fee The Producer's Stripe
+account. Add product metadata `site=feetheproducer.com`,
+`site_slug=your-lowercase-product-slug`, and `site_kind=download` (or `license`).
+Run `npm run catalog:sync` to review, then `npm run catalog:sync -- --apply`.
+The script verifies the account/project, validates opted-in products, and upserts
+mappings. It leaves unrelated existing rows unchanged.
 
-Supporting code lives in [lib/integrations/](../lib/integrations/):
-`env.ts` (configuration guards), `stripe.ts`, `supabase.ts` (user-scoped and
-service-role clients), `responses.ts` (shared JSON shapes).
+There is no public product-management interface or downloadable-file delivery
+implementation yet. Physical Printful merchandise needs separate variant,
+shipping, tax, and fulfillment mapping; do not use digital entitlement checkout.
 
-### Degradation contract
+## Provider configuration and deployment
 
-No module throws at import time. A route whose integration has no credentials
-returns `503 {"error":"integration_unavailable","integration":"…"}`. A signed-out
-caller gets `401`. This is what `tests/integrations.spec.ts` asserts, and it is
-why [middleware.ts](../middleware.ts) only engages Clerk when its keys exist —
-without that guard, a deployment with no auth credentials would fail every
-request, homepage included.
+Eight application variables are listed in `.env.example`; values live in ignored
+`.env.local` and Vercel production configuration. The Vercel project was recreated
+after owner deletion, with Next.js, Node 24, `npm ci`, and `npm run build`.
+The apex domain serves the app; `www` redirects to the apex.
 
-## Still to provision
+Stripe subscribes to checkout completion, async success/failure, expiration, and
+refund events. Clerk subscribes to user creation, update, and deletion. Their
+signing secrets are independent. Endpoints were enabled after deploying the
+routes and verifying signed harmless ignored-event probes.
 
-None of the following can be completed from this repository:
+All three migrations in `supabase/migrations` were applied through the Supabase
+SQL editor, not CLI migration tracking. Reconcile migration history before
+`supabase db push`; do not blindly reapply the baseline. Both suites in
+`supabase/tests` use rollback-only fixtures.
 
-1. **Supabase project.** The connected Supabase account currently has **no
-   organization and no projects**, so one has to be created first. Then apply
-   [supabase/migrations/0001_clerk_stripe_commerce.sql](../supabase/migrations/0001_clerk_stripe_commerce.sql)
-   with `supabase db push` or the dashboard SQL editor.
-2. **Clerk application.** The connected Clerk workspace holds one unrelated
-   application (`Hutchrok Solutions Group`). Fee The Producer needs its own.
-3. **Clerk ↔ Supabase third-party auth.** Row level security keys off the Clerk
-   `sub` claim, which only arrives once the integration is connected: run
-   Clerk's *Connect with Supabase* setup, then add Clerk as a Third-Party Auth
-   provider in the Supabase dashboard. Until then `/api/account` returns no rows
-   even with valid keys.
-4. **Stripe account and products.** Create each price in Stripe, then insert the
-   matching row in `products` (`slug`, `name`, `kind`, `mode`,
-   `stripe_price_id`). The site reads prices from that table.
-5. **Webhook endpoints.** Point Stripe at `/api/webhooks/stripe` and Clerk at
-   `/api/webhooks/clerk`, then copy each signing secret into the environment.
+## Verification and limits
 
-## Local development
+Run `npm run typecheck`, `npm run lint`, `npm run build`, `npm run test:unit`, and
+`npm run test:e2e`. Playwright serves a production build at localhost:3100;
+rebuild and restart stale previews. Provider evidence stays in ignored
+`test-results/provider-evidence`, separate from Playwright output.
 
-```bash
-cp .env.example .env.local   # fill in what you have; partial is fine
-npm run dev
-curl localhost:3000/api/health/integrations
-stripe listen --forward-to localhost:3000/api/webhooks/stripe
-```
+Validation includes 16 browser tests, five unit tests, both SQL suites, live
+route/image checks, signed harmless ignored-event probes, and rejection of
+unsigned webhook requests. Real visitor registration and a paid purchase have
+not been performed by the agent. No charge, refund, or fulfillment order was
+placed as a test.
 
-## Verification
+Install the CLI with `npm i -g vercel` for `vercel env pull`, `vercel deploy`, and
+`vercel logs`. Verify the linked project/team before deploying. Preserve an
+owner-maintained environment file before pulling remote variables over it.
 
-```bash
-npm run typecheck && npm run lint && npm run build && npm run test:e2e
-```
-
-`npm run test:e2e` serves a production build on port 3100 and reuses an existing
-server if one is listening. A preview left running from an earlier build will
-serve stale assets and fail the integration specs with `404`s — stop it and
-rebuild first.
-
-## Not built
-
-The routes are the integration surface only. No storefront, account page,
-sign-in UI, or gated download was added, so the public site is unchanged. The
-checkout success and cancel URLs currently return to `/?checkout=complete` and
-`/?checkout=cancelled`; give them dedicated pages when that UI lands.
