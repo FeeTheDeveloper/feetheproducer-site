@@ -1,0 +1,174 @@
+.live-performance {
+  padding-block: 110px 100px;
+  border-top: 1px solid var(--line);
+  overflow: clip;
+}
+.live-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+.live-heading .eyebrow { margin-bottom: 24px; }
+.live-heading h2 { font-size: clamp(44px, 5.4vw, 78px); }
+.live-intro { padding-bottom: 9px; color: var(--silver); line-height: 1.7; }
+.live-intro .live-artist { font-size: 24px; color: var(--paper); }
+.live-credit { display: block; margin-top: 20px; color: var(--gold-light); font-size: 13px; }
+.live-credit > span { color: var(--muted); padding-left: 8px; }
+.performance-arena {
+  position: relative;
+  isolation: isolate;
+  width: min(1720px, 100%);
+  margin: 0 auto;
+  padding: 9% 14% 10%;
+}
+.arena-environment { object-fit: cover; z-index: -3; }
+.arena-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(var(--ink), transparent 13%, transparent 76%, var(--ink)),
+    linear-gradient(90deg, #0a0a0940, transparent 20%, transparent 80%, #0a0a0940);
+}
+.arena-monitor {
+  position: relative;
+  border: 1px solid #a18b644f;
+  border-top: 3px solid #b5a485;
+  padding: 7px;
+  background: linear-gradient(130deg, #39362e, #080808 35%, #22221f 85%, #686355);
+  box-shadow: 0 5px 0 #020202, 0 12px 0 -6px #4b4539, 0 50px 70px #000c, 0 0 60px #daba7f0d;
+}
+.arena-monitor::before, .arena-monitor::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 3px);
+  width: 4px;
+  height: 65px;
+  background: linear-gradient(90deg, #77776e, #1a1a16);
+  z-index: -1;
+}
+.arena-monitor::before { left: 14%; }
+.arena-monitor::after { right: 14%; }
+.monitor-masthead, .monitor-credit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 20px;
+  background: #10100f;
+}
+.monitor-masthead { color: var(--silver); font-size: 9px; letter-spacing: .2em; }
+.monitor-masthead > span:first-child { color: var(--gold-light); }
+.monitor-picture { position: relative; aspect-ratio: 16 / 9; background: #000; }
+.monitor-picture video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.performance-play {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 22px;
+  border: 0;
+  background: #0a0a09e8;
+  color: var(--paper);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.performance-play-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  color: var(--ink);
+  transition: background .2s;
+}
+.performance-play-icon svg { width: 20px; height: 20px; margin-left: 3px; }
+.performance-play:hover .performance-play-icon { background: #fff6df; }
+.monitor-credit { color: var(--paper); }
+.monitor-credit > span:first-child { font-family: Georgia, serif; font-size: 23px; }
+.monitor-credit > span:last-child { font-size: 8px; letter-spacing: .13em; color: var(--silver); }
+.monitor-credit strong { color: var(--gold-light); font-weight: 400; }
+.arena-note { position: absolute; bottom: 4%; left: 0; right: 0; text-align: center; font-size: 10px; color: var(--silver); letter-spacing: .05em; }
+.performance-error { position: relative; margin-top: 30px; padding: 14px; background: var(--surface); font-size: 13px; line-height: 1.6; }
+.performance-error a { color: var(--gold-light); text-decoration: underline; }
+.performance-source-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding-block: 0 32px;
+  border-bottom: 1px solid var(--line);
+}
+.performance-source-row > p { font-size: 13px; line-height: 1.9; color: var(--silver); }
+.performance-source-row > p > span { font-size: 11px; color: var(--muted); }
+.performance-source-row > div { display: flex; gap: 28px; flex-wrap: wrap; }
+.drum-story { display: grid; grid-template-columns: 1.75fr 1fr; gap: 32px; margin-top: 80px; align-items: end; }
+.drum-story-heading { grid-column: 1 / -1; display: grid; grid-template-columns: 1.75fr 1fr; column-gap: 32px; }
+.drum-story-heading .eyebrow { grid-column: 1; margin-bottom: 20px; }
+.drum-story-heading h3 { font-family: Georgia, serif; font-size: clamp(34px, 3.7vw, 52px); font-weight: 400; letter-spacing: -.045em; line-height: 1.13; }
+.drum-story-heading h3 em { color: var(--gold); }
+.drum-story-heading > p:last-child { grid-column: 2; grid-row: 1 / span 2; align-self: end; font-size: 14px; line-height: 1.8; color: var(--silver); }
+.live-performance figure { margin: 0; min-width: 0; }
+.performance-photo-window { position: relative; overflow: hidden; background: var(--surface); }
+.performance-photo-window img { object-fit: cover; }
+.drummer-photo .performance-photo-window { aspect-ratio: 1.5; }
+.drum-kit-photo .performance-photo-window { aspect-ratio: .75; }
+.drum-kit-photo img { object-position: right center; }
+.live-performance figcaption { display: flex; justify-content: space-between; gap: 12px; padding-top: 15px; color: var(--silver); font-size: 9px; letter-spacing: .08em; line-height: 1.6; }
+.live-performance figcaption span { color: var(--muted); letter-spacing: 0; }
+.band-archive { margin-top: 55px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.band-archive summary { min-height: 76px; display: flex; justify-content: space-between; align-items: center; list-style: none; font-size: 18px; color: var(--gold-light); }
+.band-archive summary::-webkit-details-marker { display: none; }
+.band-archive summary > span { font-size: 28px; font-weight: 300; transition: transform .2s; }
+.band-archive[open] summary > span { transform: rotate(45deg); }
+.band-photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-bottom: 32px; }
+.band-photo-grid .performance-photo-window { aspect-ratio: 1.5; }
+@media (max-width: 1100px) {
+  .performance-arena { padding-inline: 10%; }
+  .performance-source-row > div { gap: 8px; flex-direction: column; }
+  .drum-story-heading { grid-template-columns: 1.2fr 1fr; }
+}
+@media (max-width: 760px) {
+  .live-performance { padding-block: 70px 60px; }
+  .live-heading { display: block; margin-bottom: 36px; }
+  .live-heading .eyebrow { margin-bottom: 18px; }
+  .live-heading h2 { font-size: clamp(43px, 11vw, 68px); }
+  .live-intro { margin-top: 26px; font-size: 14px; }
+  .live-intro .live-artist { font-size: 20px; }
+  .live-credit { margin-top: 12px; }
+  .performance-arena { padding: 65px 5% 85px; }
+  .arena-environment { object-fit: cover; }
+  .arena-monitor { padding: 4px; }
+  .arena-monitor::before, .arena-monitor::after { height: 42px; }
+  .monitor-masthead, .monitor-credit { padding: 11px 10px; gap: 8px; }
+  .monitor-masthead { font-size: 6px; letter-spacing: .14em; }
+  .monitor-credit > span:first-child { font-size: 16px; }
+  .monitor-credit > span:last-child { font-size: 6px; letter-spacing: .06em; }
+  .performance-play { padding: 10px 12px; gap: 8px; font-size: 10px; }
+  .performance-play-icon { width: 40px; height: 40px; }
+  .performance-play-icon svg { width: 16px; height: 16px; }
+  .arena-note { bottom: 8%; font-size: 9px; }
+  .performance-source-row { display: block; padding-bottom: 24px; }
+  .performance-source-row > div { margin-top: 12px; align-items: start; }
+  .performance-source-row .text-link { font-size: 12px; }
+  .drum-story { grid-template-columns: 1fr; margin-top: 50px; gap: 30px; }
+  .drum-story-heading { display: block; }
+  .drum-story-heading .eyebrow { margin-bottom: 14px; }
+  .drum-story-heading > p:last-child { margin-top: 22px; max-width: 440px; }
+  .drum-kit-photo { width: 68%; margin-left: auto !important; }
+  .live-performance figcaption { font-size: 8px; }
+  .live-performance figcaption span { font-size: 9px; }
+  .band-archive { margin-top: 38px; }
+  .band-photo-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .performance-play-icon, .band-archive summary > span { transition: none; }
+}
+@media (forced-colors: active) {
+  .arena-monitor, .performance-play, .performance-play-icon { border: 1px solid ButtonText; }
+}

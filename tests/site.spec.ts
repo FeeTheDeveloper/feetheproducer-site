@@ -18,12 +18,17 @@ const routes = [
 test("all public routes and local images load without runtime errors", async ({
   page,
 }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   for (const route of routes) {
     const response = await page.goto(route);
     expect(response?.status(), route).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
+    if (route === "/") await page.locator(".band-archive summary").click();
+    for (const image of await page.locator("img").all()) {
+      await image.scrollIntoViewIfNeeded();
+    }
     await page.locator("footer").scrollIntoViewIfNeeded();
     await expect
       .poll(
@@ -50,10 +55,15 @@ test("all public routes and local images load without runtime errors", async ({
     "/streaming/im-gone",
     "/beats/missing",
     "/downloads",
-    "/api/checkout",
   ]) {
     expect((await page.goto(route))?.status(), route).toBe(404);
   }
+  // /api/checkout is wired again, but POST-only: a navigation is rejected
+  // rather than missing. The route's own behaviour is covered in
+  // tests/integrations.spec.ts.
+  expect((await page.goto("/api/checkout"))?.status(), "/api/checkout").toBe(
+    405,
+  );
 });
 
 test("desktop, mobile, and narrow layouts have no horizontal overflow", async ({
@@ -78,6 +88,10 @@ test("desktop, mobile, and narrow layouts have no horizontal overflow", async ({
         `${route} at ${width}`,
       ).toBe(true);
       if (route === "/" && width !== 768) {
+        await page.locator(".band-archive summary").click();
+        for (const image of await page.locator("img").all()) {
+          await image.scrollIntoViewIfNeeded();
+        }
         await page.locator("footer").scrollIntoViewIfNeeded();
         await expect
           .poll(() =>
@@ -102,6 +116,9 @@ test("desktop, mobile, and narrow layouts have no horizontal overflow", async ({
           path: testInfo.outputPath(`hero-${width}.png`),
           fullPage: false,
         });
+        await page.locator("#live-performance").screenshot({
+          path: testInfo.outputPath(`performance-${width}.png`),
+        });
       }
     }
   }
@@ -118,14 +135,14 @@ test("keyboard skip link and mobile disclosure support navigation and Escape", a
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("main")).toBeFocused();
-  const menu = page.locator("summary");
+  const menu = page.locator("header summary");
   await menu.focus();
   await page.keyboard.press("Enter");
   await expect(
     page.getByRole("navigation", { name: "Mobile navigation" }),
   ).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.locator("details")).not.toHaveAttribute("open");
+  await expect(page.locator("header details")).not.toHaveAttribute("open");
   await expect(menu).toBeFocused();
   await menu.click();
   await page
@@ -133,7 +150,7 @@ test("keyboard skip link and mobile disclosure support navigation and Escape", a
     .getByRole("link", { name: "The studio" })
     .click();
   await expect(page).toHaveURL(/\/beats$/);
-  await expect(page.locator("details")).not.toHaveAttribute("open");
+  await expect(page.locator("header details")).not.toHaveAttribute("open");
 });
 
 test("motion pauses, persists, resumes, and follows OS changes", async ({
@@ -208,7 +225,11 @@ test("static site remains navigable with JavaScript disabled", async ({
   await expect(
     page.getByRole("heading", { name: "Feel every frequency." }),
   ).toBeVisible();
-  await page.locator("summary").click();
+  await expect(page.locator("video")).toHaveAttribute("controls", "");
+  await expect(page.locator("video")).not.toHaveAttribute("autoplay");
+  await page.locator(".band-archive summary").click();
+  await expect(page.locator(".band-photo-grid")).toBeVisible();
+  await page.locator("header summary").click();
   await page
     .getByRole("navigation", { name: "Mobile navigation" })
     .getByRole("link", { name: "The music" })
@@ -248,7 +269,7 @@ test("contact validates fields and prepares an email draft without a network sub
   expect(requests).toEqual([]);
 });
 
-test("catalog contains only current Apple releases and the approved YouTube channel", async ({
+test("catalog remains current and outbound links match owner-selected sources", async ({
   page,
   request,
 }) => {
@@ -305,21 +326,69 @@ test("catalog contains only current Apple releases and the approved YouTube chan
   ]);
   for (const route of routes) {
     await page.goto(route);
+    const routeAllowed = new Set(allowed);
+    if (route === "/") {
+      routeAllowed.add("https://tubitv.com/tv-shows/200166809/s01-e01-payroll-giovanni");
+      routeAllowed.add("https://www.instagram.com/bylugphonics/?hl=en");
+    }
     const links = await page
       .locator('a[href^="http"]')
       .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href")));
     expect(
-      links.every((url) => url !== null && allowed.has(url)),
+      links.every((url) => url !== null && routeAllowed.has(url)),
       route,
     ).toBe(true);
     expect(links, route).toContain(channelUrl);
-    await expect(page.locator("iframe, audio, video")).toHaveCount(0);
+    await expect(page.locator("iframe, audio")).toHaveCount(0);
+    await expect(page.locator("video")).toHaveCount(route === "/" ? 1 : 0);
   }
   const sitemap = await (await request.get("/sitemap.xml")).text();
   for (const release of expected)
     expect(sitemap).toContain(`/streaming/${release.slug}`);
   for (const removed of ["koolin-it", "l-r-a", "im-gone"])
     expect(sitemap).not.toContain(`/streaming/${removed}`);
+});
+
+test("live performance waits for play, supports seeking and pauses when hidden", async ({ page }) => {
+  const mediaRequests: string[] = [];
+  page.on("request", request => {
+    if (request.url().endsWith(".mp4")) mediaRequests.push(request.url());
+  });
+  await page.goto("/");
+  const video = page.locator("video");
+  const play = page.getByRole("button", { name: "Play Payroll Giovanni live with Bylugphonics" });
+  await expect(play).toBeVisible();
+  await expect(video).toHaveAttribute("preload", "none");
+  await expect(video).toHaveAttribute("playsinline", "");
+  await expect(video).not.toHaveAttribute("autoplay");
+  await expect(video).not.toHaveAttribute("loop");
+  expect(mediaRequests).toEqual([]);
+  await play.focus();
+  await page.keyboard.press("Enter");
+  await expect(video).toBeFocused();
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.currentTime)).toBeGreaterThan(0);
+  expect(await video.evaluate((node: HTMLVideoElement) => node.duration)).toBeCloseTo(62, 0);
+  await video.evaluate((node: HTMLVideoElement) => { node.currentTime = 30; });
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.currentTime)).toBeGreaterThanOrEqual(30);
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", { configurable: true, value: true });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.paused)).toBe(true);
+  await expect(page.locator(".performance-arena")).toHaveAttribute("data-playing", "false");
+  const gallery = page.locator(".band-archive summary");
+  await gallery.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".band-photo-grid")).toBeVisible();
+});
+
+test("failed performance media offers the real episode fallback", async ({ page }) => {
+  await page.route("**/video/payroll-giovanni-live-excerpt.mp4", route => route.abort());
+  await page.goto("/");
+  await page.getByRole("button", { name: "Play Payroll Giovanni live with Bylugphonics" }).click();
+  const fallback = page.getByRole("status");
+  await expect(fallback).toContainText("couldn’t play");
+  await expect(fallback.getByRole("link")).toHaveAttribute("href", "https://tubitv.com/tv-shows/200166809/s01-e01-payroll-giovanni");
 });
 
 test("primary routes have no detectable WCAG A/AA violations", async ({

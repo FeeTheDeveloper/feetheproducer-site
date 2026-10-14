@@ -17,6 +17,8 @@ Preserve the supplied logo at `public/brand/fp-luxury-emblem.png`. Keep colors a
 
 Use `docs/CATALOG_SOURCE.json` and current official source verification for catalog changes. Apple Music artist `1896424385` supplies listed releases; YouTube channel `UC9UgxU4WyYxVZzhVYeLyc_Q` is the video/content funnel. Historical tracks and links are not current authority.
 
+The later October 13 owner request also approves the Payroll Giovanni performance excerpt, its Tubi episode link, and Bylugphonics Instagram on the homepage. See `docs/LIVE_PERFORMANCE.md` for the exact supplied-media cut, owner-reported credit, fictional arena treatment, and remaining caption/source-coverage limitations. Preserve these separately from the release catalog.
+
 Private operations belong in the separately verified `FeeTheDeveloper/ftp_os` target. Do not add contracts, credentials, private catalog/rights records, unreleased audio, or customer data to this public repository. Contact opens an email draft; never claim a message was sent or captured.
 
 ## Verification and release

@@ -206,6 +206,7 @@ h2 {
   opacity: 0.5;
 }
 .skip-link {
+  clip-path: inset(50%);
   position: fixed;
   left: 20px;
   top: -100px;
@@ -215,6 +216,7 @@ h2 {
   padding: 14px 20px;
 }
 .skip-link:focus {
+  clip-path: none;
   top: 16px;
 }
 

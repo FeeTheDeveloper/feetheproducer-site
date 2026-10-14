@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Hero } from "@/components/sections/Hero";
 import { Studio } from "@/components/sections/Studio";
+import { LivePerformance } from "@/components/sections/LivePerformance";
 import { ProjectCta } from "@/components/sections/ProjectCta";
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { ArrowIcon, PlayIcon } from "@/components/ui/Icons";
@@ -63,6 +64,7 @@ export default function HomePage() {
           </span>
         </a>
       </section>
+      <LivePerformance />
       <Studio />
       <section className="artist-statement container-page">
         <p className="eyebrow">THE ARTIST BEHIND THE SOUND</p>

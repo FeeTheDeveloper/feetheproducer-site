@@ -18,6 +18,7 @@ export function Footer() {
           </Link>
           <div className="footer-links">
             <Link href="/streaming">The music</Link>
+            <Link href="/#live-performance">Live performance</Link>
             <Link href="/beats">Production</Link>
             <Link href="/about">About Fee</Link>
             <Link href="/licensing">Licensing inquiries</Link>

@@ -6,7 +6,7 @@ Approved brief: rebuild the public artist site around the supplied gold/silver F
 
 A listening room: grooved records, metallic edges, black studio equipment, editorial typography, and generous space. The supplied logo remains the canonical identity; do not redraw, crop, recolor, or replace it with generated artwork.
 
-The first screen pairs a large editorial headline with a dimensional logo sleeve and record. Selected music follows, then a studio character and production offerings. Music and contact remain the main visitor actions. No splash screen, scroll hijacking, invented metrics, autonomous assistant claims, or autoplay audio.
+The first screen pairs a large editorial headline with a dimensional logo sleeve and record. Selected music follows, then a live-performance viewing room, a studio character, and production offerings. Music and contact remain the main visitor actions. No splash screen, scroll hijacking, invented metrics, autonomous assistant claims, or autoplay audio.
 
 ## Tokens and typography
 
@@ -32,7 +32,7 @@ Georgia/Times New Roman for expressive headings and record titles; Arial/Helveti
 - Timing: 200–600ms interaction transitions; restrained 9–12s decorative drift. CSS transforms only for continuous motion.
 - Pause: a visible control near the hero and in the footer; preference persists when storage is available. The OS reduced-motion setting takes priority.
 - Lifecycle: IntersectionObserver and document visibility gate ambient work; pointer frames/listeners are cleaned up on pause, offscreen state, and unmount. Touch users never depend on hover.
-- Fallback: server-rendered copy, images, links, and a composed static scene; native mobile disclosure works without JavaScript. No WebGL dependency. Music and video destinations open only through visitor-selected links; no embedded media autoloads.
+- Fallback: server-rendered copy, images, links, and a composed static scene; native mobile disclosure works without JavaScript. No WebGL dependency. The owner-supplied performance excerpt uses native video controls with `preload="none"`; playback requires a visitor action. Outbound media links remain available.
 - Asset budget: original PNGs are retained; Next Image serves responsive optimized derivatives. Character is lazy-loaded, emblem is the hero priority image. No animation library added.
 
 ## Content and boundaries
@@ -43,6 +43,12 @@ The owner selected YouTube channel `UC9UgxU4WyYxVZzhVYeLyc_Q` as the video/conte
 
 Contact prepares a mailto draft; visitors must send it. No inbox provider, checkout, downloadable audio, avatar voice, chat, or account integration is provisioned. Native select semantics and platform-owned popup geometry are intentional.
 
+## Live performance addition
+
+The owner's later October 13 request adds the Payroll Giovanni / Bylugphonics feature and explicitly approves its Tubi episode and band Instagram destinations. It does not change the five-release Apple Music catalog or the YouTube funnel. The performance credit is owner-reported. Documentary photos and the supplied video carry the work story; no endorsement, verification badge, or added voiceover is used.
+
+A generated empty arena provides a fictional stadium viewing environment around a native video screen. The scene caption distinguishes the presentation from the original venue. The screen remains still for viewing; metal frame, suspension supports, and shadows supply depth. Four supplied photographs retain their original bytes; CSS crops screenshot borders for presentation. Full provenance, the exact excerpt bounds, and limitations are in `docs/LIVE_PERFORMANCE.md`.
+
 ## Verification
 
-Production build, typecheck, lint; desktop and 320/390px layouts; current and removed routes, sitemap, exact external-link set, and local image assets; keyboard navigation, disclosure Escape, motion pause persistence, OS reduced motion, offscreen/hidden-tab cleanup; no-JS navigation; contact validation/draft behavior; no embedded media requests; automated axe accessibility checks. Capture representative screenshots in ignored `test-results/`.
+Production build, typecheck, lint; desktop and 320/390px layouts; current and removed routes, sitemap, exact external-link set, and local image assets; keyboard navigation, disclosure Escape, motion pause persistence, OS reduced motion, offscreen/hidden-tab cleanup; no-JS navigation; contact validation/draft behavior; no video request before play, playback/seek/hidden-tab pause, failed-media fallback; automated axe accessibility checks. Capture representative screenshots in ignored `test-results/`. Automated checks do not certify the accuracy or availability of captions for the supplied excerpt.
