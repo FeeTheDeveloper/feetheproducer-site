@@ -8,6 +8,7 @@ import { ReleaseCard } from "@/components/cards/ReleaseCard";
 import { ArrowIcon, PlayIcon } from "@/components/ui/Icons";
 import { releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
+import "./merch/merch.css";
 
 export default function HomePage() {
   return (
@@ -67,6 +68,13 @@ export default function HomePage() {
       </section>
       <LivePerformance />
       <Studio />
+      <section className="home-merch container-page">
+        <div className="home-merch-art">
+          <Image src="/images/merch/core-hoodie.png" alt="Fee The Producer Core Hoodie, product mockup" width={1000} height={1000} sizes="(max-width: 760px) 50vw, 30vw" />
+          <Image src="/images/merch/signature-snapback.png" alt="Fee The Producer black and red Signature Snapback, product mockup" width={1000} height={1000} sizes="(max-width: 760px) 40vw, 25vw" />
+        </div>
+        <div><p className="eyebrow">THE CORE COLLECTION / 01</p><h2>Wear the <em>signature.</em></h2><p>Studio staples in black, ivory and gold. Explore the first Fee The Producer merch collection, made to order with US shipping.</p><Link href="/merch" className="text-link">Shop the collection <ArrowIcon /></Link></div>
+      </section>
       <section className="artist-statement container-page">
         <figure className="artist-photo artist-photo-wide">
           <Image

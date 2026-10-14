@@ -25,5 +25,6 @@ export const NAV_ITEMS = [
   { href: "/streaming", label: "The music" },
   { href: "/#live-performance", label: "Live" },
   { href: "/beats", label: "The studio" },
+  { href: "/merch", label: "Merch" },
   { href: "/about", label: "About Fee" },
 ] as const;

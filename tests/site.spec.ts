@@ -13,6 +13,9 @@ const routes = [
   "/about",
   "/contact",
   "/licensing",
+  "/merch",
+  "/merch/core-washed-tee",
+  "/merch/studio-letterman",
 ];
 
 test("all public routes and local images load without runtime errors", async ({
@@ -79,6 +82,8 @@ test("desktop, mobile, and narrow layouts have no horizontal overflow", async ({
       "/contact",
       "/streaming/all-gas-no-breaks",
       "/about",
+      "/merch",
+      "/merch/signature-snapback",
     ]) {
       await page.goto(route);
       expect(

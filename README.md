@@ -31,6 +31,10 @@ Read [AGENTS.md](AGENTS.md) for the four local workflows under `.agents/skills/`
 
 Keep full audio, private project files, contracts, and credentials out of `public/` and this public repository. A future paid download flow needs confirmed distribution rights, private storage, a provider-backed delivery check, and a separate reviewed release.
 
+## Merch
+
+The Core Collection is at `/merch`, backed by the Fee The Producer Printful store and Stripe Checkout. Pricing uses a 30% product gross margin; checkout is US-only and production orders are fulfilled manually. See [merch setup, pricing refresh and order handling](docs/MERCH.md). Product artwork and private pricing reports are not stored in this public repository.
+
 ## Contact
 
 The contact form opens a draft in the visitor's email app. The visitor must send it. There is no server-side inbox or newsletter provider configured; the site must not claim that a message or signup was captured.

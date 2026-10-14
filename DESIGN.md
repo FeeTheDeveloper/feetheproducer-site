@@ -41,7 +41,9 @@ The owner selected Apple Music artist ID `1896424385` as the current catalog. Th
 
 The owner selected YouTube channel `UC9UgxU4WyYxVZzhVYeLyc_Q` as the video/content funnel. Its displayed identity is Fee The Producer, @FeeTheProducer-r4k. It had no uploaded content when inspected; link to the channel without inventing a featured video. Internal site navigation and contact remain available. Generated character art is explicitly illustrative and does not represent Fee, an employee, or a live assistant.
 
-Contact prepares a mailto draft; visitors must send it. No inbox provider, checkout, downloadable audio, avatar voice, chat, or account integration is provisioned. Native select semantics and platform-owned popup geometry are intentional.
+Contact prepares a mailto draft; visitors must send it. Clerk supplies email/password accounts. The later October 14 merch request adds a Printful-backed Core Collection and US-only Stripe Checkout with manual production fulfillment. No music downloads, avatar voice, chat, or server-side contact inbox are offered. Native select semantics and platform-owned popup geometry are intentional.
+
+The merch experience uses quiet depth: actual Printful garment mockups over charcoal radial backgrounds, with a static hoodie/cap composition and restrained hover scale. Product names, prices, variants and purchase actions remain semantic HTML. Native forms work without JavaScript; reduced motion removes image transitions. Black, ivory and gold continue the existing typography and color system. Original concept boards are distinct from production mockups; the approved fabric letterman adaptation is described explicitly. See `docs/MERCH.md` for pricing and fulfillment boundaries.
 
 ## Live performance addition
 

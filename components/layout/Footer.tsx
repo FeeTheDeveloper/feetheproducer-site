@@ -20,6 +20,7 @@ export function Footer() {
             <Link href="/streaming">The music</Link>
             <Link href="/#live-performance">Live performance</Link>
             <Link href="/beats">Production</Link>
+            <Link href="/merch">Merch store</Link>
             <Link href="/about">About Fee</Link>
             <Link href="/licensing">Licensing inquiries</Link>
             <Link href="/contact">Contact</Link>

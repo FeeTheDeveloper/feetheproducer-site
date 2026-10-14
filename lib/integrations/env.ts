@@ -6,7 +6,7 @@
  * matching guard and degrades with a 503 instead of crashing the deployment.
  */
 
-export type IntegrationName = "clerk" | "stripe" | "supabase";
+export type IntegrationName = "clerk" | "stripe" | "supabase" | "printful";
 
 const CLERK_KEYS = [
   "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
@@ -75,6 +75,10 @@ export function integrationStatus() {
       configured: isSupabaseConfigured(),
       missing: missing(SUPABASE_KEYS),
       serviceRoleReady: isSupabaseAdminConfigured(),
+    },
+    printful: {
+      configured: Boolean(readEnv("PRINTFUL_API_TOKEN")) && readEnv("PRINTFUL_STORE_ID") === "18904049",
+      missing: missing(["PRINTFUL_API_TOKEN", "PRINTFUL_STORE_ID"]),
     },
   } as const;
 }
