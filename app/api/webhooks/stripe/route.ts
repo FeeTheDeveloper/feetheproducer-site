@@ -1,146 +1,87 @@
 import type { NextRequest } from "next/server";
 import type Stripe from "stripe";
-
-import {
-  isStripeConfigured,
-  isSupabaseAdminConfigured,
-} from "@/lib/integrations/env";
-import {
-  badRequest,
-  integrationUnavailable,
-  json,
-  serverError,
-} from "@/lib/integrations/responses";
-import {
-  getStripeClient,
-  getStripeWebhookSecret,
-} from "@/lib/integrations/stripe";
+import { isStripeConfigured, isSupabaseAdminConfigured, readEnv } from "@/lib/integrations/env";
+import { badRequest, integrationUnavailable, json, serverError } from "@/lib/integrations/responses";
+import { getStripeClient, getStripeWebhookSecret } from "@/lib/integrations/stripe";
 import { getSupabaseAdminClient } from "@/lib/integrations/supabase";
+import { checkoutStatus } from "@/lib/integrations/commerce-policy";
 
 export const dynamic = "force-dynamic";
+const CHECKOUT_EVENTS = new Set([
+  "checkout.session.completed", "checkout.session.async_payment_succeeded",
+  "checkout.session.async_payment_failed", "checkout.session.expired",
+]);
 
-const UNIQUE_VIOLATION = "23505";
-
-/**
- * Stripe event sink: verifies the signature over the raw body, records the
- * event id to stay idempotent across redelivery, then settles the order and
- * grants or revokes the entitlement.
- */
+/** Verify first; receipts and fulfillment commit in the same DB transaction. */
 export async function POST(request: NextRequest) {
-  if (!isStripeConfigured()) return integrationUnavailable("stripe");
+  if (!isStripeConfigured() || !readEnv("STRIPE_WEBHOOK_SECRET")) return integrationUnavailable("stripe");
   if (!isSupabaseAdminConfigured()) return integrationUnavailable("supabase");
-
   const signature = request.headers.get("stripe-signature");
-  if (!signature) return badRequest("Missing `stripe-signature` header.");
-
-  // Raw body: parsing it first would invalidate the signature.
+  if (!signature) return badRequest("Missing stripe-signature header.");
   const payload = await request.text();
-
+  const stripe = getStripeClient();
   let event: Stripe.Event;
   try {
-    event = getStripeClient().webhooks.constructEvent(
-      payload,
-      signature,
-      getStripeWebhookSecret(),
-    );
-  } catch (error) {
-    console.error("stripe signature verification failed", error);
+    event = stripe.webhooks.constructEvent(payload, signature, getStripeWebhookSecret());
+  } catch {
     return badRequest("Invalid signature.");
   }
-
+  if (event.account || event.livemode !== Boolean(readEnv("STRIPE_SECRET_KEY")?.includes("_live_"))) {
+    return badRequest("Unexpected Stripe account or mode.");
+  }
+  if (!CHECKOUT_EVENTS.has(event.type) && event.type !== "charge.refunded") {
+    return json({ received: true, ignored: true });
+  }
+  if (!("id" in event.data.object) || typeof event.data.object.id !== "string") {
+    return badRequest("Missing Stripe object ID.");
+  }
   const supabase = getSupabaseAdminClient();
-
-  const { error: seenError } = await supabase
-    .from("stripe_webhook_events")
-    .insert({ id: event.id, type: event.type });
-
-  if (seenError) {
-    if (seenError.code === UNIQUE_VIOLATION) {
-      return json({ received: true, duplicate: true });
-    }
-    console.error("webhook event log failed", seenError);
-    return serverError("Could not record the event.");
-  }
-
   try {
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object;
-        const userId =
-          session.metadata?.clerk_user_id ?? session.client_reference_id;
-        const productSlug = session.metadata?.product_slug;
-        if (!userId || !productSlug) break;
-
-        const { data: order } = await supabase
-          .from("orders")
-          .update({
-            status: "paid",
-            amount_total: session.amount_total,
-            currency: session.currency,
-            stripe_payment_intent_id:
-              typeof session.payment_intent === "string"
-                ? session.payment_intent
-                : null,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("stripe_checkout_session_id", session.id)
-          .select("id")
-          .maybeSingle();
-
-        await supabase.from("entitlements").upsert(
-          {
-            clerk_user_id: userId,
-            product_slug: productSlug,
-            order_id: order?.id ?? null,
-            revoked_at: null,
-          },
-          { onConflict: "clerk_user_id,product_slug" },
-        );
-        break;
+    let order: Record<string, unknown> | null = null;
+    let refundPaymentIntent: string | null = null;
+    if (CHECKOUT_EVENTS.has(event.type)) {
+      const session = await stripe.checkout.sessions.retrieve(event.data.object.id, {
+        expand: ["line_items.data.price", "payment_intent.latest_charge"],
+      });
+      if (session.metadata?.application !== "feetheproducer-site") return json({ received: true, ignored: true });
+      const userId = session.metadata.clerk_user_id;
+      const productSlug = session.metadata.product_slug;
+      const line = session.line_items?.data[0];
+      if (session.mode !== "payment" || !userId || !productSlug || session.client_reference_id !== userId ||
+          session.line_items?.has_more || session.line_items?.data.length !== 1 || !line?.price ||
+          !Number.isInteger(line.quantity) || line.quantity! < 1 || line.quantity! > 99) {
+        throw new Error("Invalid checkout binding");
       }
-
-      case "checkout.session.expired": {
-        await supabase
-          .from("orders")
-          .update({ status: "expired", updated_at: new Date().toISOString() })
-          .eq("stripe_checkout_session_id", event.data.object.id);
-        break;
-      }
-
-      case "charge.refunded": {
-        const charge = event.data.object;
-        const paymentIntentId =
-          typeof charge.payment_intent === "string"
-            ? charge.payment_intent
-            : null;
-        if (!paymentIntentId) break;
-
-        const { data: refunded } = await supabase
-          .from("orders")
-          .update({ status: "refunded", updated_at: new Date().toISOString() })
-          .eq("stripe_payment_intent_id", paymentIntentId)
-          .select("id, clerk_user_id, product_slug");
-
-        for (const order of refunded ?? []) {
-          await supabase
-            .from("entitlements")
-            .update({ revoked_at: new Date().toISOString() })
-            .eq("clerk_user_id", order.clerk_user_id)
-            .eq("product_slug", order.product_slug);
-        }
-        break;
-      }
-
-      default:
-        break;
+      // Bind fulfillment to the price chosen by our server when checkout began.
+      // A later catalog price change must not prevent a paid order from completing.
+      if (session.metadata.stripe_price_id !== line.price.id) throw new Error("Unknown checkout price");
+      const intent = typeof session.payment_intent === "object" ? session.payment_intent : null;
+      const charge = intent && typeof intent.latest_charge === "object" ? intent.latest_charge : null;
+      order = {
+        session_id: session.id, user_id: userId, product_slug: productSlug, quantity: line.quantity,
+        status: checkoutStatus({ paymentStatus: session.payment_status, sessionStatus: session.status,
+          eventType: event.type, fullyRefunded: charge?.refunded === true }),
+        amount_total: session.amount_total, currency: session.currency,
+        payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : intent?.id ?? null,
+      };
+    } else {
+      const charge = await stripe.charges.retrieve(event.data.object.id);
+      // Partial refunds retain access; full refunds revoke only this purchase.
+      if (!charge.refunded) return json({ received: true, ignored: true });
+      refundPaymentIntent = typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id ?? null;
+      if (!refundPaymentIntent) return json({ received: true, ignored: true });
     }
-  } catch (error) {
-    // Drop the idempotency record so Stripe's retry is processed rather than
-    // skipped as a duplicate.
-    console.error(`stripe handler failed for ${event.type}`, error);
-    await supabase.from("stripe_webhook_events").delete().eq("id", event.id);
-    return serverError("Handler failed.");
+    const { data, error } = await supabase.rpc("process_stripe_event", {
+      p_event_id: event.id, p_event_type: event.type, p_order: order,
+      p_refund_payment_intent: refundPaymentIntent,
+    });
+    if (error) {
+      console.error("stripe event transaction failed", { eventId: event.id, code: error.code });
+      return serverError("Could not process the event.");
+    }
+    return json({ received: true, ...data });
+  } catch {
+    console.error("stripe event processing failed", { eventId: event.id, type: event.type });
+    return serverError("Could not process the event.");
   }
-
-  return json({ received: true, type: event.type });
 }

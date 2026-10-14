@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { Studio } from "@/components/sections/Studio";
 import { LivePerformance } from "@/components/sections/LivePerformance";
@@ -67,6 +68,16 @@ export default function HomePage() {
       <LivePerformance />
       <Studio />
       <section className="artist-statement container-page">
+        <figure className="artist-photo artist-photo-wide">
+          <Image
+            src={SITE.images.artistConsole}
+            alt="Fee The Producer at the mixing console in a recording studio"
+            width={1630}
+            height={965}
+            sizes="(max-width: 600px) 92vw, (max-width: 1100px) 94vw, 1240px"
+          />
+          <figcaption><span>FEE THE PRODUCER</span><span>IN THE STUDIO / 01</span></figcaption>
+        </figure>
         <p className="eyebrow">THE ARTIST BEHIND THE SOUND</p>
         <h2>
           Rooted in soul.

@@ -5,7 +5,24 @@
 - User supplied: `Luxury FP Music Production Emblem.png`, October 13, 2026.
 - Repository copy: `public/brand/fp-luxury-emblem.png`.
 - Original bytes preserved. No generated replacement, recoloring, or extraction.
-- Used in navigation, hero, about, footer, and social metadata.
+- Used in navigation, hero, footer, and social metadata.
+
+## Owner-supplied artist photographs
+
+The owner supplied `IMG_2705 1.jpg` and `IMG_2706.jpg` on October 14, 2026 and explicitly identified the subject as Fee The Producer. The original files remain untouched in the owner's source folder. These are real studio photographs, separate from the fictional studio character below.
+
+| Original | SHA-256 | Enhanced website asset |
+| --- | --- | --- |
+| `IMG_2705 1.jpg` | `05faa1df95aeb68b887672807390a9e7208833b0601c948ef14251e06c0b32b2` | `public/images/artist/fee-studio-console-enhanced.png` |
+| `IMG_2706.jpg` | `d67f2ec27ee8ca66b39bdec5b3ce795eee304ebd3d25f7e5f4dd3abb3f395bef` | `public/images/artist/fee-studio-portrait-enhanced.png` |
+
+Enhancement used the built-in imagegen tool with each original as its own reference. The request preserved identity, pose, clothing, and studio setting while improving exposure, color balance, and clarity, reducing compression noise, and removing the screenshot border. AI restoration can reconstruct fine details; these outputs are presentation derivatives, not unaltered documentary originals. No new biography or studio ownership claim is inferred from the photographs.
+
+The console image is on the homepage's artist section. The closer portrait is on About. Next Image serves responsive sizes; descriptive alt text, visible captions, and static presentation work without motion. The About portrait uses a responsive crop positioned toward the subject.
+
+Console prompt: "Create one enhanced restoration of this exact owner-supplied photograph of Fee The Producer in a recording studio. Preserve his real identity and facial structure, skin tone, build, green cap, black Adidas shirt, jewelry, stance and original camera angle. Preserve the real console, monitors and recording-studio setting and their arrangement. Natural professional documentary photography, restrained warm color grade with accurate skin tones, gently recover shadow detail, balance highlights, reduce compression noise, improve clarity without waxy skin or oversharpening. Remove only the thin screenshot-like brown border along the bottom by cropping; keep the entire person and useful console composition within a wide landscape image. Do not invent facial detail, equipment, logos, text, objects, scenery, or changes to expression. No illustration, beautification or new branding. This is a faithful photo enhancement, not a new scene. Output a clean landscape photograph suitable for an artist's official website."
+
+Portrait prompt: "Enhance this exact owner-supplied studio photograph of Fee The Producer for his official website. Preserve the real person's precise identity, facial features and proportions, beard, skin tone, build, green flat-brim cap, black Adidas shirt, silver necklace, looking-down expression and pose, and actual recording studio window setting. Restrained, natural professional documentary photo restoration: reduce compression noise, gently clarify existing detail, recover shadow detail around the face while maintaining its original lighting, neutralize muddy color with warm authentic skin tones, controlled contrast. Remove the thin brown screenshot border bands at top and bottom by cropping only. Keep the existing landscape framing, head, shoulders and torso, with studio surroundings. Do not add or replace objects, invent logos or text, change clothing or face, beautify, stylize, or create a new pose/background. Retain believable skin texture and photographic softness rather than aggressive AI reconstruction."
 
 ## Studio character
 

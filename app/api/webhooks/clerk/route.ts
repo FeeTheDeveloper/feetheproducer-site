@@ -30,8 +30,7 @@ export async function POST(request: NextRequest) {
   let event: Awaited<ReturnType<typeof verifyWebhook>>;
   try {
     event = await verifyWebhook(request);
-  } catch (error) {
-    console.error("clerk signature verification failed", error);
+  } catch {
     return badRequest("Invalid signature.");
   }
 
@@ -47,18 +46,17 @@ export async function POST(request: NextRequest) {
             (address) => address.id === user.primary_email_address_id,
           ) ?? user.email_addresses[0];
 
-        const { error } = await supabase.from("profiles").upsert(
-          {
-            clerk_user_id: user.id,
+        const { error } = await supabase.rpc("process_clerk_profile_event", {
+          p_type: event.type,
+          p_timestamp: event.timestamp,
+          p_profile: {
+            id: user.id,
             email: primaryEmail?.email_address ?? null,
             first_name: user.first_name,
             last_name: user.last_name,
             image_url: user.image_url,
-            deleted_at: null,
-            updated_at: new Date().toISOString(),
           },
-          { onConflict: "clerk_user_id" },
-        );
+        });
         if (error) throw error;
         break;
       }
@@ -68,17 +66,9 @@ export async function POST(request: NextRequest) {
         if (!userId) break;
 
         // Soft delete: paid orders stay auditable after the account is gone.
-        const { error } = await supabase
-          .from("profiles")
-          .update({
-            deleted_at: new Date().toISOString(),
-            email: null,
-            first_name: null,
-            last_name: null,
-            image_url: null,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("clerk_user_id", userId);
+        const { error } = await supabase.rpc("process_clerk_profile_event", {
+          p_type: event.type, p_timestamp: event.timestamp, p_profile: { id: userId },
+        });
         if (error) throw error;
         break;
       }
@@ -86,8 +76,8 @@ export async function POST(request: NextRequest) {
       default:
         break;
     }
-  } catch (error) {
-    console.error(`clerk handler failed for ${event.type}`, error);
+  } catch {
+    console.error(`clerk handler failed for ${event.type}`);
     return serverError("Handler failed.");
   }
 

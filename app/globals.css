@@ -932,6 +932,42 @@ h2 {
   grid-column: 1 / -1;
   margin-bottom: 25px;
 }
+.artist-photo {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid #daba7f40;
+  background: #10100e;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.artist-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.artist-photo figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px 20px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+}
+.artist-photo figcaption span:first-child {
+  color: var(--gold);
+}
+.artist-photo-wide {
+  grid-column: 1 / -1;
+  margin-bottom: 48px;
+}
+.about-portrait img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 37% center;
+}
 .artist-statement > div {
   align-self: end;
   max-width: 385px;
@@ -1191,6 +1227,36 @@ h2 {
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   padding-block: 85px 100px;
+}
+.auth-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 56px;
+  padding-block: 90px 110px;
+}
+.auth-intro h1 {
+  margin-block: 24px;
+  font-size: clamp(38px, 4.8vw, 68px);
+}
+.auth-intro > p:not(.eyebrow) {
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.auth-panel, .auth-widget, .auth-card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.auth-sign-out { margin-top: 24px; }
+.auth-unavailable {
+  border: 1px solid var(--line);
+  padding: 28px;
+}
+.auth-unavailable h2 { font-size: 30px; }
+.auth-unavailable p { margin-block: 20px; line-height: 1.8; color: var(--muted); }
+@media (max-width: 800px) {
+  .auth-page { grid-template-columns: 1fr; padding-block: 50px 65px; gap: 36px; }
 }
 .contact-intro h1 {
   font-size: clamp(44px, 5vw, 73px);

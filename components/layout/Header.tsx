@@ -44,6 +44,7 @@ export function Header() {
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           {items}
+          <Link href="/sign-up" aria-current={pathname.startsWith("/sign-up") ? "page" : undefined}>Sign up</Link>
         </nav>
         <Link className="header-cta" href="/contact">
           Let’s create <ArrowIcon />
@@ -64,6 +65,9 @@ export function Header() {
           </summary>
           <nav aria-label="Mobile navigation">
             {items}
+            <Link href="/sign-up">Sign up</Link>
+            <Link href="/sign-in">Sign in</Link>
+            <Link href="/account">Your account</Link>
             <Link href="/contact">
               Start a project <ArrowIcon />
             </Link>

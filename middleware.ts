@@ -7,7 +7,7 @@ import {
 
 import { isClerkConfigured } from "@/lib/integrations/env";
 
-const withClerk = clerkMiddleware();
+const withClerk = clerkMiddleware({ signInUrl: "/sign-in", signUpUrl: "/sign-up" });
 
 /**
  * Clerk only runs when its keys are present. Without this guard a deployment
@@ -25,5 +25,6 @@ export default function middleware(request: NextRequest, event: NextFetchEvent) 
 }
 
 export const config = {
-  matcher: ["/((?!.*\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  // Public music pages and signed webhooks do not need a Clerk session.
+  matcher: ["/sign-in(.*)", "/sign-up(.*)", "/account(.*)", "/api/account", "/api/checkout", "/__clerk(.*)"],
 };

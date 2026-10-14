@@ -221,7 +221,7 @@ test("static site remains navigable with JavaScript disabled", async ({
     viewport: { width: 390, height: 844 },
   });
   const page = await context.newPage();
-  await page.goto("http://127.0.0.1:3100/");
+  await page.goto("http://localhost:3100/");
   await expect(
     page.getByRole("heading", { name: "Feel every frequency." }),
   ).toBeVisible();
@@ -235,7 +235,7 @@ test("static site remains navigable with JavaScript disabled", async ({
     .getByRole("link", { name: "The music" })
     .click();
   await expect(page).toHaveURL(/\/streaming$/);
-  await page.goto("http://127.0.0.1:3100/contact");
+  await page.goto("http://localhost:3100/contact");
   await expect(
     page.getByRole("link", { name: /contact@feetheproducer.com/ }).first(),
   ).toHaveAttribute("href", "mailto:contact@feetheproducer.com");

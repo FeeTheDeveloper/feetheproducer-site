@@ -15,6 +15,8 @@ export const SITE = {
   images: {
     logo: "/brand/fp-luxury-emblem.png",
     studio: "/images/studio/studio-character.png",
+    artistConsole: "/images/artist/fee-studio-console-enhanced.png",
+    artistPortrait: "/images/artist/fee-studio-portrait-enhanced.png",
   },
 } as const;
 

@@ -11,15 +11,19 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:unit": "node --experimental-strip-types --test tests/unit/*.test.mjs",
+    "catalog:sync": "node scripts/sync-stripe-catalog.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.15",
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "clsx": "^2.1.1",
     "next": "^15.5.27",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "server-only": "0.0.1",
     "stripe": "^23.0.0",
     "svix": "^2.8.0",
     "tailwind-merge": "^2.5.5"

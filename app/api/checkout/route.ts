@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
+import { createHash, randomUUID } from "node:crypto";
 import type { NextRequest } from "next/server";
 
 import {
@@ -15,6 +16,8 @@ import {
 } from "@/lib/integrations/responses";
 import { getStripeClient } from "@/lib/integrations/stripe";
 import { getSupabaseAdminClient } from "@/lib/integrations/supabase";
+import { checkoutQuantity, checkoutRequestKey } from "@/lib/integrations/commerce-policy";
+import { SITE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -45,13 +48,15 @@ export async function POST(request: NextRequest) {
     return badRequest("Expected a JSON body.");
   }
 
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return badRequest("Expected a JSON object.");
+  }
   const productSlug =
     typeof body.productSlug === "string" ? body.productSlug.trim() : "";
   if (!productSlug) return badRequest("`productSlug` is required.");
 
-  const quantity =
-    body.quantity === undefined ? 1 : Number.parseInt(String(body.quantity), 10);
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+  const quantity = checkoutQuantity(body.quantity);
+  if (quantity === null) {
     return badRequest("`quantity` must be a whole number between 1 and 99.");
   }
 
@@ -65,35 +70,48 @@ export async function POST(request: NextRequest) {
     .maybeSingle();
 
   if (productError) {
-    console.error("product lookup failed", productError);
+    console.error("product lookup failed", { code: productError.code });
     return serverError("Could not load the product.");
   }
   if (!product) return badRequest(`Unknown or inactive product: ${productSlug}`);
 
-  const origin = new URL(request.url).origin;
+  if (product.mode !== "payment") {
+    return badRequest("Subscription checkout is not enabled.");
+  }
+  const suppliedKey = request.headers.get("idempotency-key");
+  const requestKey = suppliedKey ? checkoutRequestKey(suppliedKey) : randomUUID();
+  if (!requestKey) return badRequest("Invalid Idempotency-Key.");
+  const idempotencyKey = createHash("sha256")
+    .update(JSON.stringify([userId, productSlug, quantity, requestKey]))
+    .digest("hex");
 
   try {
-    const session = await getStripeClient().checkout.sessions.create({
-      mode: product.mode === "subscription" ? "subscription" : "payment",
+    const stripe = getStripeClient();
+    const price = await stripe.prices.retrieve(product.stripe_price_id, { expand: ["product"] });
+    if (!price.active || price.type !== "one_time" || typeof price.product === "string" || price.product.deleted || !price.product.active) {
+      return badRequest("This product is unavailable.");
+    }
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
       line_items: [{ price: product.stripe_price_id, quantity }],
       client_reference_id: userId,
-      metadata: { clerk_user_id: userId, product_slug: product.slug },
-      success_url: `${origin}/?checkout=complete&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/?checkout=cancelled`,
-    });
+      metadata: { application: "feetheproducer-site", clerk_user_id: userId, product_slug: product.slug, stripe_price_id: price.id },
+      success_url: `${SITE.url}/?checkout=complete&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${SITE.url}/?checkout=cancelled`,
+    }, { idempotencyKey });
 
-    const { error: orderError } = await supabase.from("orders").insert({
+    const { error: orderError } = await supabase.from("orders").upsert({
       clerk_user_id: userId,
       product_slug: product.slug,
       quantity,
       status: "pending",
       stripe_checkout_session_id: session.id,
-    });
+    }, { onConflict: "stripe_checkout_session_id", ignoreDuplicates: true });
 
     if (orderError) {
-      // The session already exists in Stripe; the webhook reconciles the order
-      // from session metadata, so this is logged rather than surfaced.
-      console.error("pending order insert failed", orderError);
+      console.error("pending order insert failed", { code: orderError.code });
+      if (session.status === "open") await stripe.checkout.sessions.expire(session.id);
+      return serverError("Could not record the order. Please try again.");
     }
 
     if (!session.url) {
@@ -101,8 +119,8 @@ export async function POST(request: NextRequest) {
     }
 
     return json({ url: session.url, sessionId: session.id });
-  } catch (error) {
-    console.error("checkout session creation failed", error);
+  } catch {
+    console.error("checkout session creation failed");
     return serverError("Could not start checkout.");
   }
 }

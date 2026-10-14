@@ -20,15 +20,17 @@ export default function AboutPage() {
         </h1>
       </section>
       <section className="container-page about-grid">
-        <div className="about-emblem">
+        <figure className="artist-photo about-portrait">
           <Image
-            src={SITE.images.logo}
-            alt="Fee The Producer LLC Music Production emblem"
-            width={1254}
-            height={1254}
+            src={SITE.images.artistPortrait}
+            alt="Fee The Producer wearing a green cap in the recording studio"
+            width={1580}
+            height={995}
             sizes="(max-width: 760px) 90vw, 40vw"
+            priority
           />
-        </div>
+          <figcaption><span>FEE THE PRODUCER</span><span>IN THE STUDIO / 02</span></figcaption>
+        </figure>
         <div>
           <p className="eyebrow">FEE THE PRODUCER</p>
           <h2>
