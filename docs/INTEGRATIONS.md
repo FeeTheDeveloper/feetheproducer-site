@@ -80,4 +80,3 @@ placed as a test.
 Install the CLI with `npm i -g vercel` for `vercel env pull`, `vercel deploy`, and
 `vercel logs`. Verify the linked project/team before deploying. Preserve an
 owner-maintained environment file before pulling remote variables over it.
-
