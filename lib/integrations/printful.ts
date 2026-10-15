@@ -28,7 +28,8 @@ async function printful<T>(path: string, body?: object, fresh = false): Promise<
   });
   if (!response.ok) throw new Error("Printful request failed");
   const data = await response.json();
-  if (data.code !== 200 || !data.result) throw new Error("Invalid Printful response");
+  if (!data || typeof data !== "object" || !("code" in data) || data.code !== 200 ||
+      !("result" in data) || !data.result) throw new Error("Invalid Printful response");
   return data.result as T;
 }
 
