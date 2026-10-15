@@ -41,4 +41,4 @@ The contact form opens a draft in the visitor's email app. The visitor must send
 
 ## Deployment
 
-The production project is `feethedeveloper/feetheproducer-site` on Vercel, with `npm ci` and `npm run build`. Cloudflare DNS for the apex and `www` hosts is connected to that project. Verify the Vercel deployment, both domains, and key routes after each release. This repository is not yet connected for automatic Git deployments; a push alone does not update production.
+Production runs on the Cloudflare Worker `feetheproducer-site`, serving the apex and `www` hosts. See [Cloudflare build, deployment and recovery](docs/CLOUDFLARE_DEPLOYMENT.md). This repository is not yet connected for automatic Git deployments; a push alone does not update production.
