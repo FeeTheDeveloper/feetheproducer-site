@@ -18,6 +18,31 @@
   "scope": "Public catalog metadata and navigation only; no rights, ownership, private library, full audio, or playback verification implied.",
   "releases": [
     {
+      "slug": "dont-call-it-nothing",
+      "appleSongId": "6823479049",
+      "title": "Don't Call It Nothing",
+      "artist": "Fee The Producer",
+      "explicit": true,
+      "type": "Single",
+      "releaseDate": "2026-10-15",
+      "status": "live",
+      "featured": false,
+      "genre": "R&B/Soul",
+      "description": "Don't Call It Nothing — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
+      "coverArt": "/images/covers/apple-dont-call-it-nothing.jpg",
+      "artworkSource": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1f/ce/54/1fce5415-bff7-3f92-eaaa-77471e19e924/artwork.jpg/1080x1080bb.jpg",
+      "links": [
+        {
+          "platform": "apple",
+          "label": "Apple Music",
+          "url": "https://music.apple.com/us/album/dont-call-it-nothing/6823479048?i=6823479049",
+          "primary": true
+        }
+      ],
+      "verifiedAt": "2026-10-16",
+      "source": "Owner-supplied Apple Music song URL and Apple Music connector metadata. Official song page music:musician metadata links artist 1896424385."
+    },
+    {
       "slug": "the-band-room",
       "appleSongId": "6822257258",
       "title": "The Band Room",

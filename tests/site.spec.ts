@@ -283,6 +283,11 @@ test("catalog remains current and outbound links match owner-selected sources", 
   const channelUrl = "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q";
   const expected = [
     {
+      slug: "dont-call-it-nothing",
+      title: "Don't Call It Nothing",
+      url: "https://music.apple.com/us/album/dont-call-it-nothing/6823479048?i=6823479049",
+    },
+    {
       slug: "the-band-room",
       title: "The Band Room",
       url: "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
@@ -309,7 +314,7 @@ test("catalog remains current and outbound links match owner-selected sources", 
     },
   ];
   await page.goto("/streaming");
-  await expect(page.locator(".release-card")).toHaveCount(5);
+  await expect(page.locator(".release-card")).toHaveCount(6);
   expect(
     await page
       .locator(".release-card-link")

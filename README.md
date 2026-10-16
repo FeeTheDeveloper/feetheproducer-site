@@ -23,7 +23,7 @@ npm run build
 
 ## Catalog
 
-Edit `lib/data/releases.ts` for release pages and `lib/site.ts` for site destinations. The October 13, 2026 snapshot contains five Apple Music releases; source metadata and artwork provenance are in `docs/CATALOG_SOURCE.json`. Refresh official source metadata before changes. The canonical artist page is `https://music.apple.com/us/artist/fee-the-producer/1896424385`. Videos and content route to `https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q`.
+Edit `lib/data/releases.ts` for release pages and `lib/site.ts` for site destinations. The catalog contains six Apple Music releases, including “Don’t Call It Nothing” added from the owner-supplied official source on October 16, 2026; source metadata and artwork provenance are in `docs/CATALOG_SOURCE.json`. Refresh official source metadata before changes. The canonical artist page is `https://music.apple.com/us/artist/fee-the-producer/1896424385`. Videos and content route to `https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q`.
 
 ## Repository workflows
 
