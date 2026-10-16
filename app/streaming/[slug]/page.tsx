@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AppleMusicEmbed } from "@/components/music/AppleMusicEmbed";
 import { ReleaseArtwork } from "@/components/music/ReleaseArtwork";
-import { Button } from "@/components/ui/Button";
-import { ArrowIcon } from "@/components/ui/Icons";
 import { getReleaseBySlug, releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
 type Props = { params: Promise<{ slug: string }> };
@@ -61,18 +60,8 @@ export default async function ReleasePage({ params }: Props) {
               {release.artist} · {release.genre}
             </p>
             <p>{release.description}</p>
-            <div className="platform-buttons">
-              {release.links.map((link) => (
-                <Button
-                  key={link.platform}
-                  href={link.url}
-                  external
-                  variant={link.primary ? "gold" : "outline"}
-                >
-                  {link.label}
-                  <ArrowIcon />
-                </Button>
-              ))}
+            <div className="release-player">
+              <AppleMusicEmbed release={release} />
             </div>
           </div>
         </div>

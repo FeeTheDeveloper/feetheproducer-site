@@ -37,7 +37,7 @@ Georgia/Times New Roman for expressive headings and record titles; Arial/Helveti
 
 ## Content and boundaries
 
-The owner selected Apple Music artist ID `1896424385` as the current catalog. The October 13 source check found five releases: The Band Room; Neva Give Up (feat. Dave Watson); Back From Venus; All Gas No Breaks (feat. Ray Nathan); Rolling (feat. Ray-Nathan). Use the full official titles and matching artwork. Remove historical entries and other platform links from the rendered site. Preserve the artist's exact identity and record provenance in `docs/CATALOG_SOURCE.json`.
+The owner selected Apple Music artist ID `1896424385` as the current catalog. The October 16 source check found six releases: Don't Call It Nothing; The Band Room; Neva Give Up (feat. Dave Watson); Back From Venus; All Gas No Breaks (feat. Ray Nathan); Rolling (feat. Ray-Nathan). Use the full official titles and matching artwork. Each release page uses its owner-supplied Apple Music player, with “Don't Call It Nothing” featured on the homepage; players must not autoplay. Rendered Apple Music links have been removed in favor of the embeds. Remove historical entries and other platform links from the rendered site. Preserve the artist's exact identity and record provenance in `docs/CATALOG_SOURCE.json`.
 
 The owner selected YouTube channel `UC9UgxU4WyYxVZzhVYeLyc_Q` as the video/content funnel. Its displayed identity is Fee The Producer, @FeeTheProducer-r4k. It had no uploaded content when inspected; link to the channel without inventing a featured video. Internal site navigation and contact remain available. Generated character art is explicitly illustrative and does not represent Fee, an employee, or a live assistant.
 

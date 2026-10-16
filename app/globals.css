@@ -606,6 +606,47 @@ h2 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 32px;
 }
+.featured-listen {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.7fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 70px);
+  margin-bottom: 50px;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid #daba7f44;
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 0% 50%, #daba7f17, transparent 55%),
+    var(--surface);
+}
+.featured-listen-copy h3 {
+  margin-block: 12px 10px;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--paper);
+}
+.featured-listen-copy > p:last-child {
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.apple-music-embed {
+  display: block;
+  width: 100%;
+  max-width: 660px;
+  height: 175px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: #111;
+}
+.release-player {
+  margin-top: 28px;
+}
 .release-card-link {
   display: block;
 }
@@ -1111,12 +1152,6 @@ h2 {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.8;
-}
-.platform-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-block: 30px 22px;
 }
 .video-section {
   padding-bottom: 90px;
@@ -1652,6 +1687,11 @@ h2 {
   .release-grid {
     grid-template-columns: 1fr;
     gap: 36px;
+  }
+  .featured-listen {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 38px;
   }
   .record-sleeve {
     padding-right: 20px;

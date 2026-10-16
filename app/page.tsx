@@ -5,8 +5,9 @@ import { Studio } from "@/components/sections/Studio";
 import { LivePerformance } from "@/components/sections/LivePerformance";
 import { ProjectCta } from "@/components/sections/ProjectCta";
 import { ReleaseCard } from "@/components/cards/ReleaseCard";
+import { AppleMusicEmbed } from "@/components/music/AppleMusicEmbed";
 import { ArrowIcon, PlayIcon } from "@/components/ui/Icons";
-import { releases } from "@/lib/data/releases";
+import { featuredRelease, releases } from "@/lib/data/releases";
 import { SITE } from "@/lib/site";
 import "./merch/merch.css";
 
@@ -17,9 +18,6 @@ export default function HomePage() {
       <div className="listening-strip">
         <div className="container-page">
           <span className="eyebrow">FIND YOUR FREQUENCY</span>
-          <a href={SITE.social.apple} target="_blank" rel="noopener noreferrer">
-            Apple Music <span>↗</span>
-          </a>
           <a
             href={SITE.social.youtube}
             target="_blank"
@@ -40,6 +38,17 @@ export default function HomePage() {
           <Link href="/streaming" className="text-link">
             Explore the catalog <ArrowIcon />
           </Link>
+        </div>
+        <div className="featured-listen">
+          <div className="featured-listen-copy">
+            <p className="eyebrow">NEW RELEASE / APPLE MUSIC</p>
+            <h3>Don&apos;t Call It Nothing</h3>
+            <p>
+              The latest Fee The Producer single. Press play when you&apos;re
+              ready.
+            </p>
+          </div>
+          <AppleMusicEmbed release={featuredRelease} />
         </div>
         <div className="release-grid">
           {releases.slice(0, 3).map((release) => (

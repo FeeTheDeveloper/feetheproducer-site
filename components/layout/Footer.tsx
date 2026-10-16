@@ -27,13 +27,6 @@ export function Footer() {
           </div>
           <div className="footer-links">
             <a
-              href={SITE.social.apple}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Apple Music ↗
-            </a>
-            <a
               href={SITE.social.youtube}
               target="_blank"
               rel="noopener noreferrer"

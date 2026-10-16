@@ -10,7 +10,6 @@ export const SITE = {
   email: "contact@feetheproducer.com",
   social: {
     youtube: "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q",
-    apple: "https://music.apple.com/us/artist/fee-the-producer/1896424385",
   },
   images: {
     logo: "/brand/fp-luxury-emblem.png",

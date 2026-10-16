@@ -24,16 +24,9 @@ export default function StreamingPage() {
         </h1>
         <div className="intro-bottom">
           <p>
-            Find your next repeat. Explore the current catalog on Apple Music.
+            Find your next repeat. Choose a release to listen with its embedded
+            Apple Music player.
           </p>
-          <a
-            href={SITE.social.apple}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-link"
-          >
-            Full catalog on Apple Music <ArrowIcon />
-          </a>
         </div>
       </section>
       <section

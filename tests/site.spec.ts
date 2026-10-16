@@ -4,6 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 const routes = [
   "/",
   "/streaming",
+  "/streaming/dont-call-it-nothing",
   "/streaming/the-band-room",
   "/streaming/neva-give-up",
   "/streaming/back-from-venus",
@@ -274,42 +275,51 @@ test("contact validates fields and prepares an email draft without a network sub
   expect(requests).toEqual([]);
 });
 
-test("catalog remains current and outbound links match owner-selected sources", async ({
+test("catalog remains current and uses the owner-supplied Apple Music embeds", async ({
   page,
   request,
 }) => {
-  const artistUrl =
-    "https://music.apple.com/us/artist/fee-the-producer/1896424385";
   const channelUrl = "https://www.youtube.com/channel/UC9UgxU4WyYxVZzhVYeLyc_Q";
   const expected = [
     {
+      slug: "dont-call-it-nothing",
+      title: "Don't Call It Nothing",
+      embed:
+        "https://embed.music.apple.com/us/song/dont-call-it-nothing/6823479049",
+    },
+    {
       slug: "the-band-room",
       title: "The Band Room",
-      url: "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
+      embed:
+        "https://embed.music.apple.com/us/song/the-band-room/6822257258",
     },
     {
       slug: "neva-give-up",
       title: "Neva Give Up (feat. Dave Watson)",
-      url: "https://music.apple.com/us/album/neva-give-up-feat-dave-watson/6822143525?i=6822143526",
+      embed:
+        "https://embed.music.apple.com/us/song/neva-give-up-feat-dave-watson/6822143526",
     },
     {
       slug: "back-from-venus",
       title: "Back From Venus",
-      url: "https://music.apple.com/us/album/back-from-venus/6820309021?i=6820309022",
+      embed:
+        "https://embed.music.apple.com/us/song/back-from-venus/6820309022",
     },
     {
       slug: "all-gas-no-breaks",
       title: "All Gas No Breaks (feat. Ray Nathan)",
-      url: "https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864",
+      embed:
+        "https://embed.music.apple.com/us/song/all-gas-no-breaks-feat-ray-nathan/6806901864",
     },
     {
       slug: "rolling",
       title: "Rolling (feat. Ray-Nathan)",
-      url: "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
+      embed:
+        "https://embed.music.apple.com/us/song/rolling-feat-ray-nathan/6794165344",
     },
   ];
   await page.goto("/streaming");
-  await expect(page.locator(".release-card")).toHaveCount(5);
+  await expect(page.locator(".release-card")).toHaveCount(6);
   expect(
     await page
       .locator(".release-card-link")
@@ -318,17 +328,16 @@ test("catalog remains current and outbound links match owner-selected sources", 
   for (const release of expected) {
     await page.goto(`/streaming/${release.slug}`);
     await expect(page.locator("h1")).toContainText(release.title);
-    await expect(page.locator(".platform-buttons a")).toHaveCount(1);
-    await expect(page.locator(".platform-buttons a")).toHaveAttribute(
-      "href",
-      release.url,
+    const player = page.locator(".apple-music-embed");
+    await expect(player).toHaveCount(1);
+    await expect(player).toHaveAttribute("src", release.embed);
+    await expect(player).toHaveAttribute(
+      "title",
+      `Listen to ${release.title} by Fee The Producer on Apple Music`,
     );
+    await expect(page.locator('a[href*="music.apple.com"]')).toHaveCount(0);
   }
-  const allowed = new Set([
-    artistUrl,
-    channelUrl,
-    ...expected.map((release) => release.url),
-  ]);
+  const allowed = new Set([channelUrl]);
   for (const route of routes) {
     await page.goto(route);
     const routeAllowed = new Set(allowed);
@@ -344,7 +353,28 @@ test("catalog remains current and outbound links match owner-selected sources", 
       route,
     ).toBe(true);
     expect(links, route).toContain(channelUrl);
-    await expect(page.locator("iframe, audio")).toHaveCount(0);
+    await expect(page.locator("audio")).toHaveCount(0);
+    const release = expected.find(
+      (candidate) => route === `/streaming/${candidate.slug}`,
+    );
+    await expect(page.locator("iframe")).toHaveCount(
+      route === "/" || release ? 1 : 0,
+    );
+    if (route === "/") {
+      const player = page.locator(".apple-music-embed");
+      await expect(player).toHaveAttribute(
+        "src",
+        "https://embed.music.apple.com/us/song/dont-call-it-nothing/6823479049",
+      );
+      await expect(player).toHaveAttribute(
+        "title",
+        "Listen to Don't Call It Nothing by Fee The Producer on Apple Music",
+      );
+      await expect(player).toHaveAttribute(
+        "sandbox",
+        "allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation",
+      );
+    }
     await expect(page.locator("video")).toHaveCount(route === "/" ? 1 : 0);
   }
   const sitemap = await (await request.get("/sitemap.xml")).text();
@@ -411,6 +441,9 @@ test("primary routes have no detectable WCAG A/AA violations", async ({
     ]) {
       await page.goto(route);
       const result = await new AxeBuilder({ page })
+        // Apple owns the embed document; its current SVG has an invalid ARIA
+        // attribute. The iframe boundary itself is covered above.
+        .exclude(".apple-music-embed")
         .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
         .analyze();
       expect(

@@ -1,11 +1,5 @@
-// Verified against the owner-selected Apple Music artist profile on 2026-10-13.
-// Refresh using docs/CATALOG_SOURCE.json; preserve canonical titles and URLs.
-export interface StreamingLink {
-  platform: "apple";
-  label: "Apple Music";
-  url: string;
-  primary: boolean;
-}
+// Verified against the owner-selected Apple Music artist profile on 2026-10-16.
+// Refresh using docs/CATALOG_SOURCE.json; preserve canonical titles and embeds.
 
 export interface Release {
   slug: string;
@@ -20,10 +14,27 @@ export interface Release {
   genre: string;
   description: string;
   coverArt: string;
-  links: StreamingLink[];
+  embedUrl: string;
 }
 
 export const releases: Release[] = [
+  {
+    slug: "dont-call-it-nothing",
+    appleSongId: "6823479049",
+    title: "Don't Call It Nothing",
+    artist: "Fee The Producer",
+    explicit: true,
+    type: "Single",
+    releaseDate: "2026-10-15",
+    status: "live",
+    featured: true,
+    genre: "R&B/Soul",
+    description:
+      "Don't Call It Nothing — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
+    coverArt: "/images/covers/apple-dont-call-it-nothing.jpg",
+    embedUrl:
+      "https://embed.music.apple.com/us/song/dont-call-it-nothing/6823479049",
+  },
   {
     slug: "the-band-room",
     appleSongId: "6822257258",
@@ -33,19 +44,13 @@ export const releases: Release[] = [
     type: "Single",
     releaseDate: "2026-10-12",
     status: "live",
-    featured: true,
+    featured: false,
     genre: "Jazz",
     description:
       "The Band Room — Jazz single by Fee The Producer. Listen on Apple Music.",
     coverArt: "/images/covers/apple-the-band-room.jpg",
-    links: [
-      {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/the-band-room/6822257257?i=6822257258",
-        primary: true,
-      },
-    ],
+    embedUrl:
+      "https://embed.music.apple.com/us/song/the-band-room/6822257258",
   },
   {
     slug: "neva-give-up",
@@ -61,14 +66,8 @@ export const releases: Release[] = [
     description:
       "Neva Give Up (feat. Dave Watson) — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
     coverArt: "/images/covers/apple-neva-give-up.jpg",
-    links: [
-      {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/neva-give-up-feat-dave-watson/6822143525?i=6822143526",
-        primary: true,
-      },
-    ],
+    embedUrl:
+      "https://embed.music.apple.com/us/song/neva-give-up-feat-dave-watson/6822143526",
   },
   {
     slug: "back-from-venus",
@@ -84,14 +83,8 @@ export const releases: Release[] = [
     description:
       "Back From Venus — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
     coverArt: "/images/covers/apple-back-from-venus.jpg",
-    links: [
-      {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/back-from-venus/6820309021?i=6820309022",
-        primary: true,
-      },
-    ],
+    embedUrl:
+      "https://embed.music.apple.com/us/song/back-from-venus/6820309022",
   },
   {
     slug: "all-gas-no-breaks",
@@ -107,14 +100,8 @@ export const releases: Release[] = [
     description:
       "All Gas No Breaks (feat. Ray Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
     coverArt: "/images/covers/apple-all-gas-no-breaks.jpg",
-    links: [
-      {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/all-gas-no-breaks-feat-ray-nathan/6806901863?i=6806901864",
-        primary: true,
-      },
-    ],
+    embedUrl:
+      "https://embed.music.apple.com/us/song/all-gas-no-breaks-feat-ray-nathan/6806901864",
   },
   {
     slug: "rolling",
@@ -130,14 +117,8 @@ export const releases: Release[] = [
     description:
       "Rolling (feat. Ray-Nathan) — Hip-Hop/Rap single by Fee The Producer. Listen on Apple Music.",
     coverArt: "/images/covers/apple-rolling.jpg",
-    links: [
-      {
-        platform: "apple",
-        label: "Apple Music",
-        url: "https://music.apple.com/us/album/rolling-feat-ray-nathan/6794165343?i=6794165344",
-        primary: true,
-      },
-    ],
+    embedUrl:
+      "https://embed.music.apple.com/us/song/rolling-feat-ray-nathan/6794165344",
   },
 ];
 
