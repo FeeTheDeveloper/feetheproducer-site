@@ -25,6 +25,29 @@ export interface Release {
 
 export const releases: Release[] = [
   {
+    slug: "dont-call-it-nothing",
+    appleSongId: "6823479049",
+    title: "Don't Call It Nothing",
+    artist: "Fee The Producer",
+    explicit: true,
+    type: "Single",
+    releaseDate: "2026-10-15",
+    status: "live",
+    featured: false,
+    genre: "R&B/Soul",
+    description:
+      "Don't Call It Nothing — R&B/Soul single by Fee The Producer. Listen on Apple Music.",
+    coverArt: "/images/covers/apple-dont-call-it-nothing.jpg",
+    links: [
+      {
+        platform: "apple",
+        label: "Apple Music",
+        url: "https://music.apple.com/us/album/dont-call-it-nothing/6823479048?i=6823479049",
+        primary: true,
+      },
+    ],
+  },
+  {
     slug: "the-band-room",
     appleSongId: "6822257258",
     title: "The Band Room",
